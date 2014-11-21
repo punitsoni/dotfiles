@@ -62,6 +62,8 @@ nmap <leader>n :vsp ~/notes.md<CR>
 map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 set tags=./tags;/ "search for tags in pwd first, if not go up to root
 
+"-- YouCompleteMe Settings --"
+let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 
 " --- Python Settings --- "
 
