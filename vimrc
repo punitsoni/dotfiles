@@ -2,10 +2,16 @@
 
 set nocompatible " Make incompatible with VI
 
+" Pathogen Initialization "
+call pathogen#infect()
+filetype plugin indent on
+
 "Colors"
 
-colorscheme desert
 syntax enable " enable syntax highlight
+set t_Co=16
+set background=dark
+colorscheme solarized
 
 " Spaces and Tabs "
 
@@ -18,6 +24,7 @@ set smartindent
 set number          " show line numbers
 set showcmd         " show command in bottom bar
 "set cursorline      " highlight 
+set splitright
 
 filetype indent on  " load filetype-specific indent files
 set wildmenu        " visual autocomplete for command menu
@@ -30,37 +37,25 @@ set incsearch           " search as characters are entered
 set hlsearch            " highlight matches
 set ignorecase
 
-" Map a key to turn off search highlight "
-nnoremap <leader><space> :nohlsearch<CR>
-
-" Folding "
-
-set foldenable          " enable folding
-set foldlevelstart=10   " open most folds by default
-set foldnestmax=10      " 10 nested fold max
-" space open/closes folds
-nnoremap <space> za
-set foldmethod=syntax   " fold based on syntax (other options: indent marker manual expr diff)
-
-" Leader shortcuts "
+" Custom Key Bindings "
 
 let mapleader=","       " leader is comma
+nmap <leader>i :vsp $MYVIMRC<CR> " Open vimrc in hsplit
+nnoremap <leader><space> :nohlsearch<CR> " Map a key to turn off search highlight
+nmap <leader>n :vsp ~/notes.md<CR> " Open notes file in vsplit
 
-" jk is escape "
-inoremap jk <esc>
+"-- Folding -- (TODO)" 
+"set foldenable          " enable folding
+"set foldlevelstart=10   " open most folds by default
+"set foldnestmax=10      " 10 nested fold max
+" space open/closes folds
+"nnoremap <space> za
+"set foldmethod=syntax   " fold based on syntax (other options: indent marker manual expr diff)
 
-" key mapping for editing the *rc files "
+"-- CTAGS settings --"
 
-nnoremap <leader>ev :vsp $MYVIMRC<CR>
-nnoremap <leader>eb :vsp ~/.bashrc<CR>
-nnoremap <leader>sv :source $MYVIMRC<CR>
-
-""" VIM Plugin Settings
-
-" Pathogen "
-execute pathogen#infect()
-syntax on
-filetype plugin indent on
+map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR> "open definition in vsplit
+set tags=./tags;/ "search for tags in pwd first, if not go up to root
 
 
 " --- Python Settings --- "
@@ -71,4 +66,13 @@ autocmd FileType python nnoremap <silent> <F9> :!clear; python %<CR>
 " Jedi python completion plugin settings "
 autocmd FileType python setlocal completeopt-=preview
 
+"-- Auto reload vimrc on save --"
+augroup reload_vimrc " {
+    autocmd!
+    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END " }
 
+"-- Remember last position in file when reopening --"
+if has("autocmd")
+    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
