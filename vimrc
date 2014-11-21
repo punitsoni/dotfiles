@@ -25,6 +25,7 @@ set number          " show line numbers
 set showcmd         " show command in bottom bar
 "set cursorline      " highlight 
 set splitright
+set mouse=a         "enable mouse in all modes
 
 filetype indent on  " load filetype-specific indent files
 set wildmenu        " visual autocomplete for command menu
@@ -40,9 +41,12 @@ set ignorecase
 " Custom Key Bindings "
 
 let mapleader=","       " leader is comma
-nmap <leader>i :vsp $MYVIMRC<CR> " Open vimrc in hsplit
-nnoremap <leader><space> :nohlsearch<CR> " Map a key to turn off search highlight
-nmap <leader>n :vsp ~/notes.md<CR> " Open notes file in vsplit
+" Open vimrc in hsplit
+nmap <leader>i :vsp $MYVIMRC<CR>
+" Map a key to turn off search highlight
+nnoremap <leader><space> :nohlsearch<CR>
+" Open notes file in vsplit
+nmap <leader>n :vsp ~/notes.md<CR>
 
 "-- Folding -- (TODO)" 
 "set foldenable          " enable folding
@@ -54,7 +58,8 @@ nmap <leader>n :vsp ~/notes.md<CR> " Open notes file in vsplit
 
 "-- CTAGS settings --"
 
-map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR> "open definition in vsplit
+" open definition in vsplit
+map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 set tags=./tags;/ "search for tags in pwd first, if not go up to root
 
 
