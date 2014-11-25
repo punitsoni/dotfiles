@@ -23,9 +23,14 @@ set smartindent
 
 set number          " show line numbers
 set showcmd         " show command in bottom bar
+set showmode
 "set cursorline      " highlight 
 set splitright
 set mouse=a         "enable mouse in all modes
+"paste toggle settings
+set pastetoggle=<F2>
+set colorcolumn=81  "highlight column 81 for margin
+set listchars=tab:>- "set tab display char
 
 filetype indent on  " load filetype-specific indent files
 set wildmenu        " visual autocomplete for command menu
@@ -61,6 +66,8 @@ nmap <leader>n :vsp ~/notes.md<CR>
 " open definition in vsplit
 map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 set tags=./tags;/ "search for tags in pwd first, if not go up to root
+" autogenerate tags file when saving source files
+"au BufWritePost *.c,*.cpp,*.h silent! !ctags -R & "TODO
 
 "-- YouCompleteMe Settings --"
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
@@ -83,3 +90,5 @@ augroup END " }
 if has("autocmd")
     au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
+
+command! Kernelmode execute "set noexpandtab | set tabstop=8 | set list"
