@@ -8,7 +8,7 @@ filetype plugin indent on
 
 "Colors"
 
-syntax enable " enable syntax highlight
+syntax enable e syntax highlight
 set t_Co=16
 set background=dark
 colorscheme solarized
@@ -19,7 +19,7 @@ set tabstop=4 " number of visual spaces per TAB
 set expandtab " tabs are spaces
 set smartindent
 
-" UI config "
+" -------------------------------- UI Config ----------------------------------"
 
 set number          " show line numbers
 set showcmd         " show command in bottom bar
@@ -37,7 +37,7 @@ set wildmenu        " visual autocomplete for command menu
 set lazyredraw      " redraw only when we need to
 set showmatch       " highlight matching [{()}]
 
-" Searching "
+" -------------------------------- Searching ----------------------------------"
 
 set incsearch           " search as characters are entered
 set hlsearch            " highlight matches
@@ -64,7 +64,7 @@ nmap <leader>n :vsp ~/notes.md<CR>
 "nnoremap <space> za
 "set foldmethod=syntax   " fold based on syntax (other options: indent marker manual expr diff)
 
-"-- CTAGS settings --"
+"---------------------------- Ctags settings ----------------------------------"
 
 " open definition in vsplit
 map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
@@ -75,7 +75,22 @@ set tags=./tags;/ "search for tags in pwd first, if not go up to root
 "-- YouCompleteMe Settings --"
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 
-" --- Python Settings --- "
+
+"---------------------------- Cscope settings ---------------------------------"
+if has("cscope")
+    set csprg=/usr/bin/cscope
+    set csto=0
+    set cst
+    set nocsverb
+    " add any database in current directory
+        if filereadable("cscope.out")
+                 cs add cscope.out
+                         " else add database pointed to by environment
+                             elseif $CSCOPE_DB != ""
+        cs add $CSCOPE_DB
+    endif
+endif
+"---------------------------- Python settings ---------------------------------"
 
 "execute current buffer using python by pressing F9
 autocmd FileType python nnoremap <silent> <F9> :!clear; python %<CR>
@@ -94,4 +109,4 @@ if has("autocmd")
     au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
-command! Kernelmode execute "set noexpandtab | set tabstop=8 | set list"
+command! Kernelmode execute "set noexpandtab | set tabstop=8"
