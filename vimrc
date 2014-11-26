@@ -42,6 +42,9 @@ set showmatch       " highlight matching [{()}]
 set incsearch           " search as characters are entered
 set hlsearch            " highlight matches
 set ignorecase
+" show search highlight only in insert mode
+autocmd InsertEnter * :setlocal nohlsearch
+autocmd InsertLeave * :setlocal hlsearch
 
 " Custom Key Bindings "
 
