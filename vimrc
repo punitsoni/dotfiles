@@ -8,7 +8,7 @@ filetype plugin indent on
 
 "Colors"
 
-syntax enable e syntax highlight
+syntax enable
 set t_Co=16
 set background=dark
 colorscheme solarized
@@ -36,6 +36,9 @@ filetype indent on  " load filetype-specific indent files
 set wildmenu        " visual autocomplete for command menu
 set lazyredraw      " redraw only when we need to
 set showmatch       " highlight matching [{()}]
+set visualbell t_vb=
+set textwidth=80
+
 
 " -------------------------------- Searching ----------------------------------"
 
@@ -72,7 +75,7 @@ set tags=./tags;/ "search for tags in pwd first, if not go up to root
 " autogenerate tags file when saving source files
 "au BufWritePost *.c,*.cpp,*.h silent! !ctags -R & "TODO
 
-"-- YouCompleteMe Settings --"
+"-------------------------- YouCompleteMe settings ----------------------------"
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 
 
@@ -90,6 +93,8 @@ if has("cscope")
         cs add $CSCOPE_DB
     endif
 endif
+
+nnoremap <leader>c :!cscope -Rb<CR><CR>
 "---------------------------- Python settings ---------------------------------"
 
 "execute current buffer using python by pressing F9
