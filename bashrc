@@ -30,6 +30,10 @@ alias emacs="emacs -nw"
 
 alias glsh="~/gl.sh"
 
+
+# force 256 color terminal in tmux to work with solarized theme
+alias tmux="TERM=xterm-256color /usr/bin/tmux"
+
 #setup ssh agent on startup
 
 SSH_ENV="$HOME/.ssh/environment"
