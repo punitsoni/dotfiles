@@ -1,8 +1,16 @@
+# --- Generic BASH settings ---
+
+# bash prompt
 export PS1='\u@\h:[\[\033[33m\]\W\[\033[00m\]]$ '
 
-export PATH=$PATH:/usr/sbin:/sbin
-
-export LANG=en_US.utf8
+# Detect OS (Linux, Mac OS X)
+platform='unknown'
+unamestr=`uname`
+if [[ "$unamestr" == 'Linux' ]]; then
+   platform='linux'
+elif [[ "$unamestr" == 'Darwin' ]]; then
+   platform='mac'
+fi
 
 # Aliases
 alias ls='ls --color'
@@ -59,7 +67,21 @@ else
     start_agent;
 fi
 
+# TODO: move to local
 export PATH=$PATH:/local/mnt/workspace/punits/dropbox/scripts:/local/mnt/workspace/punits/bi
 
 # setup dircolors for solarized theme
 eval `dircolors ~/.dircolors`
+
+## Mac specific settings ##
+if [[ $platform == 'mac' ]]; then
+   alias ls='ls -G'
+   alias la='ls -al'
+fi
+
+# Import local settings from .bashrc_local file
+# this file will be specific to the machine you are using. It will not be synced
+# in dotfiles repo
+if [ -f ~/.bashrc_local ]; then
+    source ~/.bashrc_local
+fi
