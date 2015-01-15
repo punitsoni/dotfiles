@@ -68,7 +68,10 @@ else
 fi
 
 # TODO: move to local
-export PATH=$PATH:/local/mnt/workspace/punits/dropbox/scripts:/local/mnt/workspace/punits/bi
+export \
+PATH=$PATH:/local/mnt/workspace/punits/dropbox/scripts:\
+/local/mnt/workspace/punits/bi:\
+~/bin
 
 # setup dircolors for solarized theme
 eval `dircolors ~/.dircolors`
