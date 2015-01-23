@@ -38,6 +38,9 @@ alias emacs="emacs -nw"
 
 alias glsh="~/gl.sh"
 
+alias klog="echo \"waiting for device\" && adb wait-for-device root \
+        && adb wait-for-device shell cat /proc/kmsg | tee k.log"
+
 
 # force 256 color terminal in tmux to work with solarized theme
 alias tmux="TERM=xterm-256color /usr/bin/tmux"
@@ -71,7 +74,7 @@ fi
 export \
 PATH=$PATH:/local/mnt/workspace/punits/dropbox/scripts:\
 /local/mnt/workspace/punits/bi:\
-~/bin
+~/bin:~/scripts
 
 # setup dircolors for solarized theme
 eval `dircolors ~/.dircolors`
