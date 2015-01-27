@@ -7,11 +7,9 @@ startup settings for vim, bash, tmux etc.
 Note: Please take a backup of your current rc files
 All settings will be overwritten by this.
 
+From the directory where `dotfiles` repo is located, run this.
 ```
-rm ~/.vimrc
-ln -s vimrc ~/.vimrc
-ln -s vim ~/.vim
-ln -s bashrc ~/.bashrc
+./setup.sh
 ```
 
 ### bashrc settings

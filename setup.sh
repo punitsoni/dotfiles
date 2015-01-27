@@ -1,0 +1,29 @@
+#!/bin/bash
+#
+# setup script for installing the config files for various programs
+#
+read -p "This will overwrite your existing rc files, continue? (y/n) " -n 1 -r
+echo -e "\n"
+
+dotfiles_dir=$(pwd)
+
+if [[ !  $REPLY =~ ^[Yy]$ ]]
+then
+	echo "Aborted by user."
+	exit 0
+fi
+
+# TODO: take backup of existing settings
+
+set -x # start echoing commands
+ln -sf $dotfiles_dir/bashrc ~/.bashrc
+ln -sf $dotfiles_dir/vimrc ~/.vimrc
+ln -sf $dotfiles_dir/vim ~/.vim
+ln -sf $dotfiles_dir/tmux.conf ~/.tmux.conf
+ln -sf $dotfiles_dir/solarized-theme/dircolors-solarized/dircolors.ansi-dark \
+    ~/.dircolors
+set +x # stop echoing commands
+
+echo -e "Run following command to reload bashrc.\n"
+echo -e "\tsource ~/.bashrc\n"
+echo "DONE."
