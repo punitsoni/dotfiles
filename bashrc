@@ -74,7 +74,7 @@ fi
 export \
 PATH=$PATH:/local/mnt/workspace/punits/dropbox/scripts:\
 /local/mnt/workspace/punits/bi:\
-~/bin:~/scripts
+~/bin:~/.scripts
 
 # setup dircolors for solarized theme
 eval `dircolors ~/.dircolors`
