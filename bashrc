@@ -45,6 +45,9 @@ alias klog="echo \"waiting for device\" && adb wait-for-device root \
 # force 256 color terminal in tmux to work with solarized theme
 alias tmux="TERM=xterm-256color /usr/bin/tmux"
 
+# allow colored output in less
+alias less="less -r"
+
 #setup ssh agent on startup
 
 SSH_ENV="$HOME/.ssh/environment"
