@@ -41,6 +41,7 @@ alias glsh="~/gl.sh"
 alias klog="echo \"waiting for device\" && adb wait-for-device root \
         && adb wait-for-device shell cat /proc/kmsg | tee k.log"
 
+alias sshpi="ssh pi@punits-rpi.local"
 
 # force 256 color terminal in tmux to work with solarized theme
 alias tmux="TERM=xterm-256color /usr/bin/tmux"
@@ -79,13 +80,18 @@ PATH=$PATH:/local/mnt/workspace/punits/dropbox/scripts:\
 /local/mnt/workspace/punits/bi:\
 ~/bin:~/.scripts
 
-# setup dircolors for solarized theme
-eval `dircolors ~/.dircolors`
+## Linux specific settings ##
+if [[ $platform == 'linux' ]]; then
+    # setup dircolors
+    eval `dircolors ~/.dircolors`
+fi
 
 ## Mac specific settings ##
 if [[ $platform == 'mac' ]]; then
    alias ls='ls -G'
    alias la='ls -al'
+   # force 256 color terminal in tmux to work with solarized theme
+   alias tmux="TERM=xterm-256color /opt/local/bin/tmux"
 fi
 
 # Import local settings from .bashrc_local file
