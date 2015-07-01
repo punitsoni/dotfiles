@@ -24,6 +24,9 @@ alias kernel="cd \$ANDROID_BUILD_TOP/kernel/"
 alias out="cd \$ANDROID_BUILD_TOP/out/target/product/\$TARGET_PRODUCT/"
 alias drop="cd \$ANDROID_BUILD_TOP/../dropbox"
 
+# go to root directory of a git project
+alias groot="cd \$(git rev-parse --show-toplevel)"
+
 alias gs="git status"
 alias gc="git commit"
 alias gl="git log --decorate"
@@ -32,7 +35,10 @@ alias gsh="git show"
 alias gshn="git show --name-only"
 alias ga="git add"
 alias gb="git branch"
+alias gr="git remote"
 alias remove-branches="git branch | xargs git branch -D"
+
+alias bb="bitbake"
 
 alias emacs="emacs -nw"
 

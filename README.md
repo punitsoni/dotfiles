@@ -11,6 +11,10 @@ From the directory where `dotfiles` repo is located, run this.
 ```
 ./setup.sh
 ```
+## setup solarized theme for gnome-terminal
+```
+./solarized-theme/gnome-terminal-colors-solarized/install.sh
+```
 
 ### bashrc settings
 - use `~/.bashrc_local` file to put settings specific to the machine. This file will be sourced from the generic bashrc script and can override the generic settings.
