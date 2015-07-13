@@ -40,6 +40,7 @@ ln -sf $dotfiles_dir/tmux.conf ~/.tmux.conf
 ln -sf $dotfiles_dir/solarized-theme/dircolors-solarized/dircolors.ansi-dark \
     ~/.dircolors
 ln -sf $dotfiles_dir/scripts ~/.scripts
+ln -sf $dotfiles_dir/notes.md ~/.notes.md
 set +x # stop echoing commands
 
 echo -e "Run following command to reload bashrc.\n"

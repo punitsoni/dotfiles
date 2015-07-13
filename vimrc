@@ -58,7 +58,7 @@ nmap <leader>i :vsp $MYVIMRC<CR>
 " Map a key to turn off search highlight
 nnoremap <leader><space> :nohlsearch<CR>
 " Open notes file in vsplit
-nmap <leader>n :vsp ~/notes.md<CR>
+nmap <leader>n :vsp ~/.notes.md<CR>
 
 "-- Folding -- (TODO)" 
 "set foldenable          " enable folding

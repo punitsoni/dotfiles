@@ -56,6 +56,9 @@ alias tmux="TERM=xterm-256color /usr/bin/tmux"
 alias less="less -r"
 
 #setup ssh agent on startup
+if [ ! -e "$HOME/.ssh/environment" ]; then
+    touch $HOME/.ssh/environment
+fi
 
 SSH_ENV="$HOME/.ssh/environment"
 
