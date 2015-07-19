@@ -23,7 +23,7 @@ alias mmc="cd \$ANDROID_BUILD_TOP/vendor/qcom/proprietary/mm-camera"
 alias kernel="cd \$ANDROID_BUILD_TOP/kernel/"
 alias out="cd \$ANDROID_BUILD_TOP/out/target/product/\$TARGET_PRODUCT/"
 alias drop="cd \$ANDROID_BUILD_TOP/../dropbox"
-
+alias v="vim"
 # go to root directory of a git project
 alias groot="cd \$(git rev-parse --show-toplevel)"
 
@@ -82,12 +82,6 @@ if [ -f "${SSH_ENV}" ]; then
 else
     start_agent;
 fi
-
-# TODO: move to local
-export \
-PATH=$PATH:/local/mnt/workspace/punits/dropbox/scripts:\
-/local/mnt/workspace/punits/bi:\
-~/bin:~/.scripts
 
 ## Linux specific settings ##
 if [[ $platform == 'linux' ]]; then

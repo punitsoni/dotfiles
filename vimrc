@@ -1,20 +1,52 @@
-" ====== Vim Basic Settings ====="
+" ----------------- vundle plugin manager settings -------------------
+set nocompatible
+filetype off
 
-set nocompatible " Make incompatible with VI
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim/
+call vundle#begin()
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+" Add other plugings here by github repos
+Plugin 'scrooloose/nerdtree'
+Plugin 'bling/vim-airline'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'kien/ctrlp.vim'
+Plugin 'taglist.vim'
+
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+
+filetype plugin indent on    " required
+
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
 
 " Pathogen Initialization "
-call pathogen#infect()
-filetype plugin indent on
-
-"Colors"
-
+" call pathogen#infect()
+" filetype plugin indent on
 syntax enable
+
+" ---------------- nerdtree settings ------------------
+"autocmd vimenter * NERDTree
+" start nerdtree automatically when vim starts
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+map <C-n> :NERDTreeToggle<CR>
+" exit vim if nerdtree is only buffer
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+" ------ Colorscheme settings ------------
 set t_Co=16
 set background=dark
 colorscheme solarized
 
 " Spaces and Tabs "
-
 set tabstop=4       " number of visual spaces per TAB
 set shiftwidth=4
 set expandtab       " tabs are spaces
@@ -25,15 +57,12 @@ set smartindent
 set number          " show line numbers
 set showcmd         " show command in bottom bar
 set showmode
-"set cursorline      " highlight 
+set cursorline      " highlight 
 set splitright
-set mouse=a         "enable mouse in all modes
-"paste toggle settings
-set pastetoggle=<F2>
+set mouse=a          "enable mouse in all modes
+set pastetoggle=<F2> "paste toggle key
 set colorcolumn=81  "highlight column 81 for margin
 set listchars=tab:>- "set tab display char
-
-filetype indent on  " load filetype-specific indent files
 set wildmenu        " visual autocomplete for command menu
 set lazyredraw      " redraw only when we need to
 set showmatch       " highlight matching [{()}]
@@ -54,7 +83,9 @@ autocmd InsertLeave * :setlocal hlsearch
 
 let mapleader=","       " leader is comma
 " Open vimrc in hsplit
-nmap <leader>i :vsp $MYVIMRC<CR>
+"nmap <leader>i :vsp $MYVIMRC<CR>
+map <C-i> :tabnew $MYVIMRC<CR>
+map <C-t> :tabnew<CR>
 " Map a key to turn off search highlight
 nnoremap <leader><space> :nohlsearch<CR>
 " Open notes file in vsplit
@@ -66,7 +97,7 @@ nmap <leader>n :vsp ~/.notes.md<CR>
 "set foldnestmax=10      " 10 nested fold max
 " space open/closes folds
 "nnoremap <space> za
-"set foldmethod=syntax   " fold based on syntax (other options: indent marker manual expr diff)
+"set foldmethod=syntax   " other options: indent marker manual expr diff
 
 "---------------------------- Ctags settings ----------------------------------"
 
@@ -75,6 +106,10 @@ map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 set tags=./tags;/ "search for tags in pwd first, if not go up to root
 " autogenerate tags file when saving source files
 "au BufWritePost *.c,*.cpp,*.h silent! !ctags -R & "TODO
+
+" Toggle taglist window
+map <C-l> :TlistToggle<CR>
+let Tlist_Use_Right_Window = 1
 
 "-------------------------- YouCompleteMe settings ----------------------------"
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
