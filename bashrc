@@ -1,105 +1,20 @@
-# --- Generic BASH settings ---
+# bashrc from https://github.com/punitsoni/dotfiles
 
-# bash prompt
-export PS1='\u@\h:[\[\033[33m\]\W\[\033[00m\]]$ '
+# Your original bash configuration is available in ~/.bashrc_default
+# If required, you can switch back to that using following command
+#	rm -f ~/.bashrc && mv ~/.bashrc_default ~/.bashrc
 
-# Detect OS (Linux, Mac OS X)
-platform='unknown'
-unamestr=`uname`
-if [[ "$unamestr" == 'Linux' ]]; then
-   platform='linux'
-elif [[ "$unamestr" == 'Darwin' ]]; then
-   platform='mac'
+# import original default bashrc if available
+if [ -e ~/.bashrc_default ]; then
+  source ~/.bashrc_default
 fi
 
-# Aliases
-alias ls='ls --color'
-alias la='ls -la --color'
-alias ll='ls -l --color'
-alias grep='grep --color -n -E'
-alias hal="cd \$ANDROID_BUILD_TOP/hardware/qcom/camera"
-alias app="cd \$ANDROID_BUILD_TOP/packages/apps/Camera"
-alias mmc="cd \$ANDROID_BUILD_TOP/vendor/qcom/proprietary/mm-camera"
-alias kernel="cd \$ANDROID_BUILD_TOP/kernel/"
-alias out="cd \$ANDROID_BUILD_TOP/out/target/product/\$TARGET_PRODUCT/"
-alias drop="cd \$ANDROID_BUILD_TOP/../dropbox"
-alias v="vim"
-# go to root directory of a git project
-alias groot="cd \$(git rev-parse --show-toplevel)"
+DOTFILES_DIR=$HOME/.dotfiles
 
-alias gs="git status"
-alias gc="git commit"
-alias gl="git log --decorate"
-alias gd="git diff"
-alias gsh="git show"
-alias gshn="git show --name-only"
-alias ga="git add"
-alias gb="git branch"
-alias gr="git remote"
-alias remove-branches="git branch | xargs git branch -D"
+# import main bashrc
+source $DOTFILES_DIR/bashrc_main.sh
 
-alias bb="bitbake"
+# NOTE: Add any local machine specific configuration below
 
-alias emacs="emacs -nw"
-
-alias glsh="~/gl.sh"
-
-alias klog="echo \"waiting for device\" && adb wait-for-device root \
-        && adb wait-for-device shell cat /proc/kmsg | tee k.log"
-
-alias sshpi="ssh pi@punits-rpi.local"
-
-# force 256 color terminal in tmux to work with solarized theme
-alias tmux="TERM=xterm-256color /usr/bin/tmux"
-
-# allow colored output in less
-alias less="less -r"
-
-#setup ssh agent on startup
-if [ ! -e "$HOME/.ssh/environment" ]; then
-    touch $HOME/.ssh/environment
-fi
-
-SSH_ENV="$HOME/.ssh/environment"
-
-function start_agent {
-    echo "Initialising new SSH agent..."
-    /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
-    echo succeeded
-    chmod 600 "${SSH_ENV}"
-    . "${SSH_ENV}" > /dev/null
-    /usr/bin/ssh-add;
-}
-
-# Source SSH settings, if applicable
-
-if [ -f "${SSH_ENV}" ]; then
-    . "${SSH_ENV}" > /dev/null
-    #ps ${SSH_AGENT_PID} doesn't work under cywgin
-    ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
-        start_agent;
-    }
-else
-    start_agent;
-fi
-
-## Linux specific settings ##
-if [[ $platform == 'linux' ]]; then
-    # setup dircolors
-    eval `dircolors ~/.dircolors`
-fi
-
-## Mac specific settings ##
-if [[ $platform == 'mac' ]]; then
-   alias ls='ls -G'
-   alias la='ls -al'
-   # force 256 color terminal in tmux to work with solarized theme
-   alias tmux="TERM=xterm-256color /opt/local/bin/tmux"
-fi
-
-# Import local settings from .bashrc_local file
-# this file will be specific to the machine you are using. It will not be synced
-# in dotfiles repo
-if [ -f ~/.bashrc_local ]; then
-    source ~/.bashrc_local
-fi
+# for example add specific path to eclipse in this machine
+# PATH=$PATH:/opt/eclipse/bin

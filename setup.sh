@@ -1,48 +1,69 @@
-#!/bin/bash
+#!/bin/sh
 #
 # setup script for installing the config files for various programs
 # Author: Punit Soni <punitxsmart@gmail.com>
 #
 
-function backup {
-    if [ -e $1 ]; then
-            rm -rf $1.backup
-            mv $1 $1.backup
-    fi
-}
-
-read -p "This will overwrite your existing rc files, continue? (y/n) " -n 1 -r
-echo -e "\n"
-
 dotfiles_dir=$(pwd)
 
-if [[ !  $REPLY =~ ^[Yy]$ ]]
-then
-	echo "Aborted by user."
-	exit 0
-fi
+force_overwrite="no"
 
-# TODO: take backup of existing settings
+show_help() {
+    echo "usage: ./setup.sh [-f]"
+    echo "  -f : force overwrite"
+    exit 0
+}
 
-set -x # start echoing commands
-backup ~/.bashrc
-backup ~/.vimrc
-backup ~/.tmux.conf
-backup ~/.dircolors
-backup ~/.vim
-backup ~/.scripts
+# A POSIX variable. Reset in case getopts has been used previously in the shell.
+OPTIND=1
+while getopts "hf" opt; do
+    case $opt in
+    h|\?) show_help;;
+    f)  force_overwrite="yes";;
+    esac
+done
 
+overwrite_check() {
+    if [ $force_overwrite = "yes" ]; then
+        return 0
+    fi
+    while true; do
+        read -p "overwrite $1 ? (y/n) " yn
+        case $yn in
+            [Yy]) return 0;;
+            [Nn]) return 1;;
+            *)
+        esac
+    done
+}
 
-ln -sf $dotfiles_dir/bashrc ~/.bashrc
-ln -sf $dotfiles_dir/vimrc ~/.vimrc
-ln -sf $dotfiles_dir/vim ~/.vim
-ln -sf $dotfiles_dir/tmux.conf ~/.tmux.conf
-ln -sf $dotfiles_dir/solarized-theme/dircolors-solarized/dircolors.ansi-dark \
-    ~/.dircolors
-ln -sf $dotfiles_dir/scripts ~/.scripts
-ln -sf $dotfiles_dir/notes.txt ~/.notes.txt
-set +x # stop echoing commands
+echo "configuring bash..."
+overwrite_check "~/.bashrc and ~/.dotfiles" && {
+    # move the original bashrc if its not a symlink
+    if [ ! -h $HOME/.bashrc ]; then
+        mv $HOME/.bashrc $HOME/.bashrc_default
+    fi
+    rm -rf $HOME/.dotfiles
+    rsync -a $dotfiles_dir/ $HOME/.dotfiles
+    ln -sf $HOME/.dotfiles/bashrc $HOME/.bashrc
+}
 
-echo -e "Run following command to reload bashrc.\n"
-echo -e "\tsource ~/.bashrc\n"
+echo "configuring vim..."
+overwrite_check "$HOME/.vimrc" && {
+    ln -sf $HOME/.dotfiles/vimrc $HOME/.vimrc;
+    ln -sf $HOME/.dotfiles/vim $HOME/.vim;
+}
+
+echo "configuring tmux..."
+overwrite_check "$HOME/tmux.conf" && {
+    ln -sf $HOME/.dotfiles/tmux.conf $HOME/.tmux.conf
+}
+#cp -r $dotfiles_dir $HOME/.dotfiles
+#ln -sf $dotfiles_dir/solarized-theme/dircolors-solarized/dircolors.ansi-dark \
+#    ~/.dircolors
+#ln -sf $dotfiles_dir/scripts ~/.scripts
+#ln -sf $dotfiles_dir/notes.txt ~/.notes.txt
 echo "DONE."
+
+echo "Run following command to reload bash configuration."
+echo  "\n\tsource ~/.bashrc\n"
