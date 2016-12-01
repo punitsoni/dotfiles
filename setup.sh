@@ -1,12 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 #
 # setup script for installing the config files for various programs
 # Author: Punit Soni <punitxsmart@gmail.com>
 #
 
-dotfiles_dir=$(pwd)
 
-force_overwrite="no"
+# find the path to directory containing this script
+dotfiles_dir=$( cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P )
 
 show_help() {
     echo "usage: ./setup.sh [-f]"
@@ -14,6 +14,7 @@ show_help() {
     exit 0
 }
 
+force_overwrite="no"
 # A POSIX variable. Reset in case getopts has been used previously in the shell.
 OPTIND=1
 while getopts "hf" opt; do
