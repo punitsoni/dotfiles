@@ -12,7 +12,7 @@ LAMBDA=$'\u03bb'
 # get current branch if in a git repo
 git_branch() {
     color=${CYAN}
-    if ! git diff-index --quiet HEAD --; then
+    if ! git diff-index --quiet HEAD -- > /dev/null 2>&1; then
         color=${RED}
     fi
     printf $color
