@@ -13,7 +13,7 @@ git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
 # setup the bash prompt
-export PS1="\u${RED} @ ${NOCOLOR}\h ${GREEN}\W ${RED}\$(git_branch)\n${YELLOW}${LAMBDA} ${NOCOLOR}"
+export PS1="\u${RED} @${NOCOLOR}\h ${GREEN}\W ${RED}\$(git_branch)\n${YELLOW}${LAMBDA} ${NOCOLOR}"
 
 # Aliases
 alias ls='ls --color'

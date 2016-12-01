@@ -49,7 +49,7 @@ overwrite_check "~/.bashrc and ~/.dotfiles" && {
     ln -sf $HOME/.dotfiles/bashrc $HOME/.bashrc
 }
 
-:'
+: '
 # do not setup vim until portability issues are fixed
 echo "configuring vim..."
 overwrite_check "~/.vimrc and ~/.vim" && {
