@@ -5,15 +5,21 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 MAGENTA='\033[0;35m'
+CYAN='\033[0;36m'
 NOCOLOR='\033[0m'
 # utf-8 lambda character
 LAMBDA=$'\u03bb'
 # get current branch if in a git repo
 git_branch() {
+    color=${CYAN}
+    if ! git diff-index --quiet HEAD --; then
+        color=${RED}
+    fi
+    printf $color
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
 # setup the bash prompt
-export PS1="\u${RED} @${NOCOLOR}\h ${GREEN}\W ${RED}\$(git_branch)\n${YELLOW}${LAMBDA} ${NOCOLOR}"
+export PS1="\u @\h ${GREEN}\W \$(git_branch)\n${YELLOW}${LAMBDA} ${NOCOLOR}"
 
 # Aliases
 alias ls='ls --color'
