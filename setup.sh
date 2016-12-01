@@ -49,11 +49,18 @@ overwrite_check "~/.bashrc and ~/.dotfiles" && {
     ln -sf $HOME/.dotfiles/bashrc $HOME/.bashrc
 }
 
+:'
+# do not setup vim until portability issues are fixed
 echo "configuring vim..."
-overwrite_check "$HOME/.vimrc" && {
+overwrite_check "~/.vimrc and ~/.vim" && {
+    # TODO: move the original vimrc if its not a symlink
+    if [ ! -h $HOME/.vimrc ]; then
+        mv $HOME/.vimrc $HOME/.vimrc_default.vim
+    fi
     ln -sf $HOME/.dotfiles/vimrc $HOME/.vimrc;
     ln -sf $HOME/.dotfiles/vim $HOME/.vim;
 }
+'
 
 echo "configuring tmux..."
 overwrite_check "$HOME/tmux.conf" && {
