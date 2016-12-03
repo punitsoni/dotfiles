@@ -10,8 +10,8 @@ NOCOLOR='\033[0m'
 # utf-8 lambda character
 LAMBDA=$'\u03bb'
 
-#SYM=$LAMBDA
-SYM='$'
+SYM=$LAMBDA
+#SYM='$'
 # get current branch if in a git repo
 git_branch() {
     color=${CYAN}
@@ -22,12 +22,12 @@ git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
 # setup the bash prompt
-export PS1="\u @\h ${GREEN}\W \$(git_branch)\n${YELLOW}${SYM} ${NOCOLOR}"
+export PS1="\u @\h \$(git_branch)\n${GREEN}\W ${YELLOW}${SYM} ${NOCOLOR}"
 
 # Aliases
 alias ls='ls --color'
-alias la='ls -la --color'
-alias ll='ls -l --color'
+alias la='ls -la'
+alias ll='ls -l'
 alias grep='grep --color -n -E'
 
 # go to root directory of a git project
