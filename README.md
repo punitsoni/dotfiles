@@ -1,21 +1,25 @@
 dotfiles
 ========
 
-startup settings for vim, bash, tmux etc.
+startup settings for command-line tools.
+
+Currently supports
+- bash
+- vim
+- tmux
 
 ## Installation
-Note: Please take a backup of your current rc files
-All settings will be overwritten by this.
+Note: To be safe, please take a backup of your current rc files. Your current settings might get overwritten when you install this.
 
-From the directory where `dotfiles` repo is located, run this.
+To install just run,
 ```
 ./setup.sh
 ```
-## setup solarized theme for gnome-terminal
+## Misc Settings
+### setup solarized theme for gnome-terminal
 ```
 ./solarized-theme/gnome-terminal-colors-solarized/install.sh
 ```
-
 ### bashrc settings
 - use `~/.bashrc_local` file to put settings specific to the machine. This file will be sourced from the generic bashrc script and can override the generic settings.
 
