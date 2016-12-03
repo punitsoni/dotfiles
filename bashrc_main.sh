@@ -9,6 +9,9 @@ CYAN='\033[0;36m'
 NOCOLOR='\033[0m'
 # utf-8 lambda character
 LAMBDA=$'\u03bb'
+
+#SYM=$LAMBDA
+SYM='$'
 # get current branch if in a git repo
 git_branch() {
     color=${CYAN}
@@ -19,7 +22,7 @@ git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
 # setup the bash prompt
-export PS1="\u @\h ${GREEN}\W \$(git_branch)\n${YELLOW}${LAMBDA} ${NOCOLOR}"
+export PS1="\u @\h ${GREEN}\W \$(git_branch)\n${YELLOW}${SYM} ${NOCOLOR}"
 
 # Aliases
 alias ls='ls --color'

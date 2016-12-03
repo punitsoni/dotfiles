@@ -14,7 +14,7 @@ DOTFILES_DIR=$HOME/.dotfiles
 # import main bashrc
 source $DOTFILES_DIR/bashrc_main.sh
 
-# NOTE: Add any local machine specific configuration below
-
-# for example add specific path to eclipse in this machine
-# PATH=$PATH:/opt/eclipse/bin
+# add any local bashrc configuration in ~/.bashrc_local
+if [ -e ~/.bashrc_local ]; then
+  source ~/.bashrc_local
+fi

@@ -66,12 +66,8 @@ echo "configuring tmux..."
 overwrite_check "$HOME/tmux.conf" && {
     ln -sf $HOME/.dotfiles/tmux.conf $HOME/.tmux.conf
 }
-#cp -r $dotfiles_dir $HOME/.dotfiles
-#ln -sf $dotfiles_dir/solarized-theme/dircolors-solarized/dircolors.ansi-dark \
-#    ~/.dircolors
-#ln -sf $dotfiles_dir/scripts ~/.scripts
-#ln -sf $dotfiles_dir/notes.txt ~/.notes.txt
+
 echo "DONE."
 
 echo "Run following command to reload bash configuration."
-echo  "\n\tsource ~/.bashrc\n"
+printf  "\n\tsource ~/.bashrc\n\n"
