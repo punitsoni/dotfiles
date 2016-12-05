@@ -44,8 +44,10 @@ overwrite_check "~/.bashrc and ~/.dotfiles" && {
     if [ ! -h $HOME/.bashrc ]; then
         mv $HOME/.bashrc $HOME/.bashrc_default
     fi
-    rm -rf $HOME/.dotfiles
-    rsync -a $dotfiles_dir/ $HOME/.dotfiles
+    if [[ ! $HOME/.dotfiles == $dotfiles_dir ]]; then
+       rm -rf $HOME/.dotfiles
+       rsync -a $dotfiles_dir/ $HOME/.dotfiles
+    fi
     ln -sf $HOME/.dotfiles/bashrc $HOME/.bashrc
 }
 
@@ -61,6 +63,11 @@ overwrite_check "~/.vimrc and ~/.vim" && {
     ln -sf $HOME/.dotfiles/vim $HOME/.vim;
 }
 '
+echo "configuring spacemacs..."
+overwrite_check "$HOME/.spacemacs" && {
+    ln -sf $HOME/.dotfiles/spacemacs $HOME/.spacemacs
+}
+
 
 echo "configuring tmux..."
 overwrite_check "$HOME/tmux.conf" && {
