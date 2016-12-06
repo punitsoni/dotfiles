@@ -14,7 +14,7 @@ DOTFILES_DIR=$HOME/.dotfiles
 # import main bashrc
 source $DOTFILES_DIR/bashrc_main.sh
 
-# add any local bashrc configuration in ~/.bashrc_local
+# NOTE: Add any local machine specific configuration to ~/.bashrc_local
 if [ -e ~/.bashrc_local ]; then
   source ~/.bashrc_local
 fi

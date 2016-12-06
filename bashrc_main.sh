@@ -42,6 +42,7 @@ alias gshn="git show --name-only"
 alias ga="git add"
 alias gb="git branch"
 alias gr="git remote"
+alias gch="git checkout"
 alias remove-branches="git branch | xargs git branch -D"
 alias bb="bitbake"
 
