@@ -7,6 +7,7 @@ Currently supports
 - bash
 - vim
 - tmux
+- spacemacs (Emacs)
 
 ## Installation
 Note: To be safe, please take a backup of your current rc files. Your current settings might get overwritten when you install this.
