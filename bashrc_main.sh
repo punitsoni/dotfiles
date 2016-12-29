@@ -1,12 +1,14 @@
 # --- Generic BASH settings ---
 
 # ANSI colors
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[0;33m'
-MAGENTA='\033[0;35m'
-CYAN='\033[0;36m'
-NOCOLOR='\033[0m'
+RED='\[\033[0;31m\]'
+RED_NE='\033[0;31m'
+GREEN='\[\033[0;32m\]'
+YELLOW='\[\033[0;33m\]'
+MAGENTA='\[\033[0;35m\]'
+CYAN='\[\033[0;36m\]'
+CYAN_NE='\033[0;36m'
+NOCOLOR='\[\033[0m\]'
 # utf-8 lambda character
 LAMBDA=$'\u03bb'
 
@@ -14,9 +16,9 @@ SYM=$LAMBDA
 #SYM='$'
 # get current branch if in a git repo
 git_branch() {
-    color=${CYAN}
+    color=${CYAN_NE}
     if ! git diff-index --quiet HEAD -- > /dev/null 2>&1; then
-        color=${RED}
+        color=${RED_NE}
     fi
     printf $color
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
