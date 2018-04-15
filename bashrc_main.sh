@@ -95,6 +95,6 @@ case $platform in
   "mac") source $DOTFILES_DIR/bashrc_mac.sh;;
   *) true;;
 esac
-echo "---------------------------------------"
-echo "-- Welcome. Your wish is my command. --"
-echo "---------------------------------------"
+#echo "---------------------------------------"
+#echo "-- Welcome. Your wish is my command. --"
+#echo "---------------------------------------"
