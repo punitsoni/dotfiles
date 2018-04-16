@@ -49,7 +49,7 @@ alias remove-branches="git branch | xargs git branch -D"
 alias bb="bitbake"
 
 # force 256 color terminal in tmux to work with solarized theme
-alias tmux="TERM=xterm-256color /usr/bin/tmux"
+# alias tmux="TERM=xterm-256color /usr/bin/tmux"
 
 # allow colored output in less
 alias less="less -r"
