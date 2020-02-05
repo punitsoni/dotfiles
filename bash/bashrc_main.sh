@@ -46,16 +46,18 @@ alias ebrc="$EDITOR $HOME/.bashrc"
 # Source bashrc.
 alias sbrc="source $HOME/.bashrc"
 
-# ----------------------------- Welcome Message ----------------------------- #
+# -------------------------- OS Specific Settings --------------------------- #
 
-# Detect OS.
 platform='Unknown'
 if [[ $(uname) == 'Linux' ]]; then
    platform='Linux'
+   source $CFGS/bash/bashrc_linux.sh
 elif [[ $(uname) == 'Darwin' ]]; then
+   source $CFGS/bash/bashrc_macos.sh
    platform='macOS'
 fi
 
+# ----------------------------- Welcome Message ----------------------------- #
 echo \
 "------------------------------------------------------------------------------"
 echo "Configs Dir: $CFGS"
