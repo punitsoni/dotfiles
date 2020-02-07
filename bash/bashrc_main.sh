@@ -1,3 +1,7 @@
+# --------------------------------- Checks ---------------------------------- #
+# TODO: Check preconditions.
+#  * CFGS is defined.
+
 # --------------------------------- Prompt ---------------------------------- #
 
 source $CFGS/bash/ansicolors.sh
@@ -11,10 +15,15 @@ shopt -s histappend
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
+# enable programmable completion features
+if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+      . /etc/bash_completion
+fi
+
 # ------------------------- Environment Variables --------------------------- #
 
 export PATH=$HOME/bin:$PATH
-export EDITOR=vim
+export EDITOR=nvim
 export HISTSIZE=10000
 
 # -------------------------------- Aliases ---------------------------------- #
@@ -23,6 +32,21 @@ alias ls="ls --color"
 alias la='ls -la'
 alias ll='ls -l'
 alias grep='grep --color -n -E'
+
+alias vi='nvim'
+alias vim='nvim'
+alias vimdiff='nvim -d'
+alias view='nvim -R'
+
+alias tad='tmux attach -d'
+alias ..='cd ..'
+alias xx='exit'
+
+# Common typos
+alias celar=clear
+alias clea=clear
+alias sl=ls
+alias rls=ls
 
 # Common git commands.
 # Go to root directory of a git project.
@@ -38,22 +62,44 @@ alias gb="git branch"
 alias gr="git remote"
 alias gch="git checkout"
 # Delete all branches except the current one.
-alias remove-branches="git branch | xargs git branch -D"
+alias grmb="git branch | xargs git branch -D"
 # allow colored output in less
 alias less="less -r"
 # Edit bashrc.
 alias ebrc="$EDITOR $HOME/.bashrc"
+# Edit bashrc_main
+alias ebrcm="$EDITOR $CFGS/bash/bashrc_main.sh"
 # Source bashrc.
 alias sbrc="source $HOME/.bashrc"
+
+# ------------------------------ Helper Functions ---------------------------- #
+
+# Jupyter QtConsole with configuration
+jqt()
+{
+  nohup jupyter qtconsole --no-confirm-exit --paging vsplit \
+    --JupyterWidget.font_size=12 1>&2 > /dev/null &
+  echo "Jupyter QtConsole started."
+}
+
+# open a file in desktop UI
+xo()
+{
+  xdg-open $1
+}
+
+# Show $PATH variable with each entry in its own line.
+showpath()
+{
+  sed 's/:/\n/g' <<< "$PATH"
+}
 
 # -------------------------- OS Specific Settings --------------------------- #
 
 platform='Unknown'
 if [[ $(uname) == 'Linux' ]]; then
    platform='Linux'
-   source $CFGS/bash/bashrc_linux.sh
 elif [[ $(uname) == 'Darwin' ]]; then
-   source $CFGS/bash/bashrc_macos.sh
    platform='macOS'
 fi
 
@@ -64,3 +110,4 @@ echo "Configs Dir: $CFGS"
 echo "Platform: $platform"
 echo \
 "------------------------------------------------------------------------------"
+
