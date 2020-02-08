@@ -1,6 +1,24 @@
 # --------------------------------- Checks ---------------------------------- #
-# TODO: Check preconditions.
-#  * CFGS is defined.
+
+show_error() {
+  echo "Error: $1"
+  echo "Please setup your bashrc according to:"
+  echo "https://github.com/punitsoni/dotfiles/tree/dev/bash"
+}
+
+if [ -z ${CFGS+x} ]; then
+  show_error "CFGS not set."
+  return
+fi
+
+# ----------------------------- Detect Platform ----------------------------- #
+
+platform='Unknown'
+if [[ $(uname) == 'Linux' ]]; then
+   platform='Linux'
+elif [[ $(uname) == 'Darwin' ]]; then
+   platform='macOS'
+fi
 
 # --------------------------------- Prompt ---------------------------------- #
 
@@ -94,20 +112,14 @@ showpath()
   sed 's/:/\n/g' <<< "$PATH"
 }
 
-# -------------------------- OS Specific Settings --------------------------- #
-
-platform='Unknown'
-if [[ $(uname) == 'Linux' ]]; then
-   platform='Linux'
-elif [[ $(uname) == 'Darwin' ]]; then
-   platform='macOS'
-fi
-
 # ----------------------------- Welcome Message ----------------------------- #
 echo \
 "------------------------------------------------------------------------------"
-echo "Configs Dir: $CFGS"
-echo "Platform: $platform"
+printf "%12s: %s\n" "Configs Dir" "$CFGS"
+printf "%12s: %s\n" "Platform" "$platform"
+printf "%12s: %s\n" "Editor" "$EDITOR"
+# echo "Platform: $platform"
+# echo "Editor: $EDITOR"
 echo \
 "------------------------------------------------------------------------------"
 
