@@ -1,31 +1,39 @@
-# --------------------------------- Checks ---------------------------------- #
+# ---------------------------- Helper Functions ----------------------------- #
 
-show_error() {
+__brc_show_error() {
   echo "Error: $1"
   echo "Please setup your bashrc according to:"
   echo "https://github.com/punitsoni/dotfiles/tree/dev/bash"
 }
 
+# Function to be executed on every prompt.
+__brc_on_prompt() {
+  # Set terminal cursor to line. see https://superuser.com/questions/361335
+  # TODO: check if this works everywhere.
+  printf '\033[6 q'
+}
+
+# Detect current platform.
+__brc_detect_platform() {
+  if [[ $(uname) == 'Linux' ]]; then
+    echo 'Linux'
+  elif [[ $(uname) == 'Darwin' ]]; then
+    echo 'macOS'
+  else
+    echo 'Unknown'
+  fi
+}
+
+# --------------------------------- Checks ---------------------------------- #
+
 if [ -z ${CFGS+x} ]; then
-  show_error "CFGS not set."
+  __brc_show_error "CFGS not set."
   return
 fi
 
-# ----------------------------- Detect Platform ----------------------------- #
+# ------------------------------ General Setup ------------------------------ #
 
-platform='Unknown'
-if [[ $(uname) == 'Linux' ]]; then
-   platform='Linux'
-elif [[ $(uname) == 'Darwin' ]]; then
-   platform='macOS'
-fi
-
-# --------------------------------- Prompt ---------------------------------- #
-
-source $CFGS/bash/ansicolors.sh
-export PS1="\u @\h ${C_GREEN}[\w]\n${C_YELLOW}$ ${C_RESET}"
-
-# ----------------------------- Shell Options ------------------------------- #
+platform=$(__brc_detect_platform)
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -37,6 +45,12 @@ shopt -s checkwinsize
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
       . /etc/bash_completion
 fi
+
+# --------------------------------- Prompt ---------------------------------- #
+
+source $CFGS/bash/ansicolors.sh
+PS1="\u @\h ${C_GREEN}[\w]\n${C_YELLOW}$ ${C_RESET}"
+PROMPT_COMMAND=__brc_on_prompt
 
 # ------------------------- Environment Variables --------------------------- #
 
