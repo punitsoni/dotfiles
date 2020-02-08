@@ -35,6 +35,9 @@ fi
 
 platform=$(__brc_detect_platform)
 
+# load function from lib
+source $CFGS/bash/lib.sh
+
 # append to the history file, don't overwrite it
 shopt -s histappend
 # check the window size after each command and, if necessary,
@@ -106,25 +109,7 @@ alias sbrc="source $HOME/.bashrc"
 
 # ------------------------------ Helper Functions ---------------------------- #
 
-# Jupyter QtConsole with configuration
-jqt()
-{
-  nohup jupyter qtconsole --no-confirm-exit --paging vsplit \
-    --JupyterWidget.font_size=12 1>&2 > /dev/null &
-  echo "Jupyter QtConsole started."
-}
 
-# open a file in desktop UI
-xo()
-{
-  xdg-open $1
-}
-
-# Show $PATH variable with each entry in its own line.
-showpath()
-{
-  sed 's/:/\n/g' <<< "$PATH"
-}
 
 # ----------------------------- Welcome Message ----------------------------- #
 echo \
