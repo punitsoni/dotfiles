@@ -1,5 +1,6 @@
 # ---------------------------- Helper Functions ----------------------------- #
 
+# Show message for an error when loading this bashrc.
 __brc_show_error() {
   echo "Error: $1"
   echo "Please setup your bashrc according to:"
@@ -117,8 +118,7 @@ echo \
 printf "%12s: %s\n" "Configs Dir" "$CFGS"
 printf "%12s: %s\n" "Platform" "$platform"
 printf "%12s: %s\n" "Editor" "$EDITOR"
-# echo "Platform: $platform"
-# echo "Editor: $EDITOR"
 echo \
 "------------------------------------------------------------------------------"
+weather
 

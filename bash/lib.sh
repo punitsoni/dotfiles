@@ -21,3 +21,9 @@ random_chuck_joke() {
   wget "http://api.icndb.com/jokes/random" -qO- | \
     jshon -e value -e joke -u | recode html | cowsay | lolcat
 }
+
+weather() {
+  city=$(curl ifconfig.co/city 2> /dev/null)
+  echo "Weather in $city at $(date)"
+  curl wttr.in/"$city"?Q0Fn
+}
