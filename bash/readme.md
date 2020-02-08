@@ -7,9 +7,7 @@ Create a `.bashrc` file in your home directory with following content.
 # ---------------------------------- Setup ---------------------------------- #
 
 # If not running in interactive mode; just return.
-if [ ! "echo $- | grep -q 'i'" ]; then
-  return
-fi
+[ ! "echo $- | grep -q 'i'" ] && return
 
 # Path to the configs directory.
 export CFGS=$HOME/dotfiles
