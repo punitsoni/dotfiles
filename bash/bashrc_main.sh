@@ -120,5 +120,5 @@ printf "%12s: %s\n" "Platform" "$platform"
 printf "%12s: %s\n" "Editor" "$EDITOR"
 echo \
 "------------------------------------------------------------------------------"
-weather
+maybe_weather
 

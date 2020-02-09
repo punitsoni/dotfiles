@@ -22,8 +22,13 @@ random_chuck_joke() {
     jshon -e value -e joke -u | recode html | cowsay | lolcat
 }
 
-weather() {
-  city=$(curl ifconfig.co/city 2> /dev/null)
-  echo "Weather in $city at $(date)"
-  curl wttr.in/"$city"?Q0Fn
+# Displays weather in your city. If data is not available in certain time, it
+# times out and does not print anything.
+maybe_weather() {
+  timeout="1.0s"
+  city=$(timeout $timeout curl --silent ifconfig.co/city) && \
+  w=$(timeout $timeout curl --silent wttr.in/"$city"?Q0uFnM) && \
+  echo "Weather in $city. $(date +%A\ %x\ %r)" && \
+  echo "$w"
 }
+
