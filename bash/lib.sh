@@ -26,9 +26,10 @@ random_chuck_joke() {
 # times out and does not print anything.
 maybe_weather() {
   timeout="1.0s"
-  city=$(timeout $timeout curl --silent ifconfig.co/city) && \
-  w=$(timeout $timeout curl --silent wttr.in/"$city"?Q0uFnM) && \
-  echo "Weather in $city. $(date +%A\ %x\ %r)" && \
-  echo "$w"
+  # city=$(timeout $timeout curl --silent ifconfig.co/city) && \
+  # w=$(timeout $timeout curl --silent wttr.in/"$city"?Q0uFnM) && \
+  # echo "Weather in $city. $(date +%A\ %x\ %r)" && \
+  # echo "$w"
+  timeout $timeout curl wttr.in?q0uFnM
 }
 
