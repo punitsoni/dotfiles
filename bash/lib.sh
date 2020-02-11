@@ -7,9 +7,13 @@ jqt() {
   echo "Jupyter QtConsole started."
 }
 
+run_detached() {
+  nohup "$@" < /dev/null > /dev/null 2>&1
+}
+
 # open a file in desktop UI
 xo() {
-  xdg-open $1
+  run_detached xdg-open $1
 }
 
 # Show $PATH variable with each entry in its own line.
