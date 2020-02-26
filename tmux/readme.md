@@ -6,6 +6,7 @@
 
 ```
 ln -s $CFGS/tmux/tmux.conf ~/.tmux.conf
+ln -s $CFGS/tmux/tmux.conf.local ~/.tmux.conf.local
 ```
 
 ## Troubleshooting
