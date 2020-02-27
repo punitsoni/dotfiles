@@ -185,7 +185,8 @@ let g:goyo_width = 100
 " set space as the map leader key
 let mapleader="\<space>"
 " space-space = clear search highlight
-nnoremap <leader><space> :let @/ = "deadbeef"<CR>:noh<CR>:echo ""<CR>
+" nnoremap <leader><space> :let @/ = "deadbeef"<CR>:noh<CR>:echo ""<CR>
+nnoremap <leader><space> :noh<CR>:echo ""<CR>
 " edit vimrc file in split
 nnoremap <leader>ev :edit $MYVIMRC<cr>
 " reload vimrc

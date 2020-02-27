@@ -1,5 +1,6 @@
 # i3 config file (v4)
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
+
 # --------------------------------------------------------------------------- #
 # --------------------------- Config Variables ------------------------------ #
 # --------------------------------------------------------------------------- #
@@ -29,20 +30,10 @@ set $mod Mod4
 # is used in the bar {} block below.
 font pango: Fira Code 10, monospace 10
 
-# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
-# screen before suspend. Use loginctl lock-session to lock your screen.
-# exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-
-# NetworkManager is the most popular way to manage wireless networks on Linux,
-# and nm-applet is a desktop environment-independent system tray GUI for it.
-exec --no-startup-id nm-applet
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# Monitor layout.
-exec xrandr --output DP-5 --mode 2560x1440 --pos 0x0 --rotate normal \
-  --output DP-4 --mode 2560x1440 --pos 2560x0 --rotate normal
 
 # Do not automatically focus window on mouse hover.
 focus_follows_mouse no
@@ -64,22 +55,21 @@ for_window [class="Google-chrome"] border none
 
 title_align center
 
-
 # --------------------------------------------------------------------------- #
 # ------------------------------- Workspaces -------------------------------- #
 # --------------------------------------------------------------------------- #
 
 # Define names for default workspaces for which we configure key bindings.
-set $ws1 "1.Google"
-set $ws2 "2.Personal"
-set $ws3 "3.XView"
-set $ws4 "4.Chat"
-set $ws5 "5.    "
-set $ws6 "6.Code"
-set $ws7 "7.Tools"
-set $ws8 "8.Misc"
-set $ws9 "9.    "
-set $ws0 "0.    "
+set $ws1 "1:Google"
+set $ws2 "2:Personal"
+set $ws3 "3:XView"
+set $ws4 "4:Chat"
+set $ws5 "5:    "
+set $ws6 "6:Code"
+set $ws7 "7:Tools"
+set $ws8 "8:Misc"
+set $ws9 "9:    "
+set $ws0 "0:xxxx"
 
 
 # Assign workspaces on specific displays.
@@ -93,9 +83,6 @@ workspace $ws7 output $disp_right
 workspace $ws8 output $disp_right
 workspace $ws9 output $disp_right
 workspace $ws0 output $disp_right
-
-bindsym $mod+e exec $filemanager
-
 
 # --------------------------------------------------------------------------- #
 # ----------------------------- Key Bindings -------------------------------- #
@@ -129,12 +116,14 @@ bindsym $mod+Shift+Right move right
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
+bindsym $mod+e exec $filemanager
+
 # start dmenu (a program launcher)
 # bindsym $mod+d exec dmenu_run
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # split in horizontal orientation
 bindsym $mod+- split h
@@ -206,21 +195,27 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
+# Try to split above line.
+# bindsym $mod+Shift+e exec \
+#   i3-nagbar -t warning -m \
+#     'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' \
+#     -B 'Yes, exit i3' 'i3-msg exit'
+
 # Define resize mode.
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
-        bindsym $mod+h resize shrink width 5 px or 5 ppt
-        bindsym $mod+j resize grow height 5 px or 5 ppt
-        bindsym $mod+k resize shrink height 5 px or 5 ppt
-        bindsym $mod+l resize grow width 5 px or 5 ppt
-        # same bindings, but for the arrow keys
-        bindsym $mod+Left resize shrink width 5 px or 5 ppt
-        bindsym $mod+Down resize grow height 5 px or 5 ppt
-        bindsym $mod+Up resize shrink height 5 px or 5 ppt
-        bindsym $mod+Right resize grow width 5 px or 5 ppt
-        # back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+  # These bindings trigger as soon as you enter the resize mode
+  bindsym $mod+h resize shrink width 5 px or 5 ppt
+  bindsym $mod+j resize grow height 5 px or 5 ppt
+  bindsym $mod+k resize shrink height 5 px or 5 ppt
+  bindsym $mod+l resize grow width 5 px or 5 ppt
+  # same bindings, but for the arrow keys
+  bindsym $mod+Left resize shrink width 5 px or 5 ppt
+  bindsym $mod+Down resize grow height 5 px or 5 ppt
+  bindsym $mod+Up resize shrink height 5 px or 5 ppt
+  bindsym $mod+Right resize grow width 5 px or 5 ppt
+  # back to normal: Enter or Escape
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
 }
 
 # Enter resize mode.
@@ -237,11 +232,12 @@ bindsym $mod+n exec "rofi -modi 'window,run,drun' -show window"
 # --------------------------------------------------------------------------- #
 # ------------------------------- Status Bar -------------------------------- #
 # --------------------------------------------------------------------------- #
-bar {
-  status_command i3blocks
-  mode dock
-  workspace_buttons yes
-}
+
+# bar {
+#   status_command i3blocks
+#   mode dock
+#   workspace_buttons yes
+# }
 
 # --------------------------------------------------------------------------- #
 # ---------------------------------- Gaps ----------------------------------- #
@@ -249,6 +245,7 @@ bar {
 
 # Set a gap of 10px everywhere.
 set $gap 10
+
 gaps inner $gap
 gaps outer 0
 gaps horizontal $gap
@@ -262,13 +259,31 @@ gaps left 0
 # ------------------------------- External ---------------------------------- #
 # --------------------------------------------------------------------------- #
 
-# TODO: start compton
+# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
+# screen before suspend. Use loginctl lock-session to lock your screen.
+# exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
-# Set key repeat rate. delay=200ms rate=25Hz.
-exec_always xset r rate 250 30
+# NetworkManager is the most popular way to manage wireless networks on Linux,
+# and nm-applet is a desktop environment-independent system tray GUI for it.
+exec --no-startup-id nm-applet
 
-# Start compton
-exec compton &
+# Set key repeat rate. delay (ms) rate (Hz).
+exec --no-startup-id xset r rate 250 30
 
-# TODO set wallpaper with feh
+# Set monitor layout.
+exec --no-startup-id xrandr \
+  --output $disp_left --mode 2560x1440 --pos 0x0 --rotate normal \
+  --output $disp_right --mode 2560x1440 --pos 2560x0 --rotate normal
 
+exec --no-startup-id xrandr --output $disp_left --primary
+
+# Start compton.
+exec --no-startup-id compton --paint-on-overlay &
+
+# Set wallpaper with feh.
+exec_always --no-startup-id feh --randomize --bg-fill ~/Pictures/wallpapers/*
+
+# Start left and right polybars. Wait for existing polybars to be killed.
+exec_always --no-startup-id \
+  "(killall -q polybar; while (pgrep -x polybar 2>&1 > /dev/null); do usleep 100000; done); \
+  (MONITOR=$disp_left polybar main &) ; (MONITOR=$disp_right polybar main &)"
