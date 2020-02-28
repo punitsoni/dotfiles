@@ -287,3 +287,4 @@ exec_always --no-startup-id feh --randomize --bg-fill ~/Pictures/wallpapers/*
 exec_always --no-startup-id \
   "(killall -q polybar; while (pgrep -x polybar 2>&1 > /dev/null); do usleep 100000; done); \
   (MONITOR=$disp_left polybar main &) ; (MONITOR=$disp_right polybar main &)"
+
