@@ -14,7 +14,7 @@
 "
 " -- Plugin Management #plugins ---------------------------------------------{{{
 " ---------------------------------------------------------------------------- "
-" Path to the plugin location
+" Path to the plugin location. stdpath("data") points to ~/.local/share/nvim
 let g:plugdir = stdpath("data") . "/plugged"
 
 " Begin listing the plugins to load.
@@ -256,3 +256,14 @@ nnoremap <leader>= magg=G`a:echo "File re-indented."<CR>
 " -- Experimental stuff #experiments ----------------------------------------{{{
 " ---------------------------------------------------------------------------- "
 " Put experimental settings here.
+
+lua << EOF
+-- Reload a lua module --
+function Reload(mod)
+  print(string.format('Reloading %s', mod))
+  package.loaded[mod] = nil
+  require(mod)
+end
+EOF
+
+let g:fzf_layout = { 'window': 'lua require("test").NavigationFloatingWin()' }
