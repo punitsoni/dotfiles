@@ -74,9 +74,10 @@ alias vim='nvim'
 alias vimdiff='nvim -d'
 alias view='nvim -R'
 
-alias tad='tmux attach -d'
+# alias tad='tmux attach -d'
 alias ..='cd ..'
 alias xx='exit'
+alias t=type
 
 # Common typos
 alias celar=clear
@@ -107,6 +108,16 @@ alias ebrc="$EDITOR $HOME/.bashrc"
 alias ebrcm="$EDITOR $CFGS/bash/bashrc_main.sh"
 # Source bashrc.
 alias sbrc="source $HOME/.bashrc"
+
+# Attach to tmux session. Create new session if it does not exist.
+# If no argument provided. It attaches to session 0.
+tm() {
+  if [ -z $1 ]; then
+    tmux new-session -A -s 0
+  else
+    tmux new-session -A -s $1
+  fi
+}
 
 # ----------------------------- Welcome Message ----------------------------- #
 

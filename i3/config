@@ -49,6 +49,7 @@ for_window [window_role="task_dialog"] floating enable
 
 # Chrome should not have border.
 for_window [class="Google-chrome"] border none
+for_window [class="Gnome-terminal"] border pixel
 
 # Disable floating for Cider.
 # for_window [class="crx_pjmfmdnelbfpgbngjhagkjaemgagfefb"] floating disable
@@ -283,8 +284,19 @@ exec --no-startup-id compton --paint-on-overlay &
 # Set wallpaper with feh.
 exec_always --no-startup-id feh --randomize --bg-fill ~/Pictures/wallpapers/*
 
-# Start left and right polybars. Wait for existing polybars to be killed.
+# Start left and right polybars. Wait for existing polybars to be killed first.
 exec_always --no-startup-id \
   "(killall -q polybar; while (pgrep -x polybar 2>&1 > /dev/null); do usleep 100000; done); \
   (MONITOR=$disp_left polybar main &) ; (MONITOR=$disp_right polybar main &)"
+
+# Use the Menu key as Mod
+# xmodmap -e 'keycode 135 = Super_R' sets physical Menu key (should have key
+# code 135; you can check this with xev) to send the key symbol Super_R,
+# the right Windows key. You can also use Super_L for a second left Windows
+# key, both should be recognized as modifier Mod4 by i3. `
+# xset -r 135 disables autorepeat for the Menu (now right Windows) key,
+# as is already the case for the usual modifier keys.
+exec --no-startup-id xmodmap -e 'keycode 135 = Super_R' && xset -r 135
+
+
 
