@@ -113,9 +113,9 @@ alias sbrc="source $HOME/.bashrc"
 # If no argument provided. It attaches to session 0.
 tm() {
   if [ -z $1 ]; then
-    tmux new-session -A -s 0
+    ${TMUX:-tmux} new-session -A -s 0
   else
-    tmux new-session -A -s $1
+    ${TMUX:-tmux} new-session -A -s $1
   fi
 }
 

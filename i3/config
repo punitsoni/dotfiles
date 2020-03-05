@@ -30,10 +30,8 @@ set $mod Mod4
 # is used in the bar {} block below.
 font pango: Fira Code 10, monospace 10
 
-
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
-
 
 # Do not automatically focus window on mouse hover.
 focus_follows_mouse no
