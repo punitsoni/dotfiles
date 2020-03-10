@@ -98,6 +98,7 @@ alias ga="git add"
 alias gb="git branch"
 alias gr="git remote"
 alias gch="git checkout"
+alias gt="git tag"
 # Delete all branches except the current one.
 alias grmb="git branch | xargs git branch -D"
 
