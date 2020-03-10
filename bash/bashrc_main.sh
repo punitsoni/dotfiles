@@ -100,6 +100,8 @@ alias gr="git remote"
 alias gch="git checkout"
 # Delete all branches except the current one.
 alias grmb="git branch | xargs git branch -D"
+
+
 # allow colored output in less
 alias less="less -r"
 # Edit bashrc.
@@ -113,9 +115,9 @@ alias sbrc="source $HOME/.bashrc"
 # If no argument provided. It attaches to session 0.
 tm() {
   if [ -z $1 ]; then
-    ${TMUX:-tmux} new-session -A -s 0
+    ${TMUX_BIN:-tmux} new-session -A -s 0
   else
-    ${TMUX:-tmux} new-session -A -s $1
+    ${TMUX_BIN:-tmux} new-session -A -s $1
   fi
 }
 

@@ -99,6 +99,8 @@ set wildmode=longest:full,full
 " Ignore these files / dirs when searchig/globbing
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pdf,*.msi,*.exe,*.a,*.o,*.bin,*.out,*.deb
 set wildignore+=*/__pycache__/*
+" Jump to the last position when reopening a file
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 " Clear search-highlight when reloading vimrc.
 noh
 "}}}
