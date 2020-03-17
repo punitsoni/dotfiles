@@ -21,7 +21,7 @@ margin-top = 0
 margin-bottom = 0
 
 [bar/main]
-monitor = ${env:MONITOR:XXX}
+monitor = ${env:MONITOR:}
 width = 100%
 height = 27
 radius = 0.0

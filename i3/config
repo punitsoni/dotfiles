@@ -185,8 +185,14 @@ bindsym $mod+Shift+0 move container to workspace number $ws0
 # Lock screen
 bindsym $mod+Ctrl+l exec "sh $HOME/dotfiles/i3/screenlock.sh"
 
+# Move current window to scratchpad
+bindsym $mod+Shift+c move scratchpad
+# Bring scratchpad window to front one by one.
+bindsym $mod+c scratchpad show
+
+
 # reload the configuration file
-bindsym $mod+Shift+c reload
+# bindsym $mod+Shift+c reload
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
