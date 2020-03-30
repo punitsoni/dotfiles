@@ -1,0 +1,42 @@
+#!/bin/sh
+
+# Global settings.
+# layout bsp or float (default: bsp)
+yabai -m config layout bsp
+
+yabai -m config mouse_follows_focus          off
+yabai -m config focus_follows_mouse          on
+
+# Status bar settings
+yabai -m config status_bar                   on
+yabai -m config status_bar_text_font         "Google Sans Display:Regular:14"
+yabai -m config status_bar_icon_font         "Google Sans Display:Regular:16"
+yabai -m config status_bar_background_color  0xff202020
+yabai -m config status_bar_foreground_color  0xffa8a8a8
+yabai -m config status_bar_space_icon_strip  1 2 3 4 5 6 7 8 9 0
+yabai -m config status_bar_power_icon_strip  v ^
+yabai -m config status_bar_space_icon        S
+yabai -m config status_bar_clock_icon        c
+
+# Window borders and shadows
+yabai -m config window_border                on
+yabai -m config window_border_width          1
+yabai -m config window_border_radius         -1.0
+yabai -m config active_window_border_color   0xcc884400
+yabai -m config normal_window_border_color   0x22aaaaaa
+yabai -m config insert_window_border_color   0xff770000
+yabai -m config window_shadow                float
+
+
+# Gaps and Margins.
+GAP_SIZE=4
+yabai -m config top_padding                  ${GAP_SIZE}
+yabai -m config bottom_padding               ${GAP_SIZE}
+yabai -m config left_padding                 ${GAP_SIZE}
+yabai -m config right_padding                2 #${GAP_SIZE}
+yabai -m config window_gap                   ${GAP_SIZE}
+
+yabai -m config mouse_modifier               fn
+yabai -m config mouse_action1                move
+yabai -m config mouse_action2                resize
+

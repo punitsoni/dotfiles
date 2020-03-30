@@ -40,9 +40,13 @@ alias grmb="git branch | xargs git branch -D"
 alias less="less -r"
 
 # Edit bashrc.
-alias ebrc="$EDITOR $HOME/.bashrc"
+alias ebrc="${EDITOR} ${HOME}/.bashrc"
 # Edit bashrc_main
-alias ebrcm="$EDITOR $CFGS/bash/bashrc_main.sh"
+alias ebrcm="${EDITOR} ${CFGS}/bash/bashrc_main.sh"
 # Source bashrc.
-alias sbrc="source $HOME/.bashrc"
+alias sbrc="source ${HOME}/.bashrc"
+
+alias ezrc="${EDITOR} ${HOME}/.zshrc"
+alias ezrcm="${EDITOR} ${CFGS}/sh/zshrc_main.zsh"
+alias szrc="source ${HOME}/.zshrc"
 

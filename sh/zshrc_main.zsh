@@ -41,6 +41,7 @@ bindkey '^ ' autosuggest-accept
 # --------------------------------------------------------------------------- #
 # ------------------------------- My Config --------------------------------- #
 # --------------------------------------------------------------------------- #
+export EDITOR=${EDITOR:-vim}
 
 # Import dependencies.
 source $CFGS/sh/aliases.sh
@@ -55,7 +56,7 @@ setopt APPEND_HISTORY
 # Add timestamp in unix epoch time and elapsed time of the command.
 setopt EXTENDED_HISTORY
 # expire duplicates first.
-setopt HIST_EXPIRE_DUPS_FIRST 
+setopt HIST_EXPIRE_DUPS_FIRST
 # do not store duplications.
 setopt HIST_IGNORE_DUPS
 #ignore duplicates when searching.
@@ -69,16 +70,17 @@ HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 
-# --- Setup Completions.
-autoload -Uz compinit
+# ------------------------------ Completions -------------------------------- #
+
+# load bashcompinit for some old bash completions
+autoload -Uz compinit bashcompinit
 zstyle ':completion:*' menu select
 zmodload zsh/complist
 compinit
+bashcompinit
 _comp_options+=(globdots) # Include hidden files.
-# load bashcompinit for some old bash completions
-# autoload bashcompinit && bashcompinit
 
-# --- VI Mode
+# -------------------------------- VI Mode ---------------------------------- #
 # Enable vi mode keymap.
 bindkey -v
 # Reduce the mode switching delay.
@@ -94,7 +96,6 @@ zle-keymap-select() {
       ;;
   esac
 }
-# Update ZLE widget.
 zle -N zle-keymap-select
 # Use Vim keys in completion menu.
 bindkey -M menuselect '^h' vi-backward-char
@@ -102,9 +103,15 @@ bindkey -M menuselect '^j' vi-down-line-or-history
 bindkey -M menuselect '^k' vi-up-line-or-history
 bindkey -M menuselect '^l' vi-forward-char
 # Edit the command in vim when pressing Ctrl-v.
-autoload edit-command-line; zle -N edit-command-line
+autoload -Uz edit-command-line
+zle -N edit-command-line
 bindkey '^v' edit-command-line
 # Reset cursor to I-beam on each prompt.
 precmd_functions+=(cursor beam)
+
+# Enable help command.
+autoload -Uz run-help
+# unalias run-help
+alias help=run-help
 
 

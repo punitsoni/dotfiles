@@ -43,7 +43,7 @@ Plug 'junegunn/fzf.vim'
 " Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
 Plug 'junegunn/goyo.vim'
 " Autocomplete engine for neovim.
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Syntax Highlight for javascript
 Plug 'pangloss/vim-javascript'
 " React JSX syntax

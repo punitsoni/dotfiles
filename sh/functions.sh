@@ -1,5 +1,15 @@
 # Library of shell functions.
 
+# Attach to tmux session. Create new session if it does not exist.
+# If no argument provided. It attaches to session 0.
+tm() {
+  if [ -z $1 ]; then
+    ${TMUX_BIN:-tmux} new-session -A -s 0
+  else
+    ${TMUX_BIN:-tmux} new-session -A -s $1
+  fi
+}
+
 # Set terminal cursor shape.
 cursor() {
   if [[ $1 == "block" ]]; then
@@ -30,7 +40,7 @@ xo() {
 
 # Show $PATH variable with each entry in its own line.
 showpath() {
-  sed 's/:/\n/g' <<< "$PATH"
+  # sed 's/:/\n/g' << echo ${PATH}
 }
 
 random_chuck_joke() {
