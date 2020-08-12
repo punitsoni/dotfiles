@@ -50,3 +50,10 @@ alias ezrc="${EDITOR} ${HOME}/.zshrc"
 alias ezrcm="${EDITOR} ${CFGS}/sh/zshrc_main.zsh"
 alias szrc="source ${HOME}/.zshrc"
 
+# Edit zshrc.
+alias ezrc="$EDITOR $HOME/.zshrc"
+# Edit zshrc_main.
+alias ezrcm="$EDITOR $CFGS/sh/zshrc_main.zsh"
+# Source bashrc.
+alias szrc="source $HOME/.zshrc"
+

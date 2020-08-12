@@ -5,16 +5,27 @@
 # --------------------------------------------------------------------------- #
 # -------------------------------- Plugins ---------------------------------- #
 # --------------------------------------------------------------------------- #
-source $HOME/.zplug/init.zsh
+
+ZPLUGDIR=$HOME/.zplug
+
+# If zplug is not installed, install.
+if [[ ! -d ${ZPLUGDIR} ]]; then
+  echo "Zplug is not installed. Installing now. "
+  curl -sL --proto-redir -all,https \
+    https://raw.githubusercontent.com/zplug/installer/master/installer.zsh \
+    | zsh
+fi
+
+source ${ZPLUGDIR}/init.zsh
 
 # Let zplug manage zplug.
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
 # List plugins here. Make sure to use double quotes to prevent shell
 # expansion.
-zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "mafredri/zsh-async", from:github
-zplug "zsh-users/zsh-autosuggestions", from:github
+# zplug "zsh-users/zsh-autosuggestions", from:github
 # zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 # zplug "denysdovhan/spaceship-prompt", use:spaceship.zsh, from:github, as:theme
 
@@ -33,10 +44,9 @@ zplug load
 
 # --- Plugin configurations.
 # zsh-autosuggestions
-ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=48
-ZSH_AUTOSUGGEST_USE_ASYNC=1
-bindkey '^ ' autosuggest-accept
-
+# ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=48
+# ZSH_AUTOSUGGEST_USE_ASYNC=1
+# bindkey '^ ' autosuggest-accept
 
 # --------------------------------------------------------------------------- #
 # ------------------------------- My Config --------------------------------- #
