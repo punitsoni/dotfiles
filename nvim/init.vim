@@ -40,8 +40,7 @@ Plug 'bronson/vim-visual-star-search'
 " Fuzzy File Finder in ~/.fzf and run the install script
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-" Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
-Plug 'junegunn/goyo.vim'
+" Plug 'junegunn/goyo.vim'
 " Autocomplete engine for neovim.
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Syntax Highlight for javascript
@@ -94,6 +93,8 @@ set splitbelow
 set splitright
 " Show completion options in a menu.
 set wildmenu
+" Use system clipboard
+set clipboard=unnamed
 " Set the tab-completion for commands to be more similar to shell
 set wildmode=longest:full,full
 " Ignore these files / dirs when searchig/globbing
@@ -220,9 +221,10 @@ nnoremap <leader>bb :Buffers<cr>
 nnoremap <leader>bd :bd<cr>
 nnoremap <leader>bdf :bd!<cr>
 
-" better fold-toggle
+" fold-toggle current
 nnoremap <leader>; zazz0
-
+" fold-toggle all
+nnoremap <expr> <leader>o &foldlevel ? 'zMzz0' :'zRzz0'
 " Command history
 nnoremap <leader>hc :History:<cr>
 " File history
@@ -248,7 +250,7 @@ tnoremap <leader><esc> <C-\><C-n>0
 
 " Misc features. <Leader>-m
 " Toggle goyo mode.
-nnoremap <leader>mg :Goyo<cr>
+" nnoremap <leader>mg :Goyo<cr>
 
 " Reindent file.
 nnoremap <leader>= magg=G`a:echo "File re-indented."<CR>

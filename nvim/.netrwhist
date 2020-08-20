@@ -1,5 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =3
-let g:netrw_dirhist_3='/Users/punitsoni/.local/share/nvim/plugged/wsp-vim/rplugin/python3/wsp'
-let g:netrw_dirhist_2='/Users/punitsoni/.local/share/nvim/plugged/wsp-vim/rplugin/python3'
-let g:netrw_dirhist_1='/Users/punitsoni/.local/share/nvim/plugged/wsp-vim/rplugin'

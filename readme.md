@@ -50,3 +50,13 @@ ln -s $CFGS/i3/config $HOME/.config/i3/config
 ln -s $CFGS/i3/compton.conf $HOME/.config/compton.conf
 ln -s $CFGS/i3/polybar_config $HOME/.config/polybar/config
 ```
+
+## Kitty terminal
+
+Kitty sets your terminal type to `xterm-kitty`. This may not be available in
+your terminfo database. This might cause your terminal to behave in weird way.
+You can install terminfo as a separate package in Linux.
+
+```
+sudo apt install kitty-terminfo
+```

@@ -1,3 +1,4 @@
+EDITOR=${EDITOR:=nvim}
 
 alias ls="ls --color"
 alias la='ls -la'
@@ -46,9 +47,14 @@ alias ebrcm="${EDITOR} ${CFGS}/bash/bashrc_main.sh"
 # Source bashrc.
 alias sbrc="source ${HOME}/.bashrc"
 
-alias ezrc="${EDITOR} ${HOME}/.zshrc"
-alias ezrcm="${EDITOR} ${CFGS}/sh/zshrc_main.zsh"
-alias szrc="source ${HOME}/.zshrc"
+# TODO make the shell rc dynamic based on the shell we are using.
+# Edit local shell rc.
+alias eshrc="${EDITOR} ${HOME}/.zshrc"
+# Edit main shell rc.
+alias eshrcm="${EDITOR} ${CFGS}/sh/zshrc_main.zsh"
+# Source local shell rc.
+alias shrc="source ${HOME}/.zshrc"
+
 
 # Edit zshrc.
 alias ezrc="$EDITOR $HOME/.zshrc"

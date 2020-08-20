@@ -1,5 +1,23 @@
 # Library of shell functions.
 
+# Show message for an error when loading this bashrc.
+__shrc_show_error() {
+  echo "Error: $1"
+  echo "Please setup your bashrc according to:"
+  echo "https://github.com/punitsoni/dotfiles/tree/dev/bash"
+}
+
+# Detect current platform.
+__shrc_detect_platform() {
+  if [[ $(uname) == 'Linux' ]]; then
+    echo 'Linux'
+  elif [[ $(uname) == 'Darwin' ]]; then
+    echo 'macOS'
+  else
+    echo 'Unknown'
+  fi
+}
+
 # Attach to tmux session. Create new session if it does not exist.
 # If no argument provided. It attaches to session 0.
 tm() {
@@ -51,5 +69,14 @@ random_chuck_joke() {
 # Displays weather in your city.
 weather() {
   curl "wttr.in?q0uFnM"
+}
+
+# Open a website in chrome as app.
+chrome_as_app() {
+  # Currently only works on macos.
+  # TODO: make this work on Linux as well.
+  /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
+    --disable-extensions \
+    --app="$1"
 }
 

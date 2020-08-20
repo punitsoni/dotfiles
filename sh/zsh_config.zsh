@@ -44,18 +44,15 @@ zplug load
 
 # --- Plugin configurations.
 # zsh-autosuggestions
-# ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=48
-# ZSH_AUTOSUGGEST_USE_ASYNC=1
-# bindkey '^ ' autosuggest-accept
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=48
+ZSH_AUTOSUGGEST_USE_ASYNC=1
+bindkey '^ ' autosuggest-accept
 
 # --------------------------------------------------------------------------- #
 # ------------------------------- My Config --------------------------------- #
 # --------------------------------------------------------------------------- #
-export EDITOR=${EDITOR:-vim}
 
-# Import dependencies.
-source $CFGS/sh/aliases.sh
-source $CFGS/sh/functions.sh
+export PROMPT='%/ $ '
 
 # -- Shell options
 setopt AUTO_CD
@@ -73,8 +70,8 @@ setopt HIST_IGNORE_DUPS
 setopt HIST_FIND_NO_DUPS
 # removes blank lines from history.
 setopt HIST_REDUCE_BLANKS
-setopt CORRECT
-setopt CORRECT_ALL
+# setopt CORRECT
+# setopt CORRECT_ALL
 
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 HISTSIZE=10000
@@ -124,4 +121,11 @@ autoload -Uz run-help
 # unalias run-help
 alias help=run-help
 
+# Implement common aliases.
+# Edit local shellrc.
+alias eshrc="${EDITOR} ${HOME}/.zshrc"
+# Edit main shellrc.
+alias eshrcm="${EDITOR} ${CFGS}/sh/zshrc_main.zsh"
+# Source local shell rc.
+alias shrc="source ${HOME}/.zshrc"
 
