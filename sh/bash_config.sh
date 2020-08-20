@@ -1,9 +1,39 @@
+# --------------------------------------------------------------------------- #
+#                        Bash-specific Shell Config
+# --------------------------------------------------------------------------- #
 
-# Implement common aliases.
-# Edit local shellrc.
-alias eshrc="${EDITOR} ${HOME}/.zshrc"
-# Edit main shellrc.
-alias eshrcm="${EDITOR} ${CFGS}/sh/zshrc_main.zsh"
-# Source local shell rc.
-alias shrc="source ${HOME}/.zshrc"
+# append to the history file, don't overwrite it
+shopt -s histappend
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+
+# enable programmable completion features
+if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+      . /etc/bash_completion
+fi
+
+# ------------------------- Environment Variables --------------------------- #
+
+export HISTSIZE=10000
+
+# --------------------------------- Prompt ---------------------------------- #
+
+# Function to be executed on every prompt.
+__brc_on_prompt() {
+  # Set terminal cursor to line. see https://superuser.com/questions/361335
+  # TODO: check if this works everywhere.
+  printf '\033[6 q'
+}
+
+source $CFGS/sh/ansicolors.sh
+PS1="\u @\h ${C_GREEN}[\w]\n${C_YELLOW}$ ${C_RESET}"
+PROMPT_COMMAND=__brc_on_prompt
+
+alias eshrc="$EDITOR $HOME/.bashrc"
+# Edit bashrc_main
+alias eshrcm="$EDITOR $CFGS/bash/bashrc_main.sh"
+# Source bashrc.
+alias shrc="source $HOME/.bashrc"
 

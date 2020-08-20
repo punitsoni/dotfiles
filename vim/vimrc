@@ -1,7 +1,8 @@
-
 " ---------------------------------------------------------------------------{{{
 " -- Plugin Management #plugins ------------------------------------------------
 " ------------------------------------------------------------------------------
+
+" Directory where plugins are installed.
 let g:plugdir= '~/.vim/plugged'
 
 " Begin listing the plugins to load.
@@ -17,7 +18,7 @@ Plug 'rakr/vim-one'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " insert or remove brackets, parens, quotes etc. in pair
-Plug 'jiangmiao/auto-pairs'
+" Plug 'jiangmiao/auto-pairs'
 " Support for editing with surrounding quotes, parens etc.
 Plug 'tpope/vim-surround'
 " Support for repeat (.) functionality for plugins.
@@ -52,8 +53,6 @@ syntax on
 set hlsearch
 " Proper backspace behavior.
 set backspace=indent,eol,start
-" Minimal automatic indenting for all filetypes.
-" set autoindent
 " Incremental search, hit `<CR>` to stop.
 set incsearch
 " Show current command in statusbar
@@ -117,8 +116,8 @@ set termguicolors
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
-" set background dark or light for different versions of the theme.
-set background=dark " for the dark version
+" Set background dark or light for different versions of the theme.
+set background=dark
 
 function! HasColorscheme(name) abort
     let pat = 'colors/'.a:name.'.vim'
@@ -130,21 +129,18 @@ if HasColorscheme('one')
   colorscheme one
   let g:airline_theme = 'one'
   let g:one_allow_italics = 1
+  " highlight cursor line
+  set cursorline
 endif
 
 " better colors for matchparen highlight
 hi MatchParen cterm=underline ctermbg=none ctermfg=yellow
-" highlight cursor line
-set cursorline
 
 " Change cursor shape when changing modes.
-if exists('$TMUX')
-  let &t_SI = "\ePtmux;\e\e[5 q\e\\"
-  let &t_EI = "\ePtmux;\e\e[2 q\e\\"
-else
-  let &t_SI = "\e[5 q"
-  let &t_EI = "\e[2 q"
-endif
+let &t_SI = "\e[5 q"
+let &t_SR = "\e[4 q"
+let &t_EI = "\e[2 q"
+
 " Reset cursor on exit.
 " autocmd VimLeave * let &t_me="\<Esc>]50;CursorShape=1\x7"
 "}}}
@@ -155,7 +151,6 @@ endif
 " set space as the map leader key
 let mapleader="\<space>"
 " space-space = clear search highlight
-" nnoremap <leader><space> :let @/ = "deadbeef"<CR>:noh<CR>:echo ""<CR>
 nnoremap <leader><space> :noh<CR>:echo ""<CR>
 " edit vimrc file in split
 nnoremap <leader>ev :edit $MYVIMRC<cr>
@@ -169,28 +164,32 @@ nnoremap J <c-d>zz
 " symmetric shortcut for redo (undo-undo)
 " nnoremap U <c-r>
 
-" --- window management
+" --- Window management <leader>-w
 " Add leader-w prefix for all window commands.
 nnoremap <leader>w <c-w>
-" maximize current window
+" Maximize current window
 nnoremap <leader>wm <c-w>o
-" alias for close window.
+" Vertical split
+nnoremap <leader>w<bar> :vsp<cr>
+" Horizontal split
+nnoremap <leader>w- :sp<cr>
+" Close window.
 nnoremap <leader>q <c-w>c
 
-" -- buffer management
-" next buffer
+" -- Buffer management <leader>-b
+" Next buffer
 nnoremap <leader>bn :bn<cr>
-" prev buffer
+" Prev buffer
 nnoremap <leader>bp :bp<cr>
-" list buffers
+" List buffers
 nnoremap <leader>bb :Buffers<cr>
-" delete current buffer
+" Delete current buffer
 nnoremap <leader>bd :bd<cr>
 nnoremap <leader>bdf :bd!<cr>
 
-" fold-toggle current
+" Fold-toggle current
 nnoremap <leader>; zazz0
-" fold-toggle all
+" Fold-toggle all
 nnoremap <expr> <leader>o &foldlevel ? 'zMzz0' :'zRzz0'
 " Command history
 nnoremap <leader>hc :History:<cr>
@@ -202,7 +201,7 @@ nnoremap <leader>hs :History/<cr>
 " Automatically format code
 nnoremap <leader>ll :Autoformat<cr>
 
-" prevent entering Ex mode accidentally
+" Prevent entering Ex mode accidentally
 nnoremap Q <Nop>
 
 " Tab/Shift-Tab to indent/un-indent in visual mode.
