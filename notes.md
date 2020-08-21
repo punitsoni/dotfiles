@@ -1,13 +1,6 @@
 TODO
 ----
 
-- Move all shell utilities to sh/ remove the bash/ folder.
-- Apply shell configs dynamically based on the current shell.
-- Merge vim and neovim config.
-
-
-08/18/2020
----
 
 
 ---

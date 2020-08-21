@@ -1,19 +1,7 @@
-"                             Neovim configuration
-"                    _____________________________________
-"                    | _____ |   | ___ | ___ ___ | |   | |
-"                    | |   | |_| |__ | |_| __|____ | | | |
-"                    | | | |_________|__ |______ |___|_| |
-"                    | |_|   | _______ |______ |   | ____|
-"                    | ___ | |____ | |______ | |_| |____ |
-"                    |___|_|____ | |   ___ | |________ | |
-"                    |   ________| | |__ | |______ | | | |
-"                    | | | ________| | __|____ | | | __| |
-"                    |_| |__ |   | __|__ | ____| | |_| __|
-"                    |   ____| | |____ | |__ |   |__ |__ |
-"                    | |_______|_______|___|___|___|_____|
-"
+" ------------------------------------------------------------------------------
 " -- Plugin Management #plugins ---------------------------------------------{{{
-" ---------------------------------------------------------------------------- "
+" ------------------------------------------------------------------------------
+
 " Path to the plugin location. stdpath("data") points to ~/.local/share/nvim
 let g:plugdir = stdpath("data") . "/plugged"
 
@@ -30,7 +18,7 @@ Plug 'rakr/vim-one'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " insert or remove brackets, parens, quotes etc. in pair
-Plug 'jiangmiao/auto-pairs'
+" Plug 'jiangmiao/auto-pairs'
 " Support for editing with surrounding quotes, parens etc.
 Plug 'tpope/vim-surround'
 " Support for repeat (.) functionality for plugins.
@@ -48,21 +36,25 @@ Plug 'pangloss/vim-javascript'
 " React JSX syntax
 Plug 'mxw/vim-jsx'
 " Manage the wsp-vim manually as its in private repo.
-Plug g:plugdir . '/wsp-vim'
+" Plug g:plugdir . '/wsp-vim'
 " Initialize all plugins.
 call plug#end()
 
-" enable the plugin settings, required.
-filetype plugin indent on
 "}}}
 
+" ------------------------------------------------------------------------------
 " -- General Options #general -----------------------------------------------{{{
-" ---------------------------------------------------------------------------- "
-set nocompatible
+" ------------------------------------------------------------------------------
+" Enable filetype based plugin and indents
+filetype plugin indent on
 " Syntax highlighing on
 syntax on
-" Highlight search term as you type
+" Highlight search term as you type.
 set hlsearch
+" Proper backspace behavior.
+" set backspace=indent,eol,start
+" Incremental search, hit `<CR>` to stop.
+set incsearch
 " Show current command in statusbar
 set showcmd
 " Enable mouse
@@ -73,6 +65,8 @@ set ignorecase
 set noswapfile
 " keep buffers loaded when window closes, required by many plugins.
 set hidden
+" Shows the current line number at the bottom-right of the screen.
+set ruler
 " Use spaces instead of tabs.
 set expandtab
 " Set default indentation size.
@@ -104,91 +98,69 @@ set wildignore+=*/__pycache__/*
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 " Clear search-highlight when reloading vimrc.
 noh
+" disable automatic comment insertion
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+" `matchit.vim` is built-in so let's enable it!
+" Hit `%` on `if` to jump to `else`.
+runtime macros/matchit.vim
 "}}}
 
+" ------------------------------------------------------------------------------
 " -- Appearance and Themes #themes ------------------------------------------{{{
-" ---------------------------------------------------------------------------- "
+" ------------------------------------------------------------------------------
+
 " Enable truecolor.
 set termguicolors
-" Dark is power.
+" Set background dark or light for different versions of the theme.
 set background=dark
-" Set colorscheme for vim.
-colorscheme one
-" colorscheme molokai
-" theme for the airline (other good options)
-" let g:airline_theme="deus"
-" let g:airline_theme="tomorrow"
-let g:airline_theme = 'one'
-let g:one_allow_italics = 1
-" better colors for matchparen highlight
+
+function! HasColorscheme(name) abort
+    let pat = 'colors/'.a:name.'.vim'
+    return !empty(globpath(&rtp, pat))
+endfunction
+
+" Set colorscheme for vim, if exists.
+if HasColorscheme('one')
+  colorscheme one
+  let g:airline_theme = 'one'
+  let g:one_allow_italics = 1
+  " highlight cursor line
+  set cursorline
+endif
+
+" Better colors for matchparen highlight
 hi MatchParen cterm=underline ctermbg=none ctermfg=yellow
-" highlight cursor line
-set cursorline
 "}}}
 
+" ------------------------------------------------------------------------------
 " -- Plugin configurations #configplugins -----------------------------------{{{
-" ---------------------------------------------------------------------------- "
-" -- FZF config #fzfconfig --------------------------------------------------{{{
-" ---------------------------------------------------------------------------- "
+" ------------------------------------------------------------------------------
+
+" -- FZF Config -------------------------------------------------------------- "
+
 " FZF runs in terminal buffer, Disable the modeline for that buffer.
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler
       \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
-"}}}
 
-" -- Autoformat config #autoformatconfig ------------------------------------{{{
-" ---------------------------------------------------------------------------- "
-" :Autoformat should not perform default formatting if formatter is not available.
-" let g:autoformat_autoindent = 0
-" let g:autoformat_retab = 0
-" let g:autoformat_remove_trailing_spaces = 0
-" let g:formatters_python = ['yapf']
-"}}}
-
-" -- Deoplete config #deopleteconfig ----------------------------------------{{{
-" ---------------------------------------------------------------------------- "
+" -- Deoplete config #deopleteconfig ----------------------------------------- "
 let g:deoplete#enable_at_startup = 1
 " " Use tab key for completion
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-"}}}
 
+" ------------------------------------------------------------------------------
 " -- Airline config #airlineconfig ------------------------------------------{{{
-" ---------------------------------------------------------------------------- "
+" ------------------------------------------------------------------------------
 " Currently, This does not seem to work.
 let g:airline_exclude_filetypes = ['Terminal']
 "}}}
 
-" -- LanguageClient config #langconfig --------------------------------------{{{
-" ---------------------------------------------------------------------------- "
-" let g:LanguageClient_serverCommands = {}
-" let g:LanguageClient_serverCommands.python = ['pyls']
-"}}}
-
-" -- vim-lsp config #lspconfig ----------------------------------------------{{{
-" ---------------------------------------------------------------------------- "
-" if executable('pyls')
-"     " pip install python-language-server
-"     au User lsp_setup call lsp#register_server({
-"         \ 'name': 'pyls',
-"         \ 'cmd': {server_info->['pyls']},
-"         \ 'whitelist': ['python'],
-"         \ })
-" endif
-
-" let g:lsp_diagnostics_enabled = 0
-" let g:lsp_signs_enabled = 1
-"}}}
-
-" Goyo config
-let g:goyo_width = 100
-"}}}
-
+" ------------------------------------------------------------------------------
 " -- Custom key bindings #keys ----------------------------------------------{{{
-" ---------------------------------------------------------------------------- "
+" ------------------------------------------------------------------------------
 " set space as the map leader key
 let mapleader="\<space>"
 " space-space = clear search highlight
-" nnoremap <leader><space> :let @/ = "deadbeef"<CR>:noh<CR>:echo ""<CR>
 nnoremap <leader><space> :noh<CR>:echo ""<CR>
 " edit vimrc file in split
 nnoremap <leader>ev :edit $MYVIMRC<cr>
@@ -202,28 +174,32 @@ nnoremap J <c-d>zz
 " symmetric shortcut for redo (undo-undo)
 " nnoremap U <c-r>
 
-" --- window management
+" --- Window management <leader>-w
 " Add leader-w prefix for all window commands.
 nnoremap <leader>w <c-w>
-" maximize current window
+" Maximize current window
 nnoremap <leader>wm <c-w>o
-" alias for close window.
+" Vertical split
+nnoremap <leader>w<bar> :vsp<cr>
+" Horizontal split
+nnoremap <leader>w- :sp<cr>
+" Close window.
 nnoremap <leader>q <c-w>c
 
-" -- buffer management
-" next buffer
+" -- Buffer management <leader>-b
+" Next buffer
 nnoremap <leader>bn :bn<cr>
-" prev buffer
+" Prev buffer
 nnoremap <leader>bp :bp<cr>
-" list buffers
+" List buffers
 nnoremap <leader>bb :Buffers<cr>
-" delete current buffer
+" Delete current buffer
 nnoremap <leader>bd :bd<cr>
 nnoremap <leader>bdf :bd!<cr>
 
-" fold-toggle current
+" Fold-toggle current
 nnoremap <leader>; zazz0
-" fold-toggle all
+" Fold-toggle all
 nnoremap <expr> <leader>o &foldlevel ? 'zMzz0' :'zRzz0'
 " Command history
 nnoremap <leader>hc :History:<cr>
@@ -235,7 +211,7 @@ nnoremap <leader>hs :History/<cr>
 " Automatically format code
 nnoremap <leader>ll :Autoformat<cr>
 
-" prevent entering Ex mode accidentally
+" Prevent entering Ex mode accidentally
 nnoremap Q <Nop>
 
 " Tab/Shift-Tab to indent/un-indent in visual mode.
@@ -248,17 +224,17 @@ vnoremap < <gv
 " Easy switch to normal mode in terminal
 tnoremap <leader><esc> <C-\><C-n>0
 
-" Misc features. <Leader>-m
-" Toggle goyo mode.
-" nnoremap <leader>mg :Goyo<cr>
-
 " Reindent file.
 nnoremap <leader>= magg=G`a:echo "File re-indented."<CR>
 
+" Misc features. <Leader>-m
+
+
 "}}}
 
-" -- Experimental stuff #experiments ----------------------------------------{{{
-" ---------------------------------------------------------------------------- "
+" ---------------------------------------------------------------------------{{{
+" -- Experimental stuff #experiments -------------------------------------------
+" ------------------------------------------------------------------------------
 " Put experimental settings here.
 
 lua << EOF
@@ -271,3 +247,4 @@ end
 EOF
 
 let g:fzf_layout = { 'window': 'lua require("test").NavigationFloatingWin()' }
+

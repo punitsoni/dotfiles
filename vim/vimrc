@@ -146,6 +146,28 @@ let &t_EI = "\e[2 q"
 "}}}
 
 " ---------------------------------------------------------------------------{{{
+" -- Plugin configurations #configplugins --------------------------------------
+" ------------------------------------------------------------------------------
+
+" -- FZF Config -------------------------------------------------------------- "
+
+" FZF runs in terminal buffer, Disable the modeline for that buffer.
+autocmd! FileType fzf
+autocmd  FileType fzf set laststatus=0 noshowmode noruler
+      \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+
+" -- Deoplete config #deopleteconfig ----------------------------------------- "
+let g:deoplete#enable_at_startup = 1
+" " Use tab key for completion
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+
+" -- Airline config #airlineconfig ------------------------------------------{{{
+" ---------------------------------------------------------------------------- "
+" Currently, This does not seem to work.
+let g:airline_exclude_filetypes = ['Terminal']
+"}}}
+
+" ---------------------------------------------------------------------------{{{
 " -- Custom key bindings #keys -------------------------------------------------
 " ------------------------------------------------------------------------------
 " set space as the map leader key
@@ -162,7 +184,7 @@ inoremap  jk <esc>
 nnoremap K <c-u>zz
 nnoremap J <c-d>zz
 " symmetric shortcut for redo (undo-undo)
-" nnoremap U <c-r>
+nnoremap U <c-r>
 
 " --- Window management <leader>-w
 " Add leader-w prefix for all window commands.
