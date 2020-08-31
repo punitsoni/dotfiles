@@ -46,7 +46,7 @@ alias gsh="git show"
 alias gshn="git show --name-only"
 alias ga="git add"
 alias gb="git branch"
-alias gr="git remote"
+alias gr="git remote -v"
 alias gch="git checkout"
 alias gt="git tag"
 # Delete all branches except the current one.
