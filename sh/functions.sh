@@ -58,7 +58,7 @@ xo() {
 
 # Show $PATH variable with each entry in its own line.
 showpath() {
-  # sed 's/:/\n/g' << echo ${PATH}
+  sed 's/:/\n/g' < echo ${PATH}
 }
 
 random_chuck_joke() {
