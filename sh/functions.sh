@@ -28,6 +28,25 @@ tm() {
   fi
 }
 
+ls_version() {
+  if ls --color -d . >/dev/null 2>&1; then
+    echo "GNU_LS"
+  elif ls -G -d . >/dev/null 2>&1; then
+    echo "BSD_LS"
+  else
+    echo "SOLARIS_LS"
+  fi
+}
+
+# Edit file via fuzzy finder.
+# TODO: Exclude binary files from search results (*.bin, *.out etc)
+ff() {
+  file=$(
+    fzf --height=30% --border=sharp --prompt='>> ' --keep-right)
+  [[ ! -z $file ]] && $EDITOR $file
+}
+
+
 # Set terminal cursor shape.
 cursor() {
   if [[ $1 == "block" ]]; then

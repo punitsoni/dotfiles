@@ -6,7 +6,6 @@
 #                            Environment Variables
 # --------------------------------------------------------------------------- #
 export PATH=${HOME}/bin:${PATH}
-export PROMPT='%/ $ '
 
 # Set EDITOR to vim if not set already.
 [[ -z ${EDITOR} ]] && export EDITOR=vim
@@ -20,10 +19,23 @@ source ${CFGS}/sh/functions.sh
 #                                  Aliases
 # --------------------------------------------------------------------------- #
 
-# TODO: make sure that GNU ls is present for this aliases to work.
-alias ls="ls --color"
-alias la='ls -la'
-alias ll='ls -l'
+# Setup best available alias for ls.
+if command -v lsd 2>&1 > /dev/null; then
+  # If lsd exists, use that to provide ls command.
+  alias ls="lsd"
+  alias ll="lsd -l"
+  alias la="lsd -la"
+elif [[ $(ls_version) == "GNU_LS" ]]; then
+  alias ls="ls --color"
+  alias ll='ls -l'
+  alias la='ls -la'
+elif [[ $(ls_version) == "BSD_LS" ]]; then
+  # macOS has BSD version of ls by default.
+  alias ls="ls -G"
+  alias ll='ls -l'
+  alias la='ls -la'
+fi
+
 
 alias ..='cd ..'
 alias xx='exit'

@@ -1,5 +1,5 @@
 " ------------------------------------------------------------------------------
-" -- Plugin Management #plugins ---------------------------------------------{{{
+" -- Load plugins -----------------------------------------------------------{{{
 " ------------------------------------------------------------------------------
 
 " Path to the plugin location. stdpath("data") points to ~/.local/share/nvim
@@ -17,6 +17,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " insert or remove brackets, parens, quotes etc. in pair
 " Plug 'jiangmiao/auto-pairs'
+" Highlights places where you can jump.
+Plug 'easymotion/vim-easymotion'
 " Support for editing with surrounding quotes, parens etc.
 Plug 'tpope/vim-surround'
 " Support for repeat (.) functionality for plugins.
@@ -26,16 +28,17 @@ Plug 'bronson/vim-visual-star-search'
 " Fuzzy File Finder in ~/.fzf and run the install script
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-" Autocomplete engine for neovim.
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Syntax Highlight for javascript
 Plug 'pangloss/vim-javascript'
 " React JSX syntax
 Plug 'mxw/vim-jsx'
-" Official LSP plugin
-Plug 'neovim/nvim-lsp'
 " Fancy startup screen for vim.
 Plug 'mhinz/vim-startify'
+" Configs for neovim builtin LSP client.
+" Plug 'neovim/nvim-lspconfig'
+" coc.nvim provide LSP support and more..
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 " Themes
 Plug 'junegunn/seoul256.vim'
 Plug 'rakr/vim-one'
@@ -46,14 +49,15 @@ Plug 'punitsoni/basics-vim'
 Plug 'punitsoni/wsp-vim'
 
 " Local plugins.
-Plug g:plugdir . '/whid-vim'
+" Plug g:plugdir . '/whid-vim'
 
 " Initialize all plugins.
 call plug#end()
+
 "}}}
 
 " ------------------------------------------------------------------------------
-" -- General Options #general -----------------------------------------------{{{
+" -- General Setup ----------------------------------------------------------{{{
 " ------------------------------------------------------------------------------
 " Enable filetype based plugin and indents
 filetype plugin indent on
@@ -77,6 +81,9 @@ set noswapfile
 set hidden
 " Shows the current line number at the bottom-right of the screen.
 set ruler
+" Disable backups.
+set nobackup
+set nowritebackup
 " Use spaces instead of tabs.
 set expandtab
 " Set default indentation size.
@@ -86,6 +93,8 @@ set shiftwidth=2
 set noshowmode
 " Default coding textwidth
 set textwidth=80
+" Highlight the 81st column.
+set colorcolumn=81
 " No automatic wrapping of lines.
 set nowrap
 " Use » to mark Tabs and ° to mark trailing whitespace
@@ -101,31 +110,48 @@ set wildmenu
 set clipboard=unnamed
 " Set the tab-completion for commands to be more similar to shell
 set wildmode=longest:full,full
-" Ignore these files / dirs when searchig/globbing
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pdf,*.msi,*.exe,*.a,*.o,*.bin,*.out,*.deb
-set wildignore+=*/__pycache__/*
+" Ignore these files and dirs when searchig/globbing
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pdf,*.msi,*.exe,*.a,*.o,*.bin
+set wildignore+=*.out,*.deb,*/__pycache__/*
 "
-set inccommand=split
-" Jump to the last position when reopening a file
-autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-" Clear search-highlight when reloading vimrc.
-noh
+" set inccommand=split
+" Use number colum for diagnostic signs.
+set signcolumn=number
+
+" coc: Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+" set updatetime=300
+" coc: Don't pass messages to |ins-completion-menu|. (find out why?)
+" set shortmess+=c
+
+" ---- Setup autocommands ---- "
+
 " disable automatic comment insertion
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+" Highlight comments in json.
+autocmd FileType json syntax match Comment +\/\/.\+$+
+" Jump to the last position when reopening a file
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+" ---- Setup Misc. ---- "
+
+" Clear search-highlight when reloading vimrc.
+noh
+
 " `matchit.vim` is built-in so let's enable it!
 " Hit `%` on `if` to jump to `else`.
 runtime macros/matchit.vim
+
 "}}}
 
 " ------------------------------------------------------------------------------
-" -- Appearance and Themes #themes ------------------------------------------{{{
+" -- Appearance and Themes --------------------------------------------------{{{
 " ------------------------------------------------------------------------------
 
 " Enable truecolor.
 set termguicolors
 " Set background dark or light for different versions of the theme.
 set background=dark
-
 " highlight cursor line
 set cursorline
 
@@ -157,21 +183,25 @@ hi MatchParen cterm=underline ctermbg=none ctermfg=yellow
 "}}}
 
 " ------------------------------------------------------------------------------
-" -- Plugin configurations #configplugins -----------------------------------{{{
+" -- Plugin configuration ---------------------------------------------------{{{
 " ------------------------------------------------------------------------------
 
-" -- Deoplete config -- "
-let g:deoplete#enable_at_startup = 1
-" " Use tab key for completion
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-
-" -- Airline config -- "
+" -- Airline -- "
+" if (g:loaded_airline == 1)
 " Currently, This does not seem to work.
 let g:airline_exclude_filetypes = ['Terminal']
+" endif
+
+" -- Fzf -- "
+" if (g:loaded_fzf == 1)
+" Use floating window for all FZF operations.
+let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.5 } }
+" endif
+
 "}}}
 
 " ------------------------------------------------------------------------------
-" -- Custom key bindings #keys ----------------------------------------------{{{
+" -- keybindings ------------------------------------------------------------{{{
 " ------------------------------------------------------------------------------
 " set space as the map leader key
 let mapleader="\<space>"
@@ -186,12 +216,18 @@ inoremap  jk <esc>
 " Better shortcuts for pg-up and pg-down.
 nnoremap K <c-u>zz
 nnoremap J <c-d>zz
+" Better line append.
+nnoremap L A
 " Symmetric shortcut for redo (undo-undo)
 nnoremap U <c-r>
 " Quit.
 nnoremap <leader>x :q<cr>
 " Save (write) buffer to file.
-nnoremap <leader>s :w<cr>
+nnoremap <c-s> :w<cr>
+" Write current file and exit.
+nnoremap <c-q> ZZ
+" Force-close buffer and close window or exit.
+" nnoremap <c-f><c-q> :bd!<cr>ZZ
 
 " --- Window management <leader>-w
 " Add leader-w prefix for all window commands.
@@ -204,8 +240,6 @@ nnoremap <leader>w<bar> :vsp<cr>
 nnoremap <leader>w- :sp<cr>
 " Close window.
 nnoremap <leader>q <c-w>c
-" Force-close buffer and close window or exit.
-nnoremap <C-q> :bd!<cr>ZZ
 
 " Use Ctrl-[hjkl] to navigate windows in all modes.
 tnoremap <C-h> <C-\><C-N><C-w>h
@@ -227,7 +261,9 @@ nnoremap <leader>bn :bn<cr>
 " Prev buffer
 nnoremap <leader>bp :bp<cr>
 " List buffers
-nnoremap <leader>bb :Buffers<cr>
+nnoremap <leader>bl :Buffers<cr>
+" Edit previous buffer.
+nnoremap <leader>bb :edit #<cr>
 " Delete current buffer
 nnoremap <leader>bd :bd<cr>
 " Delete current buffer (force)
@@ -244,7 +280,7 @@ nnoremap <leader>hf :History<cr>
 " Search history
 nnoremap <leader>hs :History/<cr>
 " Automatically format code
-nnoremap <leader>ll :Autoformat<cr>
+" nnoremap <leader>ll :Autoformat<cr>
 " Prevent entering Ex mode accidentally
 nnoremap Q <Nop>
 " Tab/Shift-Tab to indent/un-indent in visual mode.
@@ -254,7 +290,7 @@ vnoremap <S-Tab> <gv
 vnoremap > >gv
 vnoremap < <gv
 
-" Reindent file. TODO: perform smarter re-formatting according to language.
+" Reindent file. TO-DO: perform smarter re-formatting according to language.
 nnoremap <leader>= magg=G`a:echo "File re-indented."<CR>
 
 " ---- Terminal ----
@@ -264,43 +300,38 @@ tnoremap <C-q> <C-\><C-n>:bdelete!<cr>
 tnoremap <C-e> <C-\><C-n>
 " Easy switch to normal mode in terminal
 tnoremap <leader><esc> <C-\><C-n>0
+" Open terminal
+nnoremap <C-t> :lua open_terminal()<cr>
+" Enter insert-mode when opening or switching to a terminal
+autocmd TermOpen,BufEnter term://* startinsert
 
 "}}}
 
 " ------------------------------------------------------------------------------
-" -- Experimental stuff #experiments ----------------------------------------{{{
+" -- Experiments ------------------------------------------------------------{{{
 " ------------------------------------------------------------------------------
 " Put experimental settings here.
 
-" Inline Lua code.
+" Load configuration from init.lua module.
 lua << EOF
-
--- Get basics module in global namespace.
-bs = require('basics')
-
--- TODO: configure LSP settings.
-
-function open_terminal()
-    vim.api.nvim_command('12split | terminal')
-end
-
+require('init')
 EOF
 
-" Open terminal
-nnoremap <C-t> :lua open_terminal()<cr>
-
-" let g:fzf_layout = { 'window': 'lua require("test").NavigationFloatingWin()' }
-" Floating window for all FZF operations.
-let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.5 } }
-
-" Enter insert-mode when opening or switching to a terminal
-autocmd TermOpen,BufEnter term://* startinsert
 " }}}
 
 " ------------------------------------------------------------------------------
-" -- TODOs ------------------------------------------------------------------{{{
+" -- Notes ------------------------------------------------------------------{{{
 " ------------------------------------------------------------------------------
 
+" ---- TO-DO ---- "
 " * Better color highlighting for vim-startify
+" * Check for coc.nvim requirements (vim version, node etc.)
+" * Open help and documentation in floating window.
+" * Organize init.vim by splitting it into multiple files.
+" * Learn how different config files work. e.g. ftplugin, autoload, colors etc.
+
+" coc extensions for various languages.
+" :CocInstall coc-lua coc-clangd coc-jsoj coc-vimlsp coc-python coc-snippets coc-tsserver
+
 
 " }}}
