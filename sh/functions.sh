@@ -28,6 +28,8 @@ tm() {
   fi
 }
 
+# Returns a string corresponding to the variant of ls command present in the
+# system.
 ls_version() {
   if ls --color -d . >/dev/null 2>&1; then
     echo "GNU_LS"
@@ -38,11 +40,28 @@ ls_version() {
   fi
 }
 
-# Edit file via fuzzy finder.
-# TODO: Exclude binary files from search results (*.bin, *.out etc)
+# Fuzzy find a file and open in editor.
 ff() {
-  file=$(
-    fzf --height=30% --border=sharp --prompt='>> ' --keep-right)
+  __editable_files() {
+    find . \
+      -type f \
+      \( -not -path "*/.git/*" \) \
+      \( -not -path "*/__pycache__/*" \) \
+      \( -not -name "*.bin" \) \
+      \( -not -name "*.out" \) \
+      \( -not -name "*.o" \) \
+      \( -not -name "*.pyc" \) \
+  }
+
+  __open_fzf() {
+    fzf --height=30%   \
+        --border=sharp \
+        --prompt='>> ' \
+        --keep-right
+  }
+
+  file=$(__editable_files | __open_fzf)
+
   [[ ! -z $file ]] && $EDITOR $file
 }
 

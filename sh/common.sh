@@ -20,7 +20,7 @@ source ${CFGS}/sh/functions.sh
 # --------------------------------------------------------------------------- #
 
 # Setup best available alias for ls.
-if command -v lsd 2>&1 > /dev/null; then
+if [[ -x $(command -v lsd) ]]; then
   # If lsd exists, use that to provide ls command.
   alias ls="lsd"
   alias ll="lsd -l"
