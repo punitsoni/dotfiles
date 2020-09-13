@@ -1,5 +1,5 @@
 " ------------------------------------------------------------------------------
-" -- Load plugins -----------------------------------------------------------{{{
+" -- Plugins ----------------------------------------------------------------{{{
 " ------------------------------------------------------------------------------
 
 " Path to the plugin location. stdpath("data") points to ~/.local/share/nvim
@@ -35,18 +35,33 @@ Plug 'mxw/vim-jsx'
 " Fancy startup screen for vim.
 Plug 'mhinz/vim-startify'
 " Configs for neovim builtin LSP client.
-" Plug 'neovim/nvim-lspconfig'
-" coc.nvim provide LSP support and more..
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neovim/nvim-lspconfig'
+" Better diagnostics for nvim lsp
+Plug 'nvim-lua/diagnostic-nvim'
 
-" Themes
+
+" ---- Themes ---- "
+
 Plug 'junegunn/seoul256.vim'
 Plug 'rakr/vim-one'
 Plug 'reedes/vim-colors-pencil'
 
-" My plugins.
-Plug 'punitsoni/basics-vim'
+" ---- My plugins ---- "
+
+" Workspace manager.
 Plug 'punitsoni/wsp-vim'
+
+" ---- Expremental ---- "
+
+" Requirement for telescope.
+" Plug 'nvim-lua/popup.nvim'
+" A lua library for neovim.
+Plug 'nvim-lua/plenary.nvim'
+" Fuzzy finder written in lua.
+" Plug 'nvim-lua/telescope.nvim'
+
+" coc.nvim provide LSP support and more..
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Local plugins.
 " Plug g:plugdir . '/whid-vim'
@@ -128,15 +143,10 @@ set signcolumn=number
 
 " disable automatic comment insertion
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-" Highlight comments in json.
-autocmd FileType json syntax match Comment +\/\/.\+$+
 " Jump to the last position when reopening a file
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 " ---- Setup Misc. ---- "
-
-" Clear search-highlight when reloading vimrc.
-noh
 
 " `matchit.vim` is built-in so let's enable it!
 " Hit `%` on `if` to jump to `else`.
@@ -178,26 +188,12 @@ if HasColorscheme('pencil')
   colorscheme pencil
 endif
 
+" if HasColorscheme('neo')
+"   colorscheme neo
+" endif
+
 " Better colors for matchparen highlight
-hi MatchParen cterm=underline ctermbg=none ctermfg=yellow
-"}}}
-
-" ------------------------------------------------------------------------------
-" -- Plugin configuration ---------------------------------------------------{{{
-" ------------------------------------------------------------------------------
-
-" -- Airline -- "
-" if (g:loaded_airline == 1)
-" Currently, This does not seem to work.
-let g:airline_exclude_filetypes = ['Terminal']
-" endif
-
-" -- Fzf -- "
-" if (g:loaded_fzf == 1)
-" Use floating window for all FZF operations.
-let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.5 } }
-" endif
-
+" hi MatchParen cterm=underline ctermbg=none ctermfg=yellow
 "}}}
 
 " ------------------------------------------------------------------------------
@@ -254,6 +250,11 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+" Some extra keybindings for window navigation in normal mode.
+nnoremap <leader>h <C-w>h
+nnoremap <leader>j <C-w>j
+nnoremap <leader>k <C-w>k
+nnoremap <leader>l <C-w>l
 
 " -- Buffer management <leader>-b
 " Next buffer
@@ -301,7 +302,7 @@ tnoremap <C-e> <C-\><C-n>
 " Easy switch to normal mode in terminal
 tnoremap <leader><esc> <C-\><C-n>0
 " Open terminal
-nnoremap <C-t> :lua open_terminal()<cr>
+nnoremap <C-t> :lua basics.open_terminal()<cr>
 " Enter insert-mode when opening or switching to a terminal
 autocmd TermOpen,BufEnter term://* startinsert
 
@@ -310,18 +311,22 @@ autocmd TermOpen,BufEnter term://* startinsert
 " ------------------------------------------------------------------------------
 " -- Experiments ------------------------------------------------------------{{{
 " ------------------------------------------------------------------------------
-" Put experimental settings here.
 
 " Load configuration from init.lua module.
 lua << EOF
-require('init')
+basics = require('basics')
+basics.init()
 EOF
+
 
 " }}}
 
 " ------------------------------------------------------------------------------
 " -- Notes ------------------------------------------------------------------{{{
 " ------------------------------------------------------------------------------
+
+" coc extensions for various languages.
+" :CocInstall coc-lua coc-clangd coc-jsoj coc-vimlsp coc-python coc-snippets coc-tsserver
 
 " ---- TO-DO ---- "
 " * Better color highlighting for vim-startify
@@ -330,8 +335,8 @@ EOF
 " * Organize init.vim by splitting it into multiple files.
 " * Learn how different config files work. e.g. ftplugin, autoload, colors etc.
 
-" coc extensions for various languages.
-" :CocInstall coc-lua coc-clangd coc-jsoj coc-vimlsp coc-python coc-snippets coc-tsserver
 
+" ---- Remember ---- "
+" * Put filetype specific settings in ftplugin/<ft>.vim files.
 
 " }}}
