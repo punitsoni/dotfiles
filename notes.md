@@ -1,9 +1,12 @@
 TODO
 ----
 
+* Sychronize colorscheme among alacritty, neovim and tmux.
 
 
----
+MISC
+----
+
 Installing i3 gaps in debian. Best option is to build from source.
 https://github.com/Airblader/i3/wiki/Building-from-source
 
@@ -15,7 +18,9 @@ See this wiki for setup.
 https://github.com/polybar/polybar/wiki
 
 ---
+
 Using GNU utilitis in macOS
+
 ```
 brew install coreutils findutils
 ```
