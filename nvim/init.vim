@@ -38,6 +38,8 @@ Plug 'mhinz/vim-startify'
 Plug 'neovim/nvim-lspconfig'
 " Better diagnostics for nvim lsp
 Plug 'nvim-lua/diagnostic-nvim'
+" Completion for nvim lsp.
+Plug 'nvim-lua/completion-nvim'
 
 
 " ---- Themes ---- "
@@ -56,15 +58,9 @@ Plug 'punitsoni/wsp-vim'
 " Requirement for telescope.
 " Plug 'nvim-lua/popup.nvim'
 " A lua library for neovim.
-Plug 'nvim-lua/plenary.nvim'
+" Plug 'nvim-lua/plenary.nvim'
 " Fuzzy finder written in lua.
 " Plug 'nvim-lua/telescope.nvim'
-
-" coc.nvim provide LSP support and more..
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" Local plugins.
-" Plug g:plugdir . '/whid-vim'
 
 " Initialize all plugins.
 call plug#end()
@@ -106,6 +102,8 @@ set tabstop=2
 set shiftwidth=2
 " Dont show mode as airline already does.
 set noshowmode
+" Command-line height
+set cmdheight=1
 " Default coding textwidth
 set textwidth=80
 " Highlight the 81st column.
@@ -132,25 +130,84 @@ set wildignore+=*.out,*.deb,*/__pycache__/*
 " set inccommand=split
 " Use number colum for diagnostic signs.
 set signcolumn=number
+" Things should update faster.
+set updatetime=1000
+" Make it so there are always ten lines below my cursor
+set scrolloff=10
+" Better completion experience.
+set completeopt=menuone,noinsert,noselect
+" Avoid showing message extra message when using completion.
+set shortmess+=c
 
-" coc: Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
-" set updatetime=300
-" coc: Don't pass messages to |ins-completion-menu|. (find out why?)
-" set shortmess+=c
-
-" ---- Setup autocommands ---- "
-
-" disable automatic comment insertion
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-" Jump to the last position when reopening a file
-autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+" Load configuration from basics.lua module.
+lua << EOF
+package.loaded['basics'] = nil
+bs = require('basics')
+bs.init()
+EOF
 
 " ---- Setup Misc. ---- "
 
 " `matchit.vim` is built-in so let's enable it!
 " Hit `%` on `if` to jump to `else`.
 runtime macros/matchit.vim
+
+" }}}
+
+" ------------------------------------------------------------------------------
+" -- Autocommands -----------------------------------------------------------{{{
+" ------------------------------------------------------------------------------
+
+" disable automatic comment insertion
+function! DisableAutoComment()
+  " See :help fo-table
+  setlocal formatoptions-=c
+  setlocal formatoptions-=r
+  setlocal formatoptions-=o
+endfunction
+
+augroup AllFileTypes
+  autocmd!
+  autocmd FileType * :call DisableAutoComment()
+augroup END
+
+" Jump to the last position when reopening a file
+function! JumpToLastKnownPosition()
+  if line("'\"") > 1 && line("'\"") <= line("$")
+    exe "normal! g'\""
+  endif
+endfunction
+
+augroup AllBufRead
+  autocmd!
+  autocmd BufRead * :call JumpToLastKnownPosition()
+augroup END
+
+function! OnTerminalEnter()
+  setlocal nonumber
+  startinsert
+endfunction
+
+augroup EnterTerminal
+  autocmd!
+  " Enter insert-mode.
+  " autocmd TermOpen,BufEnter term://* startinsert
+  autocmd TermOpen,BufEnter term://* :call OnTerminalEnter()
+augroup END
+
+function! OnTerminalClose()
+  bdelete!
+  " If this is not last window, close it.
+  if winbufnr(2) != -1
+    close
+  endif
+endfunction
+
+augroup TerminalClosed
+  autocmd!
+  autocmd TermClose term://* :call OnTerminalClose()
+augroup END
+
 
 "}}}
 
@@ -165,36 +222,25 @@ set background=dark
 " highlight cursor line
 set cursorline
 
-" Checks if a colorscheme exists.
-function! HasColorscheme(name) abort
-    let pat = 'colors/'.a:name.'.vim'
-    return !empty(globpath(&rtp, pat))
-endfunction
-
-" if HasColorscheme('one')
+" if v:lua.bs.has_colorscheme('one')
 "   let g:one_allow_italics = 1
 "   let g:airline_theme = 'one'
 "   colorscheme one
 " endif
 
-" if HasColorscheme('seoul256')
-"   let g:seoul256_background = 234
-"   colorscheme seoul256
-" endif
-
-if HasColorscheme('pencil')
-  let g:pencil_terminal_italics = 1
+if v:lua.bs.has_colorscheme('pencil')
+  let g:pencil_terinal_italics = 1
   let g:airline_theme = 'pencil'
   colorscheme pencil
 endif
 
-" if HasColorscheme('neo')
+" if v:lua.bs.has_colorscheme('neo')
 "   colorscheme neo
 " endif
 
 " Better colors for matchparen highlight
-" hi MatchParen cterm=underline ctermbg=none ctermfg=yellow
-"}}}
+highlight MatchParen gui=underline guibg=none guifg=yellow
+" }}}
 
 " ------------------------------------------------------------------------------
 " -- keybindings ------------------------------------------------------------{{{
@@ -202,16 +248,16 @@ endif
 " set space as the map leader key
 let mapleader="\<space>"
 " Space-space = clear search highlight
-nnoremap <leader><space> :noh<CR>:echo ""<CR>
+nnoremap <space>, :noh<CR>:echo ""<CR>
 " Edit vimrc file in split
 nnoremap <leader>ev :edit $MYVIMRC<cr>
 " Reload vimrc
 nnoremap <leader>sv :source $MYVIMRC<cr>
 " Better keymap to exit insert mode
-inoremap  jk <esc>
+inoremap jk <esc>
 " Better shortcuts for pg-up and pg-down.
-nnoremap K <c-u>zz
-nnoremap J <c-d>zz
+nnoremap <c-k> <c-u>zz
+nnoremap <c-j> <c-d>zz
 " Better line append.
 nnoremap L A
 " Symmetric shortcut for redo (undo-undo)
@@ -222,8 +268,6 @@ nnoremap <leader>x :q<cr>
 nnoremap <c-s> :w<cr>
 " Write current file and exit.
 nnoremap <c-q> ZZ
-" Force-close buffer and close window or exit.
-" nnoremap <c-f><c-q> :bd!<cr>ZZ
 
 " --- Window management <leader>-w
 " Add leader-w prefix for all window commands.
@@ -262,9 +306,9 @@ nnoremap <leader>bn :bn<cr>
 " Prev buffer
 nnoremap <leader>bp :bp<cr>
 " List buffers
-nnoremap <leader>bl :Buffers<cr>
+nnoremap <leader>bb :Buffers<cr>
 " Edit previous buffer.
-nnoremap <leader>bb :edit #<cr>
+nnoremap <leader><tab> :edit #<cr>
 " Delete current buffer
 nnoremap <leader>bd :bd<cr>
 " Delete current buffer (force)
@@ -295,16 +339,15 @@ vnoremap < <gv
 nnoremap <leader>= magg=G`a:echo "File re-indented."<CR>
 
 " ---- Terminal ----
+" Open terminal
+nnoremap <silent> <C-t> :lua bs.termbelow()<cr>
 " Kill terminal and close the window.
 tnoremap <C-q> <C-\><C-n>:bdelete!<cr>
 " Enter normal mode.
 tnoremap <C-e> <C-\><C-n>
-" Easy switch to normal mode in terminal
-tnoremap <leader><esc> <C-\><C-n>0
-" Open terminal
-nnoremap <C-t> :lua basics.open_terminal()<cr>
-" Enter insert-mode when opening or switching to a terminal
-autocmd TermOpen,BufEnter term://* startinsert
+" Enter normal mode.
+tnoremap <leader><esc> <C-\><C-n>
+
 
 "}}}
 
@@ -312,12 +355,12 @@ autocmd TermOpen,BufEnter term://* startinsert
 " -- Experiments ------------------------------------------------------------{{{
 " ------------------------------------------------------------------------------
 
-" Load configuration from init.lua module.
-lua << EOF
-basics = require('basics')
-basics.init()
-EOF
-
+set pumblend=17
+" Makes floating PopUpMenu for completing stuff on the command line.
+set wildoptions+=pum
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " }}}
 
@@ -325,15 +368,19 @@ EOF
 " -- Notes ------------------------------------------------------------------{{{
 " ------------------------------------------------------------------------------
 
-" coc extensions for various languages.
-" :CocInstall coc-lua coc-clangd coc-jsoj coc-vimlsp coc-python coc-snippets coc-tsserver
+" Install python lsp server
+" python3 -m pip 'python-language-server[all]'
+
+" Reloading an existing module.
+" lua package.loaded['nlua.ftplugin'] = nil
+" Good explanation of autocommands.
+" https://developer.ibm.com/tutorials/l-vim-script-5/
 
 " ---- TO-DO ---- "
 " * Better color highlighting for vim-startify
 " * Check for coc.nvim requirements (vim version, node etc.)
 " * Open help and documentation in floating window.
-" * Organize init.vim by splitting it into multiple files.
-" * Learn how different config files work. e.g. ftplugin, autoload, colors etc.
+" * Move more config to lua as possible.
 
 
 " ---- Remember ---- "

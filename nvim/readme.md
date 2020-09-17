@@ -30,11 +30,4 @@ restart neovim.
 
 ## Troubleshooting
 
-If you see errors related to python provider not found. Install pynvim package.
-
-```
-python -m pip install pynvim
-```
-
-From inside neovim, run command `:UpdateRemotePlugins`
 
