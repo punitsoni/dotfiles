@@ -1,1 +1,1 @@
-# Config for non-login shells.
+# Config for login shells.

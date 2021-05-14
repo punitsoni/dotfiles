@@ -50,7 +50,7 @@ ff() {
       \( -not -name "*.bin" \) \
       \( -not -name "*.out" \) \
       \( -not -name "*.o" \) \
-      \( -not -name "*.pyc" \) \
+      \( -not -name "*.pyc" \)
   }
 
   __open_fzf() {
@@ -106,15 +106,6 @@ random_chuck_joke() {
 
 # Displays weather in your city.
 weather() {
-  curl "wttr.in?q0uFnM"
-}
-
-# Open a website in chrome as app.
-chrome_as_app() {
-  # Currently only works on macos.
-  # TODO: make this work on Linux as well.
-  /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
-    --disable-extensions \
-    --app="$1"
+  curl "wttr.in?q0uFnM";
 }
 

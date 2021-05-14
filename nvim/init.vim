@@ -35,12 +35,11 @@ Plug 'mxw/vim-jsx'
 " Fancy startup screen for vim.
 Plug 'mhinz/vim-startify'
 " Configs for neovim builtin LSP client.
-Plug 'neovim/nvim-lspconfig'
+" Plug 'neovim/nvim-lspconfig'
 " Better diagnostics for nvim lsp
 Plug 'nvim-lua/diagnostic-nvim'
 " Completion for nvim lsp.
 Plug 'nvim-lua/completion-nvim'
-
 
 " ---- Themes ---- "
 
@@ -51,7 +50,7 @@ Plug 'reedes/vim-colors-pencil'
 " ---- My plugins ---- "
 
 " Workspace manager.
-Plug 'punitsoni/wsp-vim'
+" Plug 'punitsoni/wsp-vim'
 
 " ---- Expremental ---- "
 
@@ -129,7 +128,7 @@ set wildignore+=*.out,*.deb,*/__pycache__/*
 "
 " set inccommand=split
 " Use number colum for diagnostic signs.
-set signcolumn=number
+" set signcolumn=number
 " Things should update faster.
 set updatetime=1000
 " Make it so there are always ten lines below my cursor
@@ -140,11 +139,11 @@ set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 
 " Load configuration from basics.lua module.
-lua << EOF
-package.loaded['basics'] = nil
-bs = require('basics')
-bs.init()
-EOF
+" lua << EOF
+" package.loaded['basics'] = nil
+" bs = require('basics')
+" bs.init()
+" EOF
 
 " ---- Setup Misc. ---- "
 
@@ -222,17 +221,21 @@ set background=dark
 " highlight cursor line
 set cursorline
 
+let g:one_allow_italics = 1
+let g:airline_theme = 'one'
+colorscheme one
+
 " if v:lua.bs.has_colorscheme('one')
 "   let g:one_allow_italics = 1
 "   let g:airline_theme = 'one'
 "   colorscheme one
 " endif
 
-if v:lua.bs.has_colorscheme('pencil')
-  let g:pencil_terinal_italics = 1
-  let g:airline_theme = 'pencil'
-  colorscheme pencil
-endif
+" if v:lua.bs.has_colorscheme('pencil')
+"   let g:pencil_terinal_italics = 1
+"   let g:airline_theme = 'pencil'
+"   colorscheme pencil
+" endif
 
 " if v:lua.bs.has_colorscheme('neo')
 "   colorscheme neo

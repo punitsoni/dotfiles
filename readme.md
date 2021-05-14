@@ -1,11 +1,10 @@
-# CONFIGS
+# The `dotfiles`
 
-## Configure `bash`
+## Configure Shell
 
-Create a `.bashrc` file in your home directory with following content.
+Create a `.bashrc` or `.zshrc` file in your home directory with following content.
 
-
-```bash
+```sh
 # ---------------------------------- Setup ---------------------------------- #
 
 # If not running in interactive mode; just return.
@@ -15,7 +14,7 @@ Create a `.bashrc` file in your home directory with following content.
 export CFGS=$HOME/dotfiles
 
 # Source global bash configuration.
-source $CFGS/bash/bashrc_main.sh
+source $CFGS/sh/main.sh
 
 # ------------ Add custom ad-hoc configuration below this line. ------------- #
 
