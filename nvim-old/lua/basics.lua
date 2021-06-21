@@ -47,38 +47,38 @@ local function init_lsp()
   vim.g.space_before_virtual_text = 8
 
   -- Setup LSP for lua.
-  nvim_lsp.sumneko_lua.setup({
-    -- on_attach = require'diagnostic'.on_attach,
-    on_attach = lsp_on_attach,
-    settings = {
-      Lua = {
-        runtime = { version = 'LuaJIT', path = vim.split(package.path, ';'), },
-        completion = { keywordSnippet = 'Disable', },
-        diagnostics = {
-          enable = true,
-          globals = {
-            'vim', 'describe', 'it', 'before_each', 'after_each'
-          },
-        },
-        workspace = {
-          library = {
-            [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-          }
-        }
-      }
-    }
-  })
+  -- nvim_lsp.sumneko_lua.setup({
+  --   -- on_attach = require'diagnostic'.on_attach,
+  --   on_attach = lsp_on_attach,
+  --   settings = {
+  --     Lua = {
+  --       runtime = { version = 'LuaJIT', path = vim.split(package.path, ';'), },
+  --       completion = { keywordSnippet = 'Disable', },
+  --       diagnostics = {
+  --         enable = true,
+  --         globals = {
+  --           'vim', 'describe', 'it', 'before_each', 'after_each'
+  --         },
+  --       },
+  --       workspace = {
+  --         library = {
+  --           [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+  --         }
+  --       }
+  --     }
+  --   }
+  -- })
 
-  -- Setup LSP for VimL.
-  nvim_lsp.vimls.setup({
-    on_attach = lsp_on_attach,
-  })
+  -- -- Setup LSP for VimL.
+  -- nvim_lsp.vimls.setup({
+  --   on_attach = lsp_on_attach,
+  -- })
 
-  -- TODO: autocheck to make sure pyls is available in $PATH
-  -- Setup LSP for Python.
-  nvim_lsp.pyls.setup({
-    on_attach = lsp_on_attach,
-  })
+  -- -- TODO: autocheck to make sure pyls is available in $PATH
+  -- -- Setup LSP for Python.
+  -- nvim_lsp.pyls.setup({
+  --   on_attach = lsp_on_attach,
+  -- })
 
 end
 
@@ -149,6 +149,10 @@ end
 function M.wininfo()
   local ws = vim.fn.getwininfo()
   M.show(ws)
+end
+
+function M.install_missing_plugins()
+  M.show(vim.g.plugs)
 end
 
 return M

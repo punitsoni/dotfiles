@@ -34,7 +34,7 @@ PROMPT_COMMAND=__brc_on_prompt
 
 alias eshrc="$EDITOR $HOME/.bashrc"
 # Edit bashrc_main
-alias eshrcm="$EDITOR $CFGS/bash/bash_config.sh"
+alias eshrcm="$EDITOR $CFGS/sh/bash_config.sh"
 # Source bashrc.
 alias shrc="source $HOME/.bashrc"
 

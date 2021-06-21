@@ -70,10 +70,10 @@ ff() {
 cursor() {
   if [[ $1 == "block" ]]; then
       # Set terminal cursor to block.
-      echo -ne '\e[2 q'
+      echo -ne '\e[2 q';
   else
       # Default: Set terminal cursor to I-beam.
-      echo -ne '\e[6 q'
+      echo -ne '\e[6 q';
   fi
 }
 
