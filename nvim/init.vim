@@ -3,9 +3,9 @@
 " ------------------------------------------------------------------------------
 
 " Path to the plugin location. stdpath("data") points to ~/.local/share/nvim
-let g:plugdir = stdpath("data") . "/plugged"
+let g:plugdir = stdpath("data") . "/vim-plug"
 
-" Begin listing the plugins to load.
+" Start plugin setup.
 call plug#begin(g:plugdir)
 
 " Let plug manage plug.
@@ -26,16 +26,17 @@ Plug 'tpope/vim-repeat'
 " Use * to search for selections.
 Plug 'bronson/vim-visual-star-search'
 " Fuzzy File Finder in ~/.fzf and run the install script
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 " Syntax Highlight for javascript
 Plug 'pangloss/vim-javascript'
 " React JSX syntax
 Plug 'mxw/vim-jsx'
 " Fancy startup screen for vim.
-Plug 'mhinz/vim-startify'
+" Plug 'mhinz/vim-startify'
 " Configs for neovim builtin LSP client.
-" Plug 'neovim/nvim-lspconfig'
+Plug 'neovim/nvim-lspconfig'
 " Better diagnostics for nvim lsp
 Plug 'nvim-lua/diagnostic-nvim'
 " Completion for nvim lsp.
@@ -50,7 +51,7 @@ Plug 'reedes/vim-colors-pencil'
 " ---- My plugins ---- "
 
 " Workspace manager.
-" Plug 'punitsoni/wsp-vim'
+Plug 'punitsoni/wsp-vim'
 
 " ---- Expremental ---- "
 
@@ -61,7 +62,7 @@ Plug 'reedes/vim-colors-pencil'
 " Fuzzy finder written in lua.
 " Plug 'nvim-lua/telescope.nvim'
 
-" Initialize all plugins.
+" Finish plugin setup.
 call plug#end()
 
 "}}}
@@ -128,22 +129,26 @@ set wildignore+=*.out,*.deb,*/__pycache__/*
 "
 " set inccommand=split
 " Use number colum for diagnostic signs.
-" set signcolumn=number
+set signcolumn=number
 " Things should update faster.
 set updatetime=1000
 " Make it so there are always ten lines below my cursor
 set scrolloff=10
 " Better completion experience.
 set completeopt=menuone,noinsert,noselect
-" Avoid showing message extra message when using completion.
+" Avoid showing status message when using completion.
 set shortmess+=c
+" Enable truecolor on terminals.
+set termguicolors
+" Set background dark or light for different versions of the theme.
+set background=dark
+" highlight cursor line
+" set cursorline
+" Pop-up menu transperancy.
+set pumblend=17
+" Makes floating PopUpMenu for completing stuff on the command line.
+set wildoptions+=pum
 
-" Load configuration from basics.lua module.
-" lua << EOF
-" package.loaded['basics'] = nil
-" bs = require('basics')
-" bs.init()
-" EOF
 
 " ---- Setup Misc. ---- "
 
@@ -154,81 +159,13 @@ runtime macros/matchit.vim
 " }}}
 
 " ------------------------------------------------------------------------------
-" -- Autocommands -----------------------------------------------------------{{{
-" ------------------------------------------------------------------------------
-
-" disable automatic comment insertion
-function! DisableAutoComment()
-  " See :help fo-table
-  setlocal formatoptions-=c
-  setlocal formatoptions-=r
-  setlocal formatoptions-=o
-endfunction
-
-augroup AllFileTypes
-  autocmd!
-  autocmd FileType * :call DisableAutoComment()
-augroup END
-
-" Jump to the last position when reopening a file
-function! JumpToLastKnownPosition()
-  if line("'\"") > 1 && line("'\"") <= line("$")
-    exe "normal! g'\""
-  endif
-endfunction
-
-augroup AllBufRead
-  autocmd!
-  autocmd BufRead * :call JumpToLastKnownPosition()
-augroup END
-
-function! OnTerminalEnter()
-  setlocal nonumber
-  startinsert
-endfunction
-
-augroup EnterTerminal
-  autocmd!
-  " Enter insert-mode.
-  " autocmd TermOpen,BufEnter term://* startinsert
-  autocmd TermOpen,BufEnter term://* :call OnTerminalEnter()
-augroup END
-
-function! OnTerminalClose()
-  bdelete!
-  " If this is not last window, close it.
-  if winbufnr(2) != -1
-    close
-  endif
-endfunction
-
-augroup TerminalClosed
-  autocmd!
-  autocmd TermClose term://* :call OnTerminalClose()
-augroup END
-
-
-"}}}
-
-" ------------------------------------------------------------------------------
 " -- Appearance and Themes --------------------------------------------------{{{
 " ------------------------------------------------------------------------------
 
-" Enable truecolor.
-set termguicolors
-" Set background dark or light for different versions of the theme.
-set background=dark
-" highlight cursor line
-set cursorline
-
+" if v:lua.bs.has_colorscheme('one')
 let g:one_allow_italics = 1
 let g:airline_theme = 'one'
 colorscheme one
-
-" if v:lua.bs.has_colorscheme('one')
-"   let g:one_allow_italics = 1
-"   let g:airline_theme = 'one'
-"   colorscheme one
 " endif
 
 " if v:lua.bs.has_colorscheme('pencil')
@@ -259,8 +196,8 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 " Better keymap to exit insert mode
 inoremap jk <esc>
 " Better shortcuts for pg-up and pg-down.
-nnoremap <c-k> <c-u>zz
-nnoremap <c-j> <c-d>zz
+nnoremap K <c-u>zz
+nnoremap J <c-d>zz
 " Better line append.
 nnoremap L A
 " Symmetric shortcut for redo (undo-undo)
@@ -351,6 +288,64 @@ tnoremap <C-e> <C-\><C-n>
 " Enter normal mode.
 tnoremap <leader><esc> <C-\><C-n>
 
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+"}}}
+
+" ------------------------------------------------------------------------------
+" -- Autocommands -----------------------------------------------------------{{{
+" ------------------------------------------------------------------------------
+
+" disable automatic comment insertion
+function! DisableAutoComment()
+  " See :help fo-table
+  setlocal formatoptions-=c
+  setlocal formatoptions-=r
+  setlocal formatoptions-=o
+endfunction
+
+augroup AllFileTypes
+  autocmd!
+  autocmd FileType * :call DisableAutoComment()
+augroup END
+
+" Jump to the last position when reopening a file
+function! JumpToLastKnownPosition()
+  if line("'\"") > 1 && line("'\"") <= line("$")
+    exe "normal! g'\""
+  endif
+endfunction
+
+augroup AllBufRead
+  autocmd!
+  autocmd BufRead * :call JumpToLastKnownPosition()
+augroup END
+
+function! OnTerminalEnter()
+  setlocal nonumber
+  startinsert
+endfunction
+
+augroup EnterTerminal
+  autocmd!
+  autocmd TermOpen,BufEnter term://* :call OnTerminalEnter()
+augroup END
+
+function! OnTerminalClose()
+  bdelete!
+  " If this is not last window, close it.
+  if winbufnr(2) != -1
+    close
+  endif
+endfunction
+
+augroup TerminalClosed
+  autocmd!
+  autocmd TermClose term://* :call OnTerminalClose()
+augroup END
+
 
 "}}}
 
@@ -358,12 +353,12 @@ tnoremap <leader><esc> <C-\><C-n>
 " -- Experiments ------------------------------------------------------------{{{
 " ------------------------------------------------------------------------------
 
-set pumblend=17
-" Makes floating PopUpMenu for completing stuff on the command line.
-set wildoptions+=pum
-" Use <Tab> and <S-Tab> to navigate through popup menu
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" Load configuration from basics.lua module.
+" lua << EOF
+" package.loaded['basics'] = nil
+" bs = require('basics')
+" bs.init()
+" EOF
 
 " }}}
 
