@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =6
+let g:netrw_dirhist_6='/Users/punitsoni/work'
+let g:netrw_dirhist_5='/Users/punitsoni/.config/kitty/kitty-themes'
+let g:netrw_dirhist_4='/Users/punitsoni/dotfiles/nvim/plugin'
+let g:netrw_dirhist_3='/Users/punitsoni/dotfiles/nvim/ftplugin'
+let g:netrw_dirhist_2='/Users/punitsoni/dotfiles/nvim'
+let g:netrw_dirhist_1='/Users/punitsoni/dotfiles/alacritty/colors'
+let g:netrw_dirhist_0='/Users/punitsoni/.local/share/nvim/plugged/vim-colors-pencil/autoload/airline/themes'
+let g:netrw_dirhist_9='/Users/punitsoni/.local/share/nvim/plugged/vim-colors-pencil/autoload/airline'
+let g:netrw_dirhist_8='/Users/punitsoni/.local/share/nvim/plugged/vim-colors-pencil/autoload'
+let g:netrw_dirhist_7='/Users/punitsoni/.local/share/nvim/plugged/vim-colors-pencil/autoload/airline/themes'
