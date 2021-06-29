@@ -63,7 +63,7 @@ set expandtab       " expand tab to spaces so that tabs are spaces
 " Set matching pairs of characters and highlight matching brackets
 set matchpairs+=<:>,「:」
 
-" Show line number and relative line number
+" Show line number
 set number
 
 " Ignore case in general, but become case-sensitive when uppercase is present
@@ -274,7 +274,7 @@ if exists('##TermOpen')
     augroup term_settings
         autocmd!
         " Do not use number and relative number for terminal inside nvim
-        autocmd TermOpen * setlocal norelativenumber nonumber
+        autocmd TermOpen * setlocal nonumber
         " Go to insert mode by default to start typing command
         autocmd TermOpen * startinsert
     augroup END
@@ -314,7 +314,6 @@ augroup END
 
 augroup number_toggle
     autocmd!
-    autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &number | set relativenumber | endif
     autocmd BufLeave,FocusLost,InsertEnter,WinLeave * if &number | set norelativenumber | endif
 augroup END
 "}
@@ -323,8 +322,8 @@ augroup END
 " Save key strokes (now we do not need to press shift to enter command mode).
 " Vim-sneak has also mapped `;`, so using the below mapping will break the map
 " used by vim-sneak
-nnoremap ; :
-xnoremap ; :
+"nnoremap ; :
+"xnoremap ; :
 
 " Quicker way to open command window
 nnoremap q; q:
@@ -373,8 +372,8 @@ nnoremap <silent><expr> <Leader>hl (&hls && v:hlsearch ? ':nohls' : ':set hls').
 
 " Insert a blank line below or above current line (do not move the cursor),
 " see https://stackoverflow.com/a/16136133/6064933
-nnoremap <expr> oo 'm`' . v:count1 . 'o<Esc>``'
-nnoremap <expr> OO 'm`' . v:count1 . 'O<Esc>``'
+"nnoremap <expr> oo 'm`' . v:count1 . 'o<Esc>``'
+"nnoremap <expr> OO 'm`' . v:count1 . 'O<Esc>``'
 
 " nnoremap oo @='m`o<c-v><Esc>``'<cr>
 " nnoremap OO @='m`O<c-v><Esc>``'<cr>

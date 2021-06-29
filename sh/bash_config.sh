@@ -16,6 +16,7 @@ fi
 
 # ------------------------- Environment Variables --------------------------- #
 
+export HISTCONTROL=ignoredups:erasedups
 export HISTSIZE=10000
 
 # --------------------------------- Prompt ---------------------------------- #
