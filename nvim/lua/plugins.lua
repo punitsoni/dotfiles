@@ -40,6 +40,14 @@ paq {
   { 'nvim-telescope/telescope.nvim' },
 }
 
+
+-- A simple way to check if plugins are installed. If not, we automatically
+-- install them.
+local plugins_installed, _ = pcall(require, 'nvim-treesitter.configs')
+if not plugins_installed then
+  paq.install()
+end
+
 require 'nvim-treesitter.configs'.setup {
   ensure_installed = {
     'lua', 'c', 'cpp', 'python', 'bash', 'javascript', 'html', 'json'
