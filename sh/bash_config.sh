@@ -28,13 +28,13 @@ __brc_on_prompt() {
   printf '\033[6 q'
 }
 
-source $CFGS/sh/ansicolors.sh
+source $DOTFILES/sh/ansicolors.sh
 PS1="\u @\h ${C_GREEN}[\w]\n${C_YELLOW}$ ${C_RESET}"
 PROMPT_COMMAND=__brc_on_prompt
 
 alias eshrc="$EDITOR $HOME/.bashrc"
 # Edit bashrc_main
-alias eshrcm="$EDITOR $CFGS/sh/bash_config.sh"
+alias eshrcm="$EDITOR $DOTFILES/sh/bash_config.sh"
 # Source bashrc.
 alias shrc="source $HOME/.bashrc"
 

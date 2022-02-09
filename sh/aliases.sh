@@ -43,7 +43,7 @@ alias less="less -r"
 # Edit bashrc.
 alias ebrc="${EDITOR} ${HOME}/.bashrc"
 # Edit bashrc_main
-alias ebrcm="${EDITOR} ${CFGS}/bash/bashrc_main.sh"
+alias ebrcm="${EDITOR} ${DOTFILES}/bash/bashrc_main.sh"
 # Source bashrc.
 alias sbrc="source ${HOME}/.bashrc"
 
@@ -51,7 +51,7 @@ alias sbrc="source ${HOME}/.bashrc"
 # Edit local shell rc.
 alias eshrc="${EDITOR} ${HOME}/.zshrc"
 # Edit main shell rc.
-alias eshrcm="${EDITOR} ${CFGS}/sh/zshrc_main.zsh"
+alias eshrcm="${EDITOR} ${DOTFILES}/sh/zshrc_main.zsh"
 # Source local shell rc.
 alias shrc="source ${HOME}/.zshrc"
 
@@ -59,7 +59,7 @@ alias shrc="source ${HOME}/.zshrc"
 # Edit zshrc.
 alias ezrc="$EDITOR $HOME/.zshrc"
 # Edit zshrc_main.
-alias ezrcm="$EDITOR $CFGS/sh/zshrc_main.zsh"
+alias ezrcm="$EDITOR $DOTFILES/sh/zshrc_main.zsh"
 # Source bashrc.
 alias szrc="source $HOME/.zshrc"
 

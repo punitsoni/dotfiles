@@ -61,7 +61,7 @@ alt + shift - o: yabai -m space --rotate 90
 # keycode 0x18 is '=' key
 alt + shift - 0x18 : yabai -m space --balance
 
-alt + ctrl - l: sh ${CFGS}/yabai/lock_screen.sh
+alt + ctrl - l: sh ${DOTFILES}/yabai/lock_screen.sh
 
 # Toggle floating and center it on screen.
 alt + shift - f: yabai -m window --toggle float && yabai -m window --grid 5:8:2:1:4:3

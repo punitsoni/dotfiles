@@ -125,7 +125,7 @@ alias help=run-help
 # Edit local shellrc.
 alias eshrc="${EDITOR} ${HOME}/.zshrc"
 # Edit main shellrc.
-alias eshrcm="${EDITOR} ${CFGS}/sh/zsh_config.zsh"
+alias eshrcm="${EDITOR} ${DOTFILES}/sh/zsh_config.zsh"
 # Source local shell rc.
 alias shrc="source ${HOME}/.zshrc"
 
