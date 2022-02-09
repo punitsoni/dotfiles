@@ -27,10 +27,10 @@ Create a `.bashrc` or `.zshrc` file in your home directory with following conten
 [ ! "echo $- | grep -q 'i'" ] && return
 
 # Path to the configs directory.
-export CFGS=$HOME/dotfiles
+export DOTFILES=$HOME/dotfiles
 
 # Source global bash configuration.
-source $CFGS/sh/main.sh
+source $DOTFILES/sh/main.sh
 
 # ------------ Add custom ad-hoc configuration below this line. ------------- #
 
@@ -38,13 +38,15 @@ source $CFGS/sh/main.sh
 # ------------ Config added automatically by some installed packages -------- #
 
 ```
+
+Restart your terminal.
+
 ## Configure `tmux`
 
 * Install tmux
 
 ```
-ln -s $CFGS/tmux/tmux.conf ~/.tmux.conf
-ln -s $CFGS/tmux/tmux.conf.local ~/.tmux.conf.local
+ln -s $DOTFILES/tmux/tmux.conf ~/.tmux.conf && ln -s $DOTFILES/tmux/tmux.conf.local ~/.tmux.conf.local
 ```
 
 ### Troubleshooting
@@ -53,7 +55,7 @@ If you see a problem using `clear` command related to terminfo. Please install
 the tmux terminfo database.
 
 ```
-tic -x $CFGS/resources/tmux.terminfo
+tic -x $DOTFILES/resources/tmux.terminfo
 ```
 
 ## Configure `i3` window manager
@@ -61,9 +63,9 @@ tic -x $CFGS/resources/tmux.terminfo
 ```sh
 mkdir -p $HOME/.config/i3
 mkdir -p $HOME/.config/polybar
-ln -s $CFGS/i3/config $HOME/.config/i3/config
-ln -s $CFGS/i3/compton.conf $HOME/.config/compton.conf
-ln -s $CFGS/i3/polybar_config $HOME/.config/polybar/config
+ln -s $DOTFILES/i3/config $HOME/.config/i3/config
+ln -s $DOTFILES/i3/compton.conf $HOME/.config/compton.conf
+ln -s $DOTFILES/i3/polybar_config $HOME/.config/polybar/config
 ```
 
 ## Kitty terminal
