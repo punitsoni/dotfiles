@@ -81,6 +81,10 @@ opt.termguicolors = true
 opt.background = 'dark'
 -- Pop-up menu transperancy.
 opt.pumblend = 17
+-- Do not fold small blocks.
+opt.foldminlines = 3
+-- Start with all folds open
+opt.foldlevelstart = 99
 
 -- TODO: Currently following does not work due to a bug.
 -- runcmd ([[

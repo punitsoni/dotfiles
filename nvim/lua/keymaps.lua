@@ -24,9 +24,9 @@ map ('n','U','<c-r>' )
 map ('n','<c-o>','yyp' )
 
 -- Fold-toggle current
-map ('n','<space>;','zazz0' )
+map ('n','<space>;','za' )
 --" Fold-toggle all
-map ('n','<space>o',"&foldlevel ? 'zMzz0' : 'zRzz0'", {expr=true})
+map ('n','<space>o',"&foldlevel ? 'zM' : 'zR'", {expr=true})
 
 -- Indent and un-indent in visual mode.
 map ('v','<tab>;','>gv' )

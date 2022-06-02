@@ -2,9 +2,12 @@ require 'general'
 require 'plugins'
 require 'keymaps'
 
--- Experimentation --
 
 require 'setup_lua_lsp'
+
+vim.cmd 'silent! colorscheme sonokai'
+
+-- Experimentation --
 
 -- local lsp_install = require 'lspinstall'
 
