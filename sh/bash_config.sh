@@ -29,7 +29,7 @@ __brc_on_prompt() {
 }
 
 source $DOTFILES/sh/ansicolors.sh
-PS1="\u @\h ${C_GREEN}[\w]\n${C_YELLOW}$ ${C_RESET}"
+PS1="\n\u @\h ${C_GREEN}[\w]\n${C_YELLOW}$ ${C_RESET}"
 PROMPT_COMMAND=__brc_on_prompt
 
 alias eshrc="$EDITOR $HOME/.bashrc"
