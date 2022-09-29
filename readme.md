@@ -7,7 +7,7 @@ Generate ssh key
 ssh-keygen -t ed25519 -C "you@gmail.com"
 ```
 
-Add ssh key to your github account
+Add ssh key to your github account (https://github.com/settings/keys)
 ```
 cat ~/.ssh/id_ed25519.pub
 ```
