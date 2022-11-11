@@ -12,7 +12,9 @@ end
 map ('n','Q','<nop>')
 -- Clear search high-light.
 map ('n','<space><space>',':noh<cr>:echo ""<cr>')
+-- Edit config file.
 map ('n','<space>ev',':edit $MYVIMRC<cr>')
+-- Source config file.
 map ('n','<space>sv',':source $MYVIMRC<cr>' )
 -- Page-up and Page-down.
 map ('n','<c-k>','<c-u>zz' )
@@ -21,7 +23,7 @@ map ('n','H','I' )
 map ('n','L','A' )
 map ('n','U','<c-r>' )
 -- Duplicate current line
-map ('n','<c-o>','yyp' )
+-- map ('n','<c-o>','yyp' )
 
 -- Fold-toggle current
 map ('n','<space>;','za' )
@@ -70,7 +72,6 @@ map ('n','<leader>h','<c-w>h' )
 map ('n','<leader>j','<c-w>j' )
 map ('n','<leader>k','<c-w>k' )
 map ('n','<leader>l','<c-w>l' )
-
 
 -- Select command from history.
 map ('n','<space>hc',':NotImplemented' )

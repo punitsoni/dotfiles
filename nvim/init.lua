@@ -1,13 +1,13 @@
 require 'general'
-require 'plugins'
+-- require 'plugins'
+require 'packer_plugins'
 require 'keymaps'
 
-
-require 'setup_lua_lsp'
+-- require 'setup_lua_lsp'
 
 vim.cmd 'silent! colorscheme sonokai'
 
--- Experimentation --
+-- EXPERIMENTATION --
 
 -- local lsp_install = require 'lspinstall'
 

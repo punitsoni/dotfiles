@@ -7,8 +7,6 @@ local fn = vim.fn    -- to call Vim functions e.g. fn.bufnr()
 -- Shorthand for vim options.
 local opt = vim.opt
 
-
-
 ------------- Options ---------------
 
 -- Highlight search term as you type.
