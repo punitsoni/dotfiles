@@ -23,20 +23,19 @@ zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
 # List plugins here. Make sure to use double quotes to prevent shell
 # expansion.
+#
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
-zplug "mafredri/zsh-async", from:github
-# zplug "zsh-users/zsh-autosuggestions", from:github
-# zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
-# zplug "denysdovhan/spaceship-prompt", use:spaceship.zsh, from:github, as:theme
+# zplug "mafredri/zsh-async", from:github
+#
+zplug "zsh-users/zsh-autosuggestions", from:github
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
-  echo "Installing plugins..."
-  zplug install
-    # printf "Install? [y/N]: "
-    # if read -q; then
-    #     echo; zplug install
-    # fi
+  printf "New plugins found. Install? [y/N]: "
+  if read -q; then
+      echo;
+      zplug install
+  fi
 fi
 
 # Then, source plugins and add commands to $PATH

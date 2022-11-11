@@ -9,3 +9,4 @@ if [[ -n ${ZSH_VERSION} ]]; then
 elif [[ -n ${BASH_VERSION} ]]; then
   source $DOTFILES/sh/bash_config.sh
 fi
+
