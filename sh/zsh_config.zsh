@@ -24,10 +24,10 @@ zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 # List plugins here. Make sure to use double quotes to prevent shell
 # expansion.
 #
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
+# zplug "zsh-users/zsh-syntax-highlighting", defer:2
 # zplug "mafredri/zsh-async", from:github
-#
-zplug "zsh-users/zsh-autosuggestions", from:github
+# Following seems to make shell response very slow.
+# zplug "zsh-users/zsh-autosuggestions", from:github
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
@@ -42,6 +42,8 @@ fi
 zplug load
 
 # --- Plugin configurations.
+#
+# TODO: check if plugin is enabled.
 # zsh-autosuggestions
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=48
 ZSH_AUTOSUGGEST_USE_ASYNC=1

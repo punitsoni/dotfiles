@@ -5,6 +5,7 @@
 # --------------------------------------------------------------------------- #
 #                            Environment Variables
 # --------------------------------------------------------------------------- #
+# Use programs from your own bin/
 export PATH=${HOME}/bin:${PATH}
 
 # Set EDITOR to vim if not set already.
