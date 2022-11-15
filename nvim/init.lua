@@ -1,6 +1,5 @@
 require 'general'
--- require 'plugins'
-require 'packer_plugins'
+require 'plugins'
 require 'keymaps'
 
 -- require 'setup_lua_lsp'

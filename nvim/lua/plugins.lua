@@ -1,73 +1,64 @@
-local runcmd = vim.cmd  -- to execute Vim commands e.g. runcmd('pwd')
 
-local install_plugins = false
+-- Ensures that the package manager packer is installed. Returns true if this
+-- was a first-time setup and packer was newly installed.
+local ensure_packer = function()
 
--- if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
---   print('Installing packer...')
---   local packer_url = 'https://github.com/wbthomason/packer.nvim'
---   vim.fn.system({'git', 'clone', '--depth', '1', packer_url, install_path})
---   print('Done.')
--- 
---   vim.cmd('packadd packer.nvim')
---   install_plugins = true
--- end
+  local install_path =
+    vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
--- Installs paq if it is not installed already.
-local function paq_init()
-  local stdpath_data = vim.fn.stdpath('data')
-  local pac_install_dir = stdpath_data .. '/site/pack/paqs/start/paq-nvim'
-  if 0 == vim.fn.isdirectory(pac_install_dir) then
-    print('installing pac...')
-    runcmd('silent !git clone --depth=1 https://github.com/savq/paq-nvim.git '
-      .. pac_install_dir)
-    print('DONE')
+  if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+    print('Installing packer at ' .. install_path)
+    local packer_url = 'https://github.com/wbthomason/packer.nvim'
+    vim.fn.system({'git', 'clone', '--depth', '1', packer_url, install_path})
+    print('Done.')
+    vim.cmd('packadd packer.nvim')
+    return true
   end
-  -- Load paq plugin manager.
-  runcmd 'packadd paq-nvim'
-  return require 'paq-nvim'
+  return false
 end
 
-local paq = paq_init()
+local packer_bootstrap = ensure_packer()
 
-paq {
-  -- Let paq manage itself.
-  { 'savq/paq-nvim' };
+require('packer').startup(function(use)
+  -- Let packer manage itself.
+  use 'wbthomason/packer.nvim'
 
-  -- BASICS
-  -- Plugin for built-in treesitter configuration.
-  { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
-  -- Config for builtin LSP client.
-  { 'neovim/nvim-lspconfig' },
   -- Toggle code-commenting
-  {'tpope/vim-commentary'},
-  -- Better looking status line.
-  -- { 'vim-airline/vim-airline' },
-  -- Nice startup page.
-  -- { 'mhinz/vim-startify' },
+  use 'tpope/vim-commentary'
 
-  -- THEMES
-  { 'sainnhe/sonokai' },
+  -- Telescope fuzzy-finder.
+  use {
+    'nvim-telescope/telescope.nvim',
+    tag = '0.1.0',
+    requires = {'nvim-lua/plenary.nvim'}
+  }
 
-  -- telescope with dependencies
-  { 'nvim-lua/plenary.nvim' },
-  { 'nvim-lua/popup.nvim' },
-  { 'nvim-telescope/telescope.nvim' },
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = function()
+      require('nvim-treesitter.install').update({ with_sync = true })()
+    end
+  }
 
-  -- EXPERIMENTAL
-  { 'dstein64/vim-startuptime' },
+  ---- THEMES ----
+  use 'sainnhe/sonokai'
+  use 'gruvbox-community/gruvbox'
 
   -- NOTE: Avoid these performance killer plugins.
   -- Increases startup time
   -- * vim-airline
-  -- * vim -startify
-}
+  -- * vim-startify
 
-paq.install()
+  if packer_bootstrap then
+    require('packer').sync()
+  end
+end)
 
-require'nvim-treesitter.configs'.setup {
+require('nvim-treesitter.configs').setup {
   ensure_installed = {
-    'lua', 'c', 'cpp', 'python', 'bash', 'javascript', 'html', 'json'
+    'lua', 'c', 'cpp', 'python', 'bash'
   },
+  sync_install = false,
   highlight = {
     enable = true,
   },
@@ -76,13 +67,20 @@ require'nvim-treesitter.configs'.setup {
   }
 }
 
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+telescope_actions = require('telescope.actions')
 
-require'telescope'.setup{
+require('telescope').setup{
   defaults = {
-    prompt_prefix = '>> ',
-    winblend = 15,
-  }
+    mappings = {
+      i = {
+        ['<esc>'] = telescope_actions.close
+      },
+    },
+    layout_strategy = 'center',
+    preview = {
+      hide_on_startup = true,
+      filesize_limit = 5
+    }
+  },
 }
 

@@ -84,12 +84,5 @@ opt.foldminlines = 3
 -- Start with all folds open
 opt.foldlevelstart = 99
 
--- TODO: Currently following does not work due to a bug.
--- runcmd ([[
---   augroup AllFileTypes
---   autocmd!
---   autocmd FileType * :setlocal formatoptions-=o
---   augroup END
--- ]])
-
+vim.cmd('set formatoptions-=ro')
 

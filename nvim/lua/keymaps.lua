@@ -2,11 +2,15 @@
 -- Helper function for keymapping.
 local function map(mode, lhs, rhs, opts)
   local options = {noremap = true}
-  if opts then 
+  if opts then
     options = vim.tbl_extend('force', options, opts)
   end
-  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+  -- vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+  vim.keymap.set(mode, lhs, rhs, options)
 end
+
+-- TODO: make sure telescope is loaded.
+telescope_builtin = require('telescope.builtin')
 
 -- Avoid entering Ex mode accidentally.
 map ('n','Q','<nop>')
@@ -17,8 +21,8 @@ map ('n','<space>ev',':edit $MYVIMRC<cr>')
 -- Source config file.
 map ('n','<space>sv',':source $MYVIMRC<cr>' )
 -- Page-up and Page-down.
-map ('n','<c-k>','<c-u>zz' )
-map ('n','<c-j>','<c-d>zz' )
+map ('n','<c-u>','<c-u>zz' )
+map ('n','<c-d>','<c-d>zz' )
 map ('n','H','I' )
 map ('n','L','A' )
 map ('n','U','<c-r>' )
@@ -48,7 +52,7 @@ map ('i', '<s-tab>', 'pumvisible() ? "<c-p>" : "<s-tab>"', {expr=true})
 map ('n','<space>bp',':bp<cr>' )
 map ('n','<space>bn',':bn<cr>' )
 -- Select a buffer to edit.
-map ('n','<space>bb',':Telescope buffers<cr>' )
+vim.keymap.set('n', '<space>bb', telescope_builtin.buffers, {})
 -- Edit previous buffer.
 map ('n','<space><tab>',':edit #<cr>' )
 -- Delete current buffer.
@@ -79,9 +83,15 @@ map ('n','<space>hc',':NotImplemented' )
 map ('n','<space>hf',':NotImplemented' )
 -- Select from search history
 map ('n','<space>hs',':NotImplemented' )
--- Find files.
-map ('n','<space>ff',':Telescope find_files<cr>' )
 
 -- Autoformat code.
 map ('n','<space>=',':NotImplemented' )
+
+
+-- Find files.
+vim.keymap.set('n', '<space>ff', telescope_builtin.find_files, {})
+vim.keymap.set('n', '<space>fh', telescope_builtin.help_tags, {})
+
+-- File symbols using nvim-treesitter
+vim.keymap.set('n', '<space>fl', telescope_builtin.treesitter, {})
 
