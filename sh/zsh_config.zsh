@@ -23,11 +23,11 @@ zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
 # List plugins here. Make sure to use double quotes to prevent shell
 # expansion.
-#
-# zplug "zsh-users/zsh-syntax-highlighting", defer:2
-# zplug "mafredri/zsh-async", from:github
-# Following seems to make shell response very slow.
-# zplug "zsh-users/zsh-autosuggestions", from:github
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zplug "mafredri/zsh-async", from:github
+zplug "zsh-users/zsh-autosuggestions", from:github
+# zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
+# zplug "denysdovhan/spaceship-prompt", use:spaceship.zsh, from:github, as:theme
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
@@ -53,7 +53,7 @@ bindkey '^ ' autosuggest-accept
 # ------------------------------- My Config --------------------------------- #
 # --------------------------------------------------------------------------- #
 
-export PROMPT='%c $ '
+export PROMPT="%n@%m: %B%2d%b"$'\n'"$ "
 
 # -- Shell options
 setopt AUTO_CD
@@ -122,6 +122,7 @@ autoload -Uz run-help
 # unalias run-help
 alias help=run-help
 
+# ------------------------------- Aliases ----------------------------------- #
 # Implement common aliases.
 # Edit local shellrc.
 alias eshrc="${EDITOR} ${HOME}/.zshrc"

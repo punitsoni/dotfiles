@@ -1,11 +1,11 @@
 TODO
 ----
 
-* Sychronize colorscheme among alacritty, neovim and tmux.
 
+NOTES
+-----
 
-MISC
-----
+---
 
 Installing i3 gaps in debian. Best option is to build from source.
 https://github.com/Airblader/i3/wiki/Building-from-source
