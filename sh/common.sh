@@ -9,12 +9,13 @@
 export PATH=${HOME}/bin:${PATH}
 
 # Set EDITOR to vim if not set already.
-[[ -z ${EDITOR} ]] && export EDITOR=vim
+# [[ -z ${EDITOR} ]] && export EDITOR=vim
 
 # If neovim is available alias vim to neovim.
 if command -v nvim &> /dev/null; then
-    alias vim=nvim
-    alias vi=nvim
+  export EDITOR=nvim
+  alias vim=nvim
+  alias vi=nvim
 fi
 
 # --------------------------------------------------------------------------- #
