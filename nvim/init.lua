@@ -1,6 +1,6 @@
-require 'general'
-require 'plugins'
-require 'keymaps'
+require 'ps.general'
+require 'ps.plugins'
+require 'ps.keymaps'
 
 -- require 'setup_lua_lsp'
 

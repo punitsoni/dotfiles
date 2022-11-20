@@ -40,6 +40,8 @@ require('packer').startup(function(use)
     end
   }
 
+  use 'ThePrimeagen/harpoon'
+
   ---- THEMES ----
   use 'sainnhe/sonokai'
   use 'gruvbox-community/gruvbox'
@@ -47,12 +49,14 @@ require('packer').startup(function(use)
   -- NOTE: Avoid these performance killer plugins.
   -- Increases startup time
   -- * vim-airline
-  -- * vim-startify
 
   if packer_bootstrap then
     require('packer').sync()
   end
 end)
+
+print(vim.inspect(plugins))
+
 
 require('nvim-treesitter.configs').setup {
   ensure_installed = {
@@ -83,4 +87,8 @@ require('telescope').setup{
     }
   },
 }
+
+require('telescope').load_extension('harpoon')
+
+
 
