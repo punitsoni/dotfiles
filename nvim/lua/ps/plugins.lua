@@ -1,4 +1,3 @@
-
 -- Ensures that the package manager packer is installed. Returns true if this
 -- was a first-time setup and packer was newly installed.
 local ensure_packer = function()
@@ -54,41 +53,4 @@ require('packer').startup(function(use)
     require('packer').sync()
   end
 end)
-
-print(vim.inspect(plugins))
-
-
-require('nvim-treesitter.configs').setup {
-  ensure_installed = {
-    'lua', 'c', 'cpp', 'python', 'bash'
-  },
-  sync_install = false,
-  highlight = {
-    enable = true,
-  },
-  indent = {
-    enable = true
-  }
-}
-
-telescope_actions = require('telescope.actions')
-
-require('telescope').setup{
-  defaults = {
-    mappings = {
-      i = {
-        ['<esc>'] = telescope_actions.close
-      },
-    },
-    layout_strategy = 'center',
-    preview = {
-      hide_on_startup = true,
-      filesize_limit = 5
-    }
-  },
-}
-
-require('telescope').load_extension('harpoon')
-
-
 
