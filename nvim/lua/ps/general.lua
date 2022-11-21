@@ -84,5 +84,11 @@ opt.foldminlines = 3
 -- Start with all folds open
 opt.foldlevelstart = 99
 
-vim.cmd('set formatoptions-=ro')
+vim.api.nvim_create_autocmd(
+  { 'FileType' }, {
+  command = 'set formatoptions-=ro'
+})
+
+vim.g.mapleader = "<space>"
+
 
