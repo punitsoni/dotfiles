@@ -34,9 +34,6 @@ source $DOTFILES/sh/main.sh
 
 # ------------ Add custom ad-hoc configuration below this line. ------------- #
 
-
-# ------------ Config added automatically by some installed packages -------- #
-
 ```
 
 Restart your terminal.
