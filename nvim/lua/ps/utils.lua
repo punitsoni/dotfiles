@@ -1,4 +1,3 @@
-
 local M = {}
 
 -- Ensures that the package manager packer is installed. Returns true if this
@@ -23,4 +22,21 @@ M.plugin_loaded = function(name)
   return packer_plugins[name] and packer_plugins[name].loaded
 end
 
+-- Shorthand for mapping keys for insert mode
+M.imap = function(tbl)
+  vim.keymap.set('i', tbl[1], tbl[2], tbl[3])
+end
+
+-- Shorthand for mapping keys for normal mode
+M.nmap = function(tbl)
+  vim.keymap.set('n', tbl[1], tbl[2], tbl[3])
+end
+
+-- Shorthand for mapping keys for visual mode
+M.vmap = function(tbl)
+  vim.keymap.set('v', tbl[1], tbl[2], tbl[3])
+end
+
+
 return M
+

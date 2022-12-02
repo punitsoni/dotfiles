@@ -1,9 +1,5 @@
 -- Configuration for the native neovim features.
 
--- Shorthand for executing vim commands.
-local runcmd = vim.cmd
--- Shorthand for calling vim functions.
-local fn = vim.fn    -- to call Vim functions e.g. fn.bufnr()
 -- Shorthand for vim options.
 local opt = vim.opt
 
@@ -53,8 +49,11 @@ opt.number = true
 -- Better window splits.
 opt.splitbelow = true
 opt.splitright = true
+
+-- TODO: system keyboard makes things slow. Debug this.
 -- Use system clipboard
-opt.clipboard = 'unnamed'
+-- opt.clipboard = 'unnamed'
+
 -- Set the tab-completion for commands to be more similar to shell
 opt.wildmode = 'longest:full,full'
 opt.wildmenu = true
@@ -66,7 +65,7 @@ opt.wildignore = {
 -- Use number colum for diagnostic signs.
 opt.signcolumn = 'number'
 -- Things should update faster.
-opt.updatetime = 1000
+-- opt.updatetime = 1000
 -- Make it so there are always ten lines below my cursor
 -- opt.scrolloff = 10
 -- Better completion experience.
@@ -84,11 +83,21 @@ opt.foldminlines = 3
 -- Start with all folds open
 opt.foldlevelstart = 99
 
-vim.api.nvim_create_autocmd(
-  { 'FileType' }, {
+vim.api.nvim_create_autocmd({ 'FileType' }, {
   command = 'set formatoptions-=ro'
 })
 
-vim.g.mapleader = "<space>"
-
-
+-- vim.api.nvim_create_autocmd({ 'FileType' }, {
+--   pattern = {'*'},
+--   callback = function()
+--     state = {
+--       match = vim.fn.expand('<amatch>'),
+--       filename = vim.fn.expand('<afile>')
+--     }
+--     print('filetype set')
+--     print(vim.inspect(state))
+--     vim.cmd [[
+--       set formatoptions-=ro
+--     ]]
+--   end
+-- })

@@ -13,3 +13,5 @@ vim.cmd 'silent! colorscheme sonokai'
 --lsp_util = require 'lsp_util'
 -- lsp_util.install_ls('lua')
 
+-- print('starting profile')
+-- require('plenary.profile').start('/tmp/output_flame.log', {flame = true})

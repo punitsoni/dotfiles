@@ -120,10 +120,10 @@ precmd_functions+=(cursor beam)
 # Enable help command.
 autoload -Uz run-help
 # unalias run-help
-alias help=run-help
 
 # ------------------------------- Aliases ----------------------------------- #
-# Implement common aliases.
+
+alias help=run-help
 # Edit local shellrc.
 alias eshrc="${EDITOR} ${HOME}/.zshrc"
 # Edit main shellrc.
