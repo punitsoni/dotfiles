@@ -53,7 +53,7 @@ map ('n','<space>bp',':bp<cr>' )
 map ('n','<space>bn',':bn<cr>' )
 -- Select a buffer to edit.
 vim.keymap.set('n', '<space>bb', telescope_builtin.buffers, {})
--- Edit previous buffer.
+-- Edit previous buffer (Toggle between current and alternate buffer).
 map ('n','<space><tab>',':edit #<cr>' )
 -- Delete current buffer.
 map ('n','<space>bd',':bd<cr>' )

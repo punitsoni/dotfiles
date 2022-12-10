@@ -1,6 +1,6 @@
 local utils = require 'ps.utils'
 
-local packer_bootstrap = utils.ensure_packer()
+local is_first_time = utils.ensure_packer()
 
 require('packer').startup(function(use)
   -- Let packer manage itself.
@@ -47,12 +47,12 @@ require('packer').startup(function(use)
   -- Colorscheme gruvbox
   use 'gruvbox-community/gruvbox'
 
-  if packer_bootstrap then
+  if is_first_time then
     require('packer').sync()
   end
 end)
 
-if packer_bootstrap then
+if is_first_time then
   print '=================================='
   print '    Plugins are being installed'
   print '    Wait until Packer completes,'

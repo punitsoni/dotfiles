@@ -83,21 +83,8 @@ opt.foldminlines = 3
 -- Start with all folds open
 opt.foldlevelstart = 99
 
+-- Do not continue comments when pressing enter.
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   command = 'set formatoptions-=ro'
 })
 
--- vim.api.nvim_create_autocmd({ 'FileType' }, {
---   pattern = {'*'},
---   callback = function()
---     state = {
---       match = vim.fn.expand('<amatch>'),
---       filename = vim.fn.expand('<afile>')
---     }
---     print('filetype set')
---     print(vim.inspect(state))
---     vim.cmd [[
---       set formatoptions-=ro
---     ]]
---   end
--- })
