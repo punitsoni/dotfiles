@@ -11,3 +11,8 @@ For example `ftplugin/cpp.lua`
 ## Run lua file in nvim environment for development
 
 sh runlua.sh file.lua
+
+## Useful shortcuts and tips
+
+* `C-w L` Move the current window to right full-height. Useful for moving help
+  buffer to right side.

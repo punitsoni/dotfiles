@@ -2,8 +2,12 @@ require 'ps.general'
 require 'ps.plugins'
 require 'ps.keymaps'
 
--- require 'setup_lua_lsp'
+require 'ps.config_telescope'
 
+-- Load basic actions
+require 'ps.actions'
+
+-- Set colorscheme
 vim.cmd 'silent! colorscheme sonokai'
 
 -- EXPERIMENTATION --

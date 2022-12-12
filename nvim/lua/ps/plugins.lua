@@ -1,3 +1,7 @@
+------------------------------------------------------------
+-- Initializes packer and lists the plugins to be loaded.
+------------------------------------------------------------
+
 local utils = require 'ps.utils'
 
 local is_first_time = utils.ensure_packer()
@@ -14,6 +18,13 @@ require('packer').startup(function(use)
     'nvim-telescope/telescope.nvim',
     tag = '0.1.0',
     requires = {'nvim-lua/plenary.nvim'}
+  }
+
+  -- Native fuzzy finder for telescope. Requires building.
+  -- TODO: make sure gcc/clang and make is available.
+  use {
+    'nvim-telescope/telescope-fzf-native.nvim',
+    run = 'make' 
   }
 
   use {
@@ -60,4 +71,9 @@ if is_first_time then
   print '=================================='
   return
 end
+
+
+
+
+
 
