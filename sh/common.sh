@@ -6,7 +6,7 @@
 #                            Environment Variables
 # --------------------------------------------------------------------------- #
 # Use programs from your own bin/
-export PATH=${HOME}/bin:${PATH}
+export PATH=${HOME}/bin:${HOME}/.local/bin:${PATH}
 
 # Set EDITOR to vim if not set already.
 # [[ -z ${EDITOR} ]] && export EDITOR=vim
