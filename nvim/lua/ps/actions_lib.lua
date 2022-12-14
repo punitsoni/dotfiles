@@ -1,6 +1,6 @@
 -------------------------------------------------------------------------------
 -- Actions library
--- Implements the actions feature. Requires telescope plugin.
+-- Select and execute pre-registered actions. Requires telescope plugin.
 -------------------------------------------------------------------------------
 local ts_pickers = require 'telescope.pickers'
 local ts_finders = require 'telescope.finders'
@@ -66,4 +66,3 @@ M.pick_action = function(opts)
 end
 
 return M
-

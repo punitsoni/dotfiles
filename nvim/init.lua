@@ -12,6 +12,8 @@ vim.cmd 'silent! colorscheme sonokai'
 
 -- EXPERIMENTATION --
 
+require'lualine'.setup {}
+
 -- local lsp_install = require 'lspinstall'
 
 --lsp_util = require 'lsp_util'

@@ -64,16 +64,11 @@ require('packer').startup(function(use)
 end)
 
 if is_first_time then
-  print '=================================='
-  print '    Plugins are being installed'
+  print '==================================='
+  print '    Plugins are being installed.'
   print '    Wait until Packer completes,'
   print '       then restart nvim'
-  print '=================================='
+  print '==================================='
   return
 end
-
-
-
-
-
 
