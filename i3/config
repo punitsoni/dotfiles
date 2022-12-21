@@ -116,7 +116,8 @@ bindsym Control+Right workspace next
 
 # start a terminal
 # bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Return exec gnome-terminal
+# bindsym $mod+Return exec gnome-terminal
+bindsym $mod+Return exec kitty
 
 bindsym $mod+e exec $filemanager
 
@@ -270,7 +271,8 @@ exec --no-startup-id xrandr \
 
 exec --no-startup-id xrandr --output $disp_left --primary
 
-exec --no-startup-id pulseaudio --start
+# exec --no-startup-id pulseaudio --start
+
 
 # Start compton.
 exec_always --no-startup-id "killall -q compton; compton --paint-on-overlay --config ~/.config/i3/compton.conf"
