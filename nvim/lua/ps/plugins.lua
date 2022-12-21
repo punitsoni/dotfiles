@@ -13,6 +13,9 @@ require('packer').startup(function(use)
   -- Toggle code-commenting
   use 'tpope/vim-commentary'
 
+  -- Quotes.
+  use 'tpope/vim-surround'
+
   -- Telescope fuzzy-finder.
   use {
     'nvim-telescope/telescope.nvim',
@@ -29,9 +32,10 @@ require('packer').startup(function(use)
 
   use {
     'nvim-treesitter/nvim-treesitter',
-    run = function()
-      require('nvim-treesitter.install').update({ with_sync = true })()
-    end
+    run = ':TSUpdate'
+    -- run = function()
+    --   require('nvim-treesitter.install').update({ with_sync = true })()
+    -- end
   }
 
   use 'ThePrimeagen/harpoon'
@@ -57,6 +61,13 @@ require('packer').startup(function(use)
   use 'sainnhe/sonokai'
   -- Colorscheme gruvbox
   use 'gruvbox-community/gruvbox'
+
+  -- Coloescheme rose-pine
+  use {
+    'rose-pine/neovim',
+    as = 'rose-pine',
+  }
+
 
   if is_first_time then
     require('packer').sync()

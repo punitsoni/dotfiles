@@ -1,6 +1,5 @@
 -- Configuration for the native neovim features.
 
-
 -- Highlight search term as you type.
 vim.opt.hlsearch = true
 -- Incremental search, hit `<CR>` to stop.

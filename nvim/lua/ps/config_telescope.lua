@@ -19,7 +19,7 @@ require('telescope').setup {
         width = 0.7,
       },
     },
-    winblend = 15,
+    -- winblend = 15,
   },
   extensions = {
     fzf = {
