@@ -27,21 +27,42 @@ require('packer').startup(function(use)
   -- TODO: make sure gcc/clang and make is available.
   use {
     'nvim-telescope/telescope-fzf-native.nvim',
-    run = 'make' 
+    run = 'make'
   }
 
+  -- Highlight, edit and navigate code.
   use {
     'nvim-treesitter/nvim-treesitter',
-    run = ':TSUpdate'
-    -- run = function()
-    --   require('nvim-treesitter.install').update({ with_sync = true })()
-    -- end
+    run = function()
+      require('nvim-treesitter.install').update({ with_sync = true })()
+    end
+  }
+  use { -- Additional text objects via treesitter
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    after = 'nvim-treesitter',
   }
 
-  use 'ThePrimeagen/harpoon'
+
+  -- LSP Configuration & Plugins
+  use {
+    'neovim/nvim-lspconfig',
+    requires = {
+      -- Automatically install LSPs to stdpath for neovim
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
+
+      -- Useful status updates for LSP
+      'j-hui/fidget.nvim',
+
+      -- Additional lua configuration, makes nvim stuff amazing
+      'folke/neodev.nvim',
+    },
+  }
+
+  -- use 'ThePrimeagen/harpoon'
 
   -- Configurations for neovim lsp
-  use 'neovim/nvim-lspconfig'
+  -- use 'neovim/nvim-lspconfig'
 
   -- Completion engine and sources.
   use 'hrsh7th/nvim-cmp'

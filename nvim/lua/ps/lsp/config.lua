@@ -2,7 +2,7 @@
 local M = {}
 
 -- This function is called when LSP client is attached to a buffer.
-local function lsp_on_attach(client, bufnr)
+local function lsp_on_attach(_, bufnr)
 
   local function buf_keymap(mode, lhs, rhs, opts)
     if not opts then

@@ -1,7 +1,7 @@
 -- Configuration for the native neovim features.
 
 -- Highlight search term as you type.
-vim.opt.hlsearch = true
+-- vim.opt.hlsearch = true
 -- Incremental search, hit `<CR>` to stop.
 vim.opt.incsearch = true
 -- Show current command in statusbar
@@ -78,8 +78,13 @@ vim.opt.foldminlines = 3
 -- Start with all folds open
 vim.opt.foldlevelstart = 99
 
+-- Set space as the leader key.
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
 -- Do not continue comments when pressing enter.
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   command = 'set formatoptions-=ro'
 })
+
 

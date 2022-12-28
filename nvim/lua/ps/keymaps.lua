@@ -1,6 +1,6 @@
 -- TODO: make sure telescope is loaded.
-telescope_builtin = require('telescope.builtin')
-alib = require('ps.actions_lib')
+local telescope_builtin = require('telescope.builtin')
+local alib = require('ps.actions_lib')
 
 -- Helper function for keymapping.
 local function map(mode, lhs, rhs, opts)
@@ -74,17 +74,6 @@ map ('n','<space>j','<c-w>j')
 map ('n','<space>k','<c-w>k')
 map ('n','<space>l','<c-w>l')
 
--- Select command from history.
-map ('n','<space>hc',':NotImplemented')
--- Select file from history.
-map ('n','<space>hf',':NotImplemented')
--- Select from search history
-map ('n','<space>hs',':NotImplemented')
-
--- Autoformat code.
-map ('n','<space>=',':NotImplemented')
-
-
 -- Find files.
 map ('n', '<space>ff', telescope_builtin.find_files)
 -- Previously open files.
@@ -94,7 +83,14 @@ map ('n', '<space>fh', telescope_builtin.help_tags)
 map ('n', '<space>fl', telescope_builtin.live_grep)
 
 -- File symbols using nvim-treesitter
-map ('n', '<space>fs', telescope_builtin.treesitter)
+map ('n', '<space>fs', telescope_builtin.treesitter, {
+  desc = 'Find symbols'
+})
+
+map ('n', '<space>/', telescope_builtin.current_buffer_fuzzy_find, {
+  desc = 'Find in current buffer.'
+})
+
 
 -- Pick and run an action.
 map ('n', '<space>p', alib.pick_action)

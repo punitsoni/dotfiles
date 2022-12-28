@@ -5,6 +5,7 @@
 local ts_builtin = require 'telescope.builtin'
 local alib = require 'ps.actions_lib'
 local utils = require 'ps.utils'
+local wsp = require 'ps.wsp'
 
 alib.register_action({
   name = 'find-files',
@@ -31,3 +32,7 @@ alib.register_action({
   end,
 })
 
+alib.register_action({
+  name = 'wsp-files',
+  func = wsp.select_file
+})

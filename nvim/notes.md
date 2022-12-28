@@ -7,7 +7,6 @@
 Everything in `init.lua` is run before any plugins are loaded. We need to see
 if we should move all overriding config into after/plugin directory.
 
-
 ---
 
 Implemented the actions feature. Now we can use shortcuts `<space>p` or `Ctrl-p`
