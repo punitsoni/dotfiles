@@ -17,6 +17,18 @@ M.ensure_packer = function()
   return false
 end
 
+
+-- Removes newline char from a string.
+function M.strip(s)
+  return string.gsub(s, '\n', '')
+end
+
+-- Converts a path that is relative to refdir to absolute path.
+function M.abspath(refdir, relpath)
+  return M.strip(vim.fn.system(
+           'cd '.. refdir .. ' && realpath ' .. relpath))
+end
+
 -- Checks if plugin is loaded.
 M.plugin_loaded = function(name)
   return packer_plugins[name] and packer_plugins[name].loaded

@@ -20,7 +20,7 @@ require('packer').startup(function(use)
   use {
     'nvim-telescope/telescope.nvim',
     tag = '0.1.0',
-    requires = {'nvim-lua/plenary.nvim'}
+    requires = {'nvim-lua/plenary.nvim'},
   }
 
   -- Native fuzzy finder for telescope. Requires building.
@@ -35,13 +35,21 @@ require('packer').startup(function(use)
     'nvim-treesitter/nvim-treesitter',
     run = function()
       require('nvim-treesitter.install').update({ with_sync = true })()
-    end
+    end,
   }
   use { -- Additional text objects via treesitter
     'nvim-treesitter/nvim-treesitter-textobjects',
     after = 'nvim-treesitter',
   }
 
+  -- File tree.
+  use {
+    'nvim-tree/nvim-tree.lua',
+    requires = {
+      'nvim-tree/nvim-web-devicons', -- optional, for file icons
+    },
+    tag = 'nightly' -- optional, updated every week. (see issue #1193)
+  }
 
   -- LSP Configuration & Plugins
   use {
@@ -61,9 +69,6 @@ require('packer').startup(function(use)
 
   -- use 'ThePrimeagen/harpoon'
 
-  -- Configurations for neovim lsp
-  -- use 'neovim/nvim-lspconfig'
-
   -- Completion engine and sources.
   use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lsp'
@@ -75,20 +80,25 @@ require('packer').startup(function(use)
   -- Status line
   use {
     'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+    config = require'ps.pconf'.config_lualine
+  }
+
+  use {
+    'goolord/alpha-nvim',
+    requires = { 'nvim-tree/nvim-web-devicons' },
+    config = require'ps.pconf'.config_alpha_nvim
   }
 
   -- Colorscheme sonokai
   use 'sainnhe/sonokai'
   -- Colorscheme gruvbox
   use 'gruvbox-community/gruvbox'
-
   -- Coloescheme rose-pine
   use {
     'rose-pine/neovim',
     as = 'rose-pine',
   }
-
 
   if is_first_time then
     require('packer').sync()
@@ -103,4 +113,10 @@ if is_first_time then
   print '==================================='
   return
 end
+
+-- Configure Plugins.
+require'ps.pconf'.config_telescope()
+require'ps.pconf'.config_rosepine()
+require'ps.config_treesitter'
+require'ps.config_lsp'
 

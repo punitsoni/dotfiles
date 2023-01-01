@@ -91,6 +91,9 @@ map ('n', '<space>/', telescope_builtin.current_buffer_fuzzy_find, {
   desc = 'Find in current buffer.'
 })
 
+map ('n', '<C-b>', ':NvimTreeToggle<cr>', {
+  desc = 'Toggle nvim-tree'
+})
 
 -- Pick and run an action.
 map ('n', '<space>p', alib.pick_action)

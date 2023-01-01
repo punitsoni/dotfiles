@@ -36,3 +36,4 @@ alib.register_action({
   name = 'wsp-files',
   func = wsp.select_file
 })
+

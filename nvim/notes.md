@@ -1,7 +1,6 @@
 ## December 2022
 
 
-
 ---
 
 Everything in `init.lua` is run before any plugins are loaded. We need to see
