@@ -13,7 +13,11 @@ local function lsp_on_attach(_, bufnr)
   end
 
   buf_keymap("n", "K", vim.lsp.buf.hover)
-  buf_keymap("n", "gd", vim.lsp.buf.definition)
+  buf_keymap("n", "gd", function()
+    vim.lsp.buf.definition()
+    vim.cmd 'normal zz'
+    end
+  )
   buf_keymap("n", "gt", vim.lsp.buf.type_definition)
   buf_keymap("n", "gr", vim.lsp.buf.references)
   buf_keymap("n", "gi", vim.lsp.buf.implementation)
@@ -22,7 +26,6 @@ local function lsp_on_attach(_, bufnr)
   buf_keymap("n", "<space>gk", vim.diagnostic.goto_prev)
   -- Rename symbol.
   buf_keymap("n", "<space>r", vim.lsp.buf.rename)
-
 end
 
 -- LSP config for lua language.

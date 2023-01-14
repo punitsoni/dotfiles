@@ -1,3 +1,5 @@
+-- Load my global functions / objects.
+require 'ps.globals'
 -- Configure default neovim setup such as options.
 require 'ps.general'
 -- Load and configure external plugins.
@@ -8,9 +10,9 @@ require 'ps.keymaps'
 require 'ps.actions'
 
 -- Set colorscheme.
--- vim.cmd 'silent! colorscheme sonokai'
+vim.cmd 'silent! colorscheme sonokai'
 -- vim.cmd 'silent! colorscheme rose-pine'
-vim.cmd 'silent! colorscheme gruvbox'
+-- vim.cmd 'silent! colorscheme gruvbox'
 
 -- EXPERIMENTATION --
 

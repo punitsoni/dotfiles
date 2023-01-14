@@ -1,5 +1,9 @@
 -- Configuration for the native neovim features.
 
+-- Set space as the leader key.
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
 -- Highlight search term as you type.
 -- vim.opt.hlsearch = true
 -- Incremental search, hit `<CR>` to stop.
@@ -26,7 +30,9 @@ vim.opt.expandtab = true
 -- Set default indentation size.
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
--- Dont show mode as airline already does.
+-- Round the indents to shiftwidth.
+vim.opt.shiftround = true
+-- Dont show mode as we will use status line for it.
 vim.opt.showmode = false
 -- Command-line height
 vim.opt.cmdheight = 1
@@ -78,13 +84,8 @@ vim.opt.foldminlines = 3
 -- Start with all folds open
 vim.opt.foldlevelstart = 99
 
--- Set space as the leader key.
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-
 -- Do not continue comments when pressing enter.
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   command = 'set formatoptions-=ro'
 })
-
 

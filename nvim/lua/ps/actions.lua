@@ -37,3 +37,7 @@ alib.register_action({
   func = wsp.select_file
 })
 
+alib.register_action({
+  name = 'wsp-config',
+  func = wsp.edit_config,
+})

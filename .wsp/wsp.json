@@ -1,4 +1,5 @@
 {
+  "name": "dotfiles",
   "dirs": [
     "."
   ],
@@ -12,5 +13,4 @@
   "files_exclude": [
   ]
 }
-
 

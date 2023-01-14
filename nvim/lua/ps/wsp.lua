@@ -3,7 +3,7 @@ local builtin = require'telescope.builtin'
 -- local finders = require'telescope.finders'
 -- local conf = require'telescope.config'.values
 local util = require'ps.utils'
-local Path = require 'plenary.path'
+local alib = require'ps.actions_lib'
 
 local CONFIG_DIRNAME = '.wsp'
 local CONFIG_FILENAME = 'wsp.json'
@@ -31,47 +31,79 @@ local function get_wsp_config()
   return config
 end
 
-local wsp_config = get_wsp_config()
-if wsp_config then
-  vim.g.wsp_mode = 'wsp'
-end
+local wsp_config = nil
 
-local M = {}
-
-function M.new_workspace()
-  local cwd = vim.fn.getcwd()
-end
-
-function M.is_wsp_active()
-  return wsp_config ~= nil
-end
-
--- Opens a ui to find and select a file in the workspace.
-function M.select_file()
-  if not M.is_wsp_active() then
-    print('wsp not active')
-    return
+local function wsp_init()
+  wsp_config = get_wsp_config()
+  if wsp_config then
+    vim.g.wsp_mode = 'wsp'
+  else
+    vim.g.wsp_mode = ''
   end
-  builtin.find_files({
-    search_dirs = vim.tbl_map(
-      function (d)
-        if Path:new(d):is_absolute() then
-          return d
-        end
-        -- TODO: Use Path lib to join these paths.
-        return wsp_config.rootdir ..'/'.. d
-      end,
-      wsp_config.dirs
-    )
+end
+
+wsp_init()
+
+local function create_actions()
+  alib.register_action({
+    name = 'wsp-files',
+    func = wsp.select_file
+  })
+
+  alib.register_action({
+    name = 'wsp-config',
+    func = wsp.edit_config,
   })
 end
 
-function M.test()
-  local f = M.select_file()
+
+local wsp = {}
+
+function wsp.new_workspace()
+  local cwd = vim.fn.getcwd()
+end
+
+function wsp.is_wsp_active()
+  return wsp_config ~= nil
+end
+
+function wsp.edit_config()
+  if not wsp_config then
+    return
+  end
+  vim.cmd('e ' .. wsp_config.rootdir ..
+          '/' .. CONFIG_DIRNAME ..'/'.. CONFIG_FILENAME)
+end
+
+-- Opens a ui to find and select a file in the workspace.
+function wsp.select_file()
+  if not wsp_config then
+    print('wsp not active')
+    return
+  end
+  -- local Path = require 'plenary.path'
+  builtin.find_files({
+    cwd = wsp_config.rootdir,
+    search_dirs = wsp_config.dirs,
+    -- search_dirs = vim.tbl_map(
+    --   function (d)
+    --     if Path:new(d):is_absolute() then
+    --       return d
+    --     end
+    --     -- TODO: Use Path lib to join these paths.
+    --     return wsp_config.rootdir ..'/'.. d
+    --   end,
+    --   wsp_config.dirs
+    -- )
+  })
+end
+
+function wsp.test()
+  local f = wsp.select_file()
   print('selected='..f)
 end
 
-return M
+return wsp
 
 --[[
 

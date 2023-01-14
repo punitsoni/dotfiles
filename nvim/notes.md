@@ -1,5 +1,22 @@
-## December 2022
+## January 2023
 
+---
+
+Handling local config
+
+We might want to have some configuration that is applied in neovim only in the
+local machine. We do not want this config to be packaged as part of the
+dotfiles. In that case we cannot have it in the ~/.config/nvim directory, as
+that is a symlink to a directory in dotfiles.
+
+Solution is to put this in another runtimepath. ~/.local/share/nvim/site is such
+a place where you can put a plugin/ directory that is automatically loaded when
+nvim starts.
+
+This is useful to separate the work-specific config that you do not want to
+bundle with dotfiles.
+
+## December 2022
 
 ---
 

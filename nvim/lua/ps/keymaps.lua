@@ -47,7 +47,9 @@ map ('i', '<s-tab>', 'pumvisible() ? "<c-p>" : "<s-tab>"', {expr=true})
 
 -- Previous and next.
 map ('n','<space>bp',':bp<cr>')
+map ('n','<space>,',':bp<cr>')
 map ('n','<space>bn',':bn<cr>')
+map ('n','<space>.',':bn<cr>')
 -- Select a buffer to edit.
 map ('n', '<space>bb', telescope_builtin.buffers)
 -- Edit previous buffer (Toggle between current and alternate buffer).
@@ -93,6 +95,14 @@ map ('n', '<space>/', telescope_builtin.current_buffer_fuzzy_find, {
 
 map ('n', '<C-b>', ':NvimTreeToggle<cr>', {
   desc = 'Toggle nvim-tree'
+})
+
+-- Center the line after jump.
+map ('n', '<C-o>', '<C-o>zz', {})
+map ('n', '<C-i>', '<C-i>zz', {})
+
+map ('n', '<leader><leader>h', ':Alpha<cr>', {
+  desc = 'Open home page.'
 })
 
 -- Pick and run an action.

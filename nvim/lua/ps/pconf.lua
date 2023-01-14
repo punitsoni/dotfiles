@@ -40,7 +40,7 @@ function M.config_lualine()
   require'lualine'.setup {
     sections = {
       lualine_a = {'mode'},
-      lualine_b = { vim.g.wsp_mode, 'branch', 'diff', 'diagnostics'},
+      lualine_b = {'vim.g.wsp_mode', 'branch', 'diff', 'diagnostics'},
       lualine_c = {'filename'},
       lualine_x = {'encoding', 'fileformat', 'filetype'},
       lualine_y = {'progress'},
@@ -58,8 +58,13 @@ end
 function M.config_rosepine()
   require'rose-pine'.setup {
     -- disable_background allows for window transparency.
-    -- disable_background = true
+    disable_background = true
   }
+end
+
+-- Setup all lsp related plugins.
+function M.config_lsp_plugins()
+  require'ps.config_lsp'.setup_all()
 end
 
 return M
