@@ -1,6 +1,8 @@
 TODO
 ----
-
+* Revisit the dev workflow setup by ThePrimagen.
+  - Automatically create tmux sessions in workspaces using fzf
+  - Use cht.sh for looking up help from commandline.
 
 NOTES
 -----

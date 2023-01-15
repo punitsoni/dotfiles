@@ -22,9 +22,9 @@ __shrc_detect_platform() {
 # If no argument provided. It attaches to session 0.
 tm() {
   if [ -z $1 ]; then
-    ${TMUX_BIN:-tmux} new-session -A -s 0
+    tmux new-session -A -s 0
   else
-    ${TMUX_BIN:-tmux} new-session -A -s $1
+    tmux new-session -A -s $1
   fi
 }
 

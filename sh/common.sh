@@ -3,13 +3,15 @@
 # --------------------------------------------------------------------------- #
 
 # --------------------------------------------------------------------------- #
+#                                 Functions
+# --------------------------------------------------------------------------- #
+source ${DOTFILES}/sh/functions.sh
+
+# --------------------------------------------------------------------------- #
 #                            Environment Variables
 # --------------------------------------------------------------------------- #
 # Use programs from your own bin/
 export PATH=${HOME}/bin:${HOME}/.local/bin:${PATH}
-
-# Set EDITOR to vim if not set already.
-# [[ -z ${EDITOR} ]] && export EDITOR=vim
 
 # If neovim is available alias vim to neovim.
 if command -v nvim &> /dev/null; then
@@ -17,11 +19,6 @@ if command -v nvim &> /dev/null; then
   alias vim=nvim
   alias vi=nvim
 fi
-
-# --------------------------------------------------------------------------- #
-#                                 Functions
-# --------------------------------------------------------------------------- #
-source ${DOTFILES}/sh/functions.sh
 
 # --------------------------------------------------------------------------- #
 #                                  Aliases

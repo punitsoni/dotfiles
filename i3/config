@@ -36,6 +36,10 @@ floating_modifier $mod
 # Do not automatically focus window on mouse hover.
 focus_follows_mouse no
 
+# Always focus on a window that requests it.
+# e.g. Browser opening links.
+focus_on_window_activation focus
+
 # For default windows, keep title. remove borders.
 default_border normal 0
 default_floating_border normal 0
