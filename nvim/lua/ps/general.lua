@@ -51,10 +51,6 @@ vim.opt.number = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
--- TODO: system keyboard makes things slow. Debug this.
--- Use system clipboard
--- opt.clipboard = 'unnamed'
-
 -- Set the tab-completion for commands to be more similar to shell
 vim.opt.wildmode = 'longest:full,full'
 vim.opt.wildmenu = true

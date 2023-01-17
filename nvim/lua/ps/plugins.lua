@@ -98,6 +98,9 @@ require('packer').startup(function(use)
     as = 'rose-pine',
   }
 
+  -- Provides command to measure startup time.
+  use 'dstein64/vim-startuptime'
+
   if packer_bootstrap then
     require('packer').sync()
   end
@@ -117,6 +120,5 @@ require'ps.pconf'.config_telescope()
 require'ps.pconf'.config_rosepine()
 require'ps.pconf'.config_lsp_plugins()
 require'ps.config_treesitter'
-
 require'nvim-lastplace'.setup{}
 

@@ -58,7 +58,7 @@ end
 function M.config_rosepine()
   require'rose-pine'.setup {
     -- disable_background allows for window transparency.
-    disable_background = true
+    -- disable_background = true
   }
 end
 
