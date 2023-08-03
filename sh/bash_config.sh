@@ -32,9 +32,16 @@ source $DOTFILES/sh/ansicolors.sh
 PS1="\n\u@\h ${C_GREEN}[\w]\n${C_YELLOW}$ ${C_RESET}"
 PROMPT_COMMAND=__brc_on_prompt
 
+# --------------------------------- Misc ------------------------------------ #
+
 alias eshrc="$EDITOR $HOME/.bashrc"
 # Edit bashrc_main
 alias eshrcm="$EDITOR $DOTFILES/sh/bash_config.sh"
 # Source bashrc.
 alias shrc="source $HOME/.bashrc"
+
+# Install fzf key bindings (ctrl-r)
+if command -v fzf > /dev/null 2>&1 ; then
+  source /usr/share/doc/fzf/examples/key-bindings.bash
+fi
 
