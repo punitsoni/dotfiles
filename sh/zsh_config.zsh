@@ -131,3 +131,8 @@ alias eshrcm="${EDITOR} ${DOTFILES}/sh/zsh_config.zsh"
 # Source local shell rc.
 alias shrc="source ${HOME}/.zshrc"
 
+# Load fzf completion for zsh.
+if has_command fzf; then
+  source <(fzf --zsh)
+fi
+

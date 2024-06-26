@@ -25,3 +25,6 @@ yabai -m config mouse_action1                move
 # set modifier + right-click drag to resize window (default: resize)
 yabai -m config mouse_action2                resize
 
+# Keep the system preferences window floating.
+yabai -m rule --add app="^System Preferences$" manage=off
+ 

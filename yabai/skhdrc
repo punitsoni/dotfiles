@@ -1,3 +1,11 @@
+#
+# SKHD Config file.
+#
+# Note:
+# When the skhd is running, config is automatically reloaded when modified.
+# 
+
+
 # Open terminal.
 
 # kitty terminal emulator
@@ -36,12 +44,22 @@ alt + shift - 8 : yabai -m window --space 8 && yabai -m space --focus 8
 alt + shift - 9 : yabai -m window --space 9 && yabai -m space --focus 9
 alt + shift - 0 : yabai -m window --space 0 && yabai -m space --focus 0
 
+alt + shift - c: yabai -m space --create
+alt + shift - d: yabai -m space --destroy
+
 # Focus on prev/next workspace.
 alt - n : yabai -m space --focus next
-alt - p : yabai -m space --focus next
+alt - p : yabai -m space --focus prev
+alt - right : yabai -m space --focus next
+alt - left : yabai -m space --focus prev
 
-# alt + cmd - h : yabai -m space --focus prev
-# alt + cmd - l : yabai -m space --focus next
+# Zoom focused window.
+# options: zoom-parent, zoom-fullscreen, native-fullscreen
+alt - f : yabai -m window --toggle zoom-parent
+
+# Toggle floating.
+alt - d : yabai -m window --toggle float
+
 
 # Focus windows on current workspace.
 alt - h : yabai -m window --focus west
@@ -65,4 +83,5 @@ alt + ctrl - l: sh ${DOTFILES}/yabai/lock_screen.sh
 
 # Toggle floating and center it on screen.
 alt + shift - f: yabai -m window --toggle float && yabai -m window --grid 5:8:2:1:4:3
+
 

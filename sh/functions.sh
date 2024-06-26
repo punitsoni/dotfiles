@@ -18,6 +18,15 @@ __shrc_detect_platform() {
   fi
 }
 
+# Returns true if platform is MacOS.
+is_macos() {
+  [[ $(uname) == 'Darwin' ]]
+}
+
+has_command() {
+  command -v $1 &> /dev/null
+}
+
 # Attach to tmux session. Create new session if it does not exist.
 # If no argument provided. It attaches to session 0.
 tm() {
