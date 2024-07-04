@@ -17,8 +17,6 @@
 # Reload yabai configuration file
 alt + shift - r : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
 
-# float / unfloat window and center on screen
-# alt + alt - f : yabai -m window --toggle float; yabai -m window --grid 4:4:1:1:2:2
 
 # Select workspace.
 alt - 1 : yabai -m space --focus 1
@@ -30,7 +28,7 @@ alt - 6 : yabai -m space --focus 6
 alt - 7 : yabai -m space --focus 7
 alt - 8 : yabai -m space --focus 8
 alt - 9 : yabai -m space --focus 9
-alt - 0 : yabai -m space --focus 0
+alt - 0 : yabai -m space --focus 10
 
 # Move current window to a workspace.
 alt + shift - 1 : yabai -m window --space 1 && yabai -m space --focus 1
@@ -42,7 +40,7 @@ alt + shift - 6 : yabai -m window --space 6 && yabai -m space --focus 6
 alt + shift - 7 : yabai -m window --space 7 && yabai -m space --focus 7
 alt + shift - 8 : yabai -m window --space 8 && yabai -m space --focus 8
 alt + shift - 9 : yabai -m window --space 9 && yabai -m space --focus 9
-alt + shift - 0 : yabai -m window --space 0 && yabai -m space --focus 0
+alt + shift - 0 : yabai -m window --space 10 && yabai -m space --focus 10
 
 alt + shift - c: yabai -m space --create
 alt + shift - d: yabai -m space --destroy
@@ -58,7 +56,9 @@ alt - left : yabai -m space --focus prev
 alt - f : yabai -m window --toggle zoom-parent
 
 # Toggle floating.
-alt - d : yabai -m window --toggle float
+# alt - d : yabai -m window --toggle float
+# float / unfloat window and center on screen
+alt - d : yabai -m window --toggle float; yabai -m window --grid 50:100:25:10:50:30
 
 
 # Focus windows on current workspace.

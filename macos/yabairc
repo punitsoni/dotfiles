@@ -1,5 +1,13 @@
 #!/bin/sh
 
+# Load scripting addition.
+# For this to work you must configure sudo such that
+# it will be able to run the command without password.
+# See dotfiles/macos/enable_sudo_for_yabai.sh
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+sudo yabai --load-sa
+
+
 # Global settings.
 # layout bsp or float (default: bsp)
 yabai -m config layout bsp
@@ -26,5 +34,5 @@ yabai -m config mouse_action1                move
 yabai -m config mouse_action2                resize
 
 # Keep the system preferences window floating.
-yabai -m rule --add app="^System Preferences$" manage=off
+yabai -m rule --add app="^System Settings$" manage=off
  
