@@ -55,7 +55,6 @@ bindkey '^ ' autosuggest-accept
 
 export PROMPT="%n@%m: %B%2d%b"$'\n'"$ "
 
-# -- Shell options
 setopt AUTO_CD
 # share history across multiple zsh sessions
 setopt SHARE_HISTORY
@@ -73,6 +72,8 @@ setopt HIST_FIND_NO_DUPS
 setopt HIST_REDUCE_BLANKS
 # setopt CORRECT
 # setopt CORRECT_ALL
+setopt noautomenu
+setopt nomenucomplete
 
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 HISTSIZE=10000

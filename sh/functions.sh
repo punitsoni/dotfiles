@@ -51,8 +51,14 @@ ls_version() {
 
 # Fuzzy find a file and open in editor.
 ff() {
+  dir=$1
+
+  if [[ -z $dir ]]; then
+    dir=.
+  fi
+
   __editable_files() {
-    find . \
+    find $dir \
       -type f \
       \( -not -path "*/.git/*" \) \
       \( -not -path "*/__pycache__/*" \) \
