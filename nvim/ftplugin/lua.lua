@@ -6,3 +6,4 @@ local function run_current_file()
   vim.cmd('luafile %')
 end
 vim.keymap.set('n', '<space>r.', run_current_file, {})
+

@@ -1,112 +1,113 @@
 -- TODO: make sure telescope is loaded.
 local telescope_builtin = require('telescope.builtin')
 local alib = require('ps.actions_lib')
+local actions = require'ps.actions'
+local util = require'ps.utils'
 
--- Helper function for keymapping.
-local function map(mode, lhs, rhs, opts)
-  opts = opts or {}
-  opts = vim.tbl_extend('force', opts, {noremap = true})
-  vim.keymap.set(mode, lhs, rhs, opts)
-end
+local nmap = util.nmap
+local vmap = util.vmap
+local imap = util.imap
 
 -- Avoid entering Ex mode accidentally.
-map ('n','Q','<nop>')
+nmap ('Q','<nop>')
 -- Clear search high-light.
-map ('n','<space><space>',':noh<cr>:echo ""<cr>')
+nmap ('<space><space>',':noh<cr>:echo ""<cr>')
 -- Edit config file.
-map ('n','<space>ev',':edit $MYVIMRC<cr>')
+nmap ('<space>ev',':edit $MYVIMRC<cr>')
 -- Source config file.
-map ('n','<space>sv',':source $MYVIMRC<cr>')
+nmap ('<space>sv',':source $MYVIMRC<cr>')
 -- Page-up and Page-down.
-map ('n','<c-u>','<c-u>zz')
-map ('n','<c-d>','<c-d>zz')
-map ('n','H','I')
-map ('n','L','A')
-map ('n','U','<c-r>')
+nmap ('<c-u>','<c-u>zz')
+nmap ('<c-d>','<c-d>zz')
+nmap ('H','I')
+nmap ('L','A')
+nmap ('U','<c-r>')
 -- Duplicate current line
--- map ('n','<c-o>','yyp')
+-- nmap ('<c-o>','yyp')
 
 -- Fold-toggle current
-map ('n','<space>;','za')
+nmap ('<space>;','za')
 --" Fold-toggle all
-map ('n','<space>o',"&foldlevel ? 'zM' : 'zR'", {expr=true})
+nmap ('<space>o',"&foldlevel ? 'zM' : 'zR'", {expr=true})
 
 -- Indent and un-indent in visual mode.
-map ('v','<tab>;','>gv')
-map ('v','<s-tab>;','<gv')
+vmap ('<tab>;','>gv')
+vmap ('<s-tab>;','<gv')
 -- Keep selection when indenting.
-map ('v','>','>gv')
-map ('v','<','<gv')
+vmap ('>','>gv')
+vmap ('<','<gv')
 
 -- Use <Tab> and <S-Tab> to navigate through popup menu
-map ('i', '<tab>', 'pumvisible() ? "<c-n>" : "<tab>"', {expr=true})
-map ('i', '<s-tab>', 'pumvisible() ? "<c-p>" : "<s-tab>"', {expr=true})
-
+imap ('<tab>', 'pumvisible() ? "<c-n>" : "<tab>"', {expr=true})
+imap ('<s-tab>', 'pumvisible() ? "<c-p>" : "<s-tab>"', {expr=true})
 
 ---- BUFFER MANAGEMENT ----
 
 -- Previous and next.
-map ('n','<space>bp',':bp<cr>')
-map ('n','<space>,',':bp<cr>')
-map ('n','<space>bn',':bn<cr>')
-map ('n','<space>.',':bn<cr>')
+nmap ('<space>bp',':bp<cr>')
+nmap ('<space>,',':bp<cr>')
+nmap ('<space>bn',':bn<cr>')
+nmap ('<space>.',':bn<cr>')
 -- Select a buffer to edit.
-map ('n', '<space>bb', telescope_builtin.buffers)
+nmap ('<space>bb', telescope_builtin.buffers)
 -- Edit previous buffer (Toggle between current and alternate buffer).
-map ('n','<space><tab>',':edit #<cr>')
+nmap ('<space><tab>',':edit #<cr>')
 -- Delete current buffer.
-map ('n','<space>bd',':bd<cr>')
+nmap ('<space>bd',':bd<cr>')
 -- Delete current buffer (force)
-map ('n','<space>bx',':bd!<cr>')
+nmap ('<space>bx',':bd!<cr>')
 
 
 ---- WINDOW MANAGEMENT ----
 
-map ('n','<space>w','<c-w>')
+nmap ('<space>w','<c-w>')
 -- Maximize.
-map ('n','<space>wm','<c-w>o')
+nmap ('<space>wm','<c-w>o')
 -- Horizontal and Vertical splits.
-map ('n','<space>w-',':sp<cr>')
-map ('n','<space>w<bar>',':vsp<cr>')
+nmap ('<space>w-',':sp<cr>')
+nmap ('<space>w<bar>',':vsp<cr>')
 -- Close window.
-map ('n','<space>q','<c-w>c')
+nmap ('<space>q','<c-w>c')
 -- Window navigation.
-map ('n','<space>h','<c-w>h')
-map ('n','<space>j','<c-w>j')
-map ('n','<space>k','<c-w>k')
-map ('n','<space>l','<c-w>l')
+nmap ('<space>h','<c-w>h')
+nmap ('<space>j','<c-w>j')
+nmap ('<space>k','<c-w>k')
+nmap ('<space>l','<c-w>l')
 
 -- Find files.
-map ('n', '<space>ff', telescope_builtin.find_files)
+nmap ('<space>ff', telescope_builtin.find_files)
 -- Previously open files.
-map ('n', '<space>fo', telescope_builtin.oldfiles)
-map ('n', '<space>fh', telescope_builtin.help_tags)
+nmap ('<space>fo', telescope_builtin.oldfiles)
+-- Nvim config files.
+nmap ('<space>fn', actions.nvim_config_files)
+-- Help tags.
+nmap ('<space>fh', telescope_builtin.help_tags)
 -- Livegrep (async search for filenames and text)
-map ('n', '<space>fl', telescope_builtin.live_grep)
+nmap ('<space>fl', telescope_builtin.live_grep)
 
 -- File symbols using nvim-treesitter
-map ('n', '<space>fs', telescope_builtin.treesitter, {
+nmap ('<space>fs', telescope_builtin.treesitter, {
   desc = 'Find symbols'
 })
 
-map ('n', '<space>/', telescope_builtin.current_buffer_fuzzy_find, {
+nmap ('<space>/', telescope_builtin.current_buffer_fuzzy_find, {
   desc = 'Find in current buffer.'
 })
 
-map ('n', '<C-b>', ':NvimTreeToggle<cr>', {
+nmap ('<C-b>', actions.toggle_tree, {
   desc = 'Toggle nvim-tree'
 })
 
 -- Center the line after jump.
-map ('n', '<C-o>', '<C-o>zz', {})
-map ('n', '<C-i>', '<C-i>zz', {})
+nmap ('<C-o>', '<C-o>zz', {})
+nmap ('<C-i>', '<C-i>zz', {})
 
-map ('n', '<leader><leader>h', ':Alpha<cr>', {
+nmap ('<leader><leader>h', ':Alpha<cr>', {
   desc = 'Open home page.'
 })
 
 -- Pick and run an action.
-map ('n', '<space>p', alib.pick_action)
-map ('n', '<C-p>', alib.pick_action)
+nmap ('<space>p', alib.pick_action)
+nmap ('<C-p>', alib.pick_action)
 
 

@@ -59,8 +59,8 @@ vim.opt.wildignore = {
   -- '*/tmp/*', '*.so', '*.swp,*', '*.zip', '*.pdf', '*.o', '*.bin',
   -- '*/__pycache__/*', '*.so', '*.deb', '*.exe', '*.a',
 }
--- Use number colum for diagnostic signs.
-vim.opt.signcolumn = 'number'
+-- Show signcolumn when a sign is available (e.g. gitsigns)
+vim.opt.signcolumn = 'auto'
 -- Things should update faster. (default is 4000ms)
 vim.opt.updatetime = 500
 -- Make it so there are always ten lines below my cursor

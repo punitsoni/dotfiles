@@ -1,57 +1,72 @@
-------------------------------------------------------------
--- Initializes packer and lists the plugins to be loaded.
-------------------------------------------------------------
+-- Bootstrap lazy.nvim --
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
-local utils = require 'ps.utils'
-
-local packer_bootstrap = utils.ensure_packer()
-
-require('packer').startup(function(use)
-  -- Let packer manage itself.
-  use 'wbthomason/packer.nvim'
+require("lazy").setup({
   -- Toggle code-commenting
-  use 'tpope/vim-commentary'
+  'tpope/vim-commentary',
   -- Quotes.
-  use 'tpope/vim-surround'
+  'tpope/vim-surround',
   -- Telescope fuzzy-finder.
-  use {
+  {
     'nvim-telescope/telescope.nvim',
-    tag = '0.1.0',
-    requires = {'nvim-lua/plenary.nvim'},
-  }
+    -- tag = '0.1.0',
+    dependencies = {'nvim-lua/plenary.nvim'},
+    config = require'ps.config.telescope'
+  },
   -- Native fuzzy finder for telescope. Requires building.
   -- TODO: make sure gcc/clang and make is available.
-  use {
+  {
     'nvim-telescope/telescope-fzf-native.nvim',
-    run = 'make'
-  }
+    build = 'make'
+  },
   -- Treesitter: Highlight, edit and navigate code.
-  use {
+  {
     'nvim-treesitter/nvim-treesitter',
-    run = function()
+    build = function()
       require('nvim-treesitter.install').update({ with_sync = true })()
     end,
-  }
-  -- Additional text objects via treesitter.
-  use {
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    after = 'nvim-treesitter',
-  }
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter-textobjects',
+    },
+    config = require'ps.config.treesitter'
+  },
+
   -- File tree.
-  use {
+  {
     'nvim-tree/nvim-tree.lua',
-    requires = {
+    dependencies = {
       'nvim-tree/nvim-web-devicons', -- optional, for file icons
     },
-    tag = 'nightly' -- optional, updated every week. (see issue #1193)
-  }
+    config = require'ps.config.nvim-tree',
+  },
+
   -- Open files at the last cursor position.
-  use 'ethanholz/nvim-lastplace'
+  {
+    'ethanholz/nvim-lastplace',
+    config = function() require'nvim-lastplace'.setup() end,
+  },
+
+  -- Better ui for input and select.
+  {
+    'stevearc/dressing.nvim',
+    event = 'VeryLazy'
+  },
 
   -- LSP Configuration & Plugins
-  use {
+  {
     'neovim/nvim-lspconfig',
-    requires = {
+    dependencies = {
       -- Automatically install LSPs to stdpath for neovim
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
@@ -62,63 +77,89 @@ require('packer').startup(function(use)
       -- Additional lua configuration, makes nvim stuff amazing
       'folke/neodev.nvim',
     },
-  }
+  },
 
-  -- use 'ThePrimeagen/harpoon'
+  -- Harpoon: quickly switch between imp files in project.
+  {
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = require'ps.config.harpoon',
+  },
 
   -- Completion engine and sources.
-  use 'hrsh7th/nvim-cmp'
-  use 'hrsh7th/cmp-nvim-lsp'
-  use 'hrsh7th/cmp-nvim-lua'
-  use 'hrsh7th/cmp-buffer'
-  use 'hrsh7th/cmp-path'
-  use 'hrsh7th/cmp-cmdline'
+  'hrsh7th/nvim-cmp',
+  'hrsh7th/cmp-nvim-lsp',
+  'hrsh7th/cmp-nvim-lua',
+  'hrsh7th/cmp-buffer',
+  'hrsh7th/cmp-path',
+  'hrsh7th/cmp-cmdline',
 
   -- Status line
-  use {
+  {
     'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
-    config = require'ps.pconf'.config_lualine
-  }
+    dependencies = { 'kyazdani42/nvim-web-devicons', opt = true },
+    config = require'ps.config.lualine'
+  },
 
   -- Homepage.
-  use {
+  {
     'goolord/alpha-nvim',
-    requires = { 'nvim-tree/nvim-web-devicons' },
-    config = require'ps.pconf'.config_alpha_nvim
-  }
-
-  -- Colorscheme sonokai
-  use 'sainnhe/sonokai'
-  -- Colorscheme gruvbox
-  use 'gruvbox-community/gruvbox'
-  -- Coloescheme rose-pine
-  use {
-    'rose-pine/neovim',
-    as = 'rose-pine',
-  }
+    dependencies = { 'kyazdani42/nvim-web-devicons' },
+    -- config = require'ps.pconf'.config_alpha_nvim
+  },
 
   -- Provides command to measure startup time.
-  use 'dstein64/vim-startuptime'
+  'dstein64/vim-startuptime',
 
-  if packer_bootstrap then
-    require('packer').sync()
-  end
-end)
+  -- Tmux navigation.
+  {
+    'alexghergh/nvim-tmux-navigation',
+    config = require'ps.config.nvim-tmux-navigation',
+  },
 
-if packer_bootstrap then
-  print '==================================='
-  print '    Plugins are being installed.'
-  print '    Wait until Packer completes,'
-  print '       then restart nvim'
-  print '==================================='
-  return
-end
+  {
+    'lewis6991/gitsigns.nvim',
+    config = require'ps.config.gitsigns',
+  },
+
+  {
+    'tpope/vim-fugitive',
+    config = require'ps.config.fugitive',
+  },
+
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    init = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 300
+    end,
+  },
+
+  ------------------------------------------------------------
+  --                     Colorschmes                      --
+  ------------------------------------------------------------
+
+  'sainnhe/sonokai',
+  'gruvbox-community/gruvbox',
+  {
+    'rose-pine/neovim',
+    config = function()
+      require 'rose-pine'.setup({
+        -- disable_background allows for window transparency.
+        -- disable_background = true
+      })
+    end
+  },
+  {
+    "olimorris/onedarkpro.nvim",
+  }
+})
 
 -- Configure Plugins.
-require'ps.pconf'.config_telescope()
-require'ps.pconf'.config_rosepine()
-require'ps.pconf'.config_lsp_plugins()
-require'ps.config_treesitter'
-require'nvim-lastplace'.setup{}
+
+require'ps.config.lsp'
+require'ps.config.themes'
+
 
