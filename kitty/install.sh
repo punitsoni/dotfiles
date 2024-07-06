@@ -2,12 +2,10 @@
 # TODO: this only works for linux right now. Add OS-specific check to avoid
 # errors.
 
-
 curl_installer() {
   # Download and install it to ~/.local/bin
   curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
 }
-
 
 add_to_path_and_desktop() {
   mkdir -p ~/.local/bin
@@ -21,8 +19,6 @@ add_to_path_and_desktop() {
   # Update the paths to the kitty and its icon in the kitty.desktop file(s)
   sed -i "s|Icon=kitty|Icon=/home/$USER/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" ~/.local/share/applications/kitty*.desktop
   sed -i "s|Exec=kitty|Exec=/home/$USER/.local/kitty.app/bin/kitty|g" ~/.local/share/applications/kitty*.desktop
-
-
 }
 
 link_config() {
@@ -30,7 +26,7 @@ link_config() {
   ln -s ~/dotfiles/kitty/kitty.conf ~/.config/kitty/
 }
 
-
 # curl_installer
 # add_to_path_and_desktop
 link_config
+
