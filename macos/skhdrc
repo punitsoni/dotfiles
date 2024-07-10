@@ -50,6 +50,8 @@ alt - n : yabai -m space --focus next
 alt - p : yabai -m space --focus prev
 alt - right : yabai -m space --focus next
 alt - left : yabai -m space --focus prev
+ctrl - right : yabai -m space --focus next
+ctrl - left : yabai -m space --focus prev
 
 # Zoom focused window.
 # options: zoom-parent, zoom-fullscreen, native-fullscreen
