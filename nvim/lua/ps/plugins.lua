@@ -20,9 +20,8 @@ require("lazy").setup({
   -- Telescope fuzzy-finder.
   {
     'nvim-telescope/telescope.nvim',
-    -- tag = '0.1.0',
-    dependencies = {'nvim-lua/plenary.nvim'},
-    config = require'ps.config.telescope'
+    dependencie = { 'nvim-lua/plenary.nvim' },
+    config = require 'ps.config.telescope'
   },
   -- Native fuzzy finder for telescope. Requires building.
   -- TODO: make sure gcc/clang and make is available.
@@ -39,7 +38,7 @@ require("lazy").setup({
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
     },
-    config = require'ps.config.treesitter'
+    config = require 'ps.config.treesitter'
   },
 
   -- File tree.
@@ -48,13 +47,13 @@ require("lazy").setup({
     dependencies = {
       'nvim-tree/nvim-web-devicons', -- optional, for file icons
     },
-    config = require'ps.config.nvim-tree',
+    config = require 'ps.config.nvim-tree',
   },
 
   -- Open files at the last cursor position.
   {
     'ethanholz/nvim-lastplace',
-    config = function() require'nvim-lastplace'.setup() end,
+    config = function() require 'nvim-lastplace'.setup() end,
   },
 
   -- Better ui for input and select.
@@ -84,7 +83,7 @@ require("lazy").setup({
     "ThePrimeagen/harpoon",
     branch = "harpoon2",
     dependencies = { "nvim-lua/plenary.nvim" },
-    config = require'ps.config.harpoon',
+    config = require 'ps.config.harpoon',
   },
 
   -- Completion engine and sources.
@@ -99,33 +98,35 @@ require("lazy").setup({
   {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'kyazdani42/nvim-web-devicons', opt = true },
-    config = require'ps.config.lualine'
+    config = require 'ps.config.lualine'
   },
 
   -- Homepage.
   {
     'goolord/alpha-nvim',
     dependencies = { 'kyazdani42/nvim-web-devicons' },
-    -- config = require'ps.pconf'.config_alpha_nvim
+    config = function()
+      require 'alpha'.setup(require 'alpha.themes.startify'.config)
+    end,
   },
 
   -- Provides command to measure startup time.
-  'dstein64/vim-startuptime',
+  -- 'dstein64/vim-startuptime',
 
   -- Tmux navigation.
   {
     'alexghergh/nvim-tmux-navigation',
-    config = require'ps.config.nvim-tmux-navigation',
+    config = require 'ps.config.nvim-tmux-navigation',
   },
 
   {
     'lewis6991/gitsigns.nvim',
-    config = require'ps.config.gitsigns',
+    config = require 'ps.config.gitsigns',
   },
 
   {
     'tpope/vim-fugitive',
-    config = require'ps.config.fugitive',
+    config = require 'ps.config.fugitive',
   },
 
   {
@@ -135,10 +136,90 @@ require("lazy").setup({
       vim.o.timeout = true
       vim.o.timeoutlen = 300
     end,
+    config = function() require 'which-key'.setup() end,
+  },
+
+  {
+    "folke/trouble.nvim",
+    opts = {}, -- for default options, refer to the configuration section for custom setup.
+    cmd = "Trouble",
+    -- TODO Move keymaps to the general keymaps.lua
+    keys = {
+      {
+        "<leader>xx",
+        "<cmd>Trouble diagnostics toggle<cr>",
+        desc = "Diagnostics (Trouble)",
+      },
+      {
+        "<leader>xX",
+        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+        desc = "Buffer Diagnostics (Trouble)",
+      },
+      {
+        "<leader>cs",
+        "<cmd>Trouble symbols toggle focus=false<cr>",
+        desc = "Symbols (Trouble)",
+      },
+      {
+        "<leader>cl",
+        "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+        desc = "LSP Definitions / references / ... (Trouble)",
+      },
+      {
+        "<leader>xL",
+        "<cmd>Trouble loclist toggle<cr>",
+        desc = "Location List (Trouble)",
+      },
+      {
+        "<leader>xQ",
+        "<cmd>Trouble qflist toggle<cr>",
+        desc = "Quickfix List (Trouble)",
+      },
+    },
+  },
+
+  -- Awesome plugin to move windows / splits around.
+  {
+    'sindrets/winshift.nvim'
+  },
+
+  {
+    'akinsho/bufferline.nvim',
+    dependencies = 'nvim-tree/nvim-web-devicons',
+    config = require 'ps.config.bufferline',
+  },
+
+  -- Show symbols sidebar.
+  {
+    "hedyhli/outline.nvim",
+    lazy = true,
+    cmd = { "Outline", "OutlineOpen" },
+    keys = {
+      { "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
+    },
+    config = function()
+      require 'outline'.setup {
+        outline_window = {
+          hide_cursor = true,
+          focus_on_open = false,
+
+        },
+        symbols = {
+          default = { 'String', exclude = true },
+          python = { 'Function', 'Class' },
+        },
+      }
+    end
+  },
+
+  -- Floating terminal.
+  {
+    'voldikss/vim-floaterm',
+    config = require'ps.config.floaterm',
   },
 
   ------------------------------------------------------------
-  --                     Colorschmes                      --
+  --                      Colorschmes                       --
   ------------------------------------------------------------
 
   'sainnhe/sonokai',
@@ -154,12 +235,14 @@ require("lazy").setup({
   },
   {
     "olimorris/onedarkpro.nvim",
-  }
+  },
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    -- priority = 1000
+    config = require 'ps.config.catppuccin',
+  },
 })
 
 -- Configure Plugins.
-
-require'ps.config.lsp'
-require'ps.config.themes'
-
-
+require 'ps.config.lsp'

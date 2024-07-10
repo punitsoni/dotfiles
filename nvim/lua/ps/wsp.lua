@@ -3,7 +3,7 @@ local builtin = require'telescope.builtin'
 -- local finders = require'telescope.finders'
 -- local conf = require'telescope.config'.values
 local util = require'ps.utils'
-local alib = require'ps.actions_lib'
+-- local alib = require'ps.actions_lib'
 
 local CONFIG_DIRNAME = '.wsp'
 local CONFIG_FILENAME = 'wsp.json'
@@ -42,32 +42,32 @@ local function wsp_init()
   end
 end
 
+-- TODO call this using autocmd on event such as VimEnter.
 wsp_init()
 
-local function create_actions()
-  alib.register_action({
-    name = 'wsp-files',
-    func = wsp.select_file
-  })
+-- local function create_actions()
+--   alib.register_action({
+--     name = 'wsp-files',
+--     func = wsp.select_file
+--   })
 
-  alib.register_action({
-    name = 'wsp-config',
-    func = wsp.edit_config,
-  })
-end
+--   alib.register_action({
+--     name = 'wsp-config',
+--     func = wsp.edit_config,
+--   })
+-- end
 
+local M = {}
 
-local wsp = {}
-
-function wsp.new_workspace()
+function M.new_workspace()
   local cwd = vim.fn.getcwd()
 end
 
-function wsp.is_wsp_active()
+function M.is_wsp_active()
   return wsp_config ~= nil
 end
 
-function wsp.edit_config()
+function M.edit_config()
   if not wsp_config then
     return
   end
@@ -76,7 +76,7 @@ function wsp.edit_config()
 end
 
 -- Opens a ui to find and select a file in the workspace.
-function wsp.select_file()
+function M.select_file()
   if not wsp_config then
     print('wsp not active')
     return
@@ -98,14 +98,20 @@ function wsp.select_file()
   })
 end
 
-function wsp.test()
-  local f = wsp.select_file()
+function M.test()
+  local f = M.select_file()
   print('selected='..f)
 end
 
-return wsp
+return M
 
 --[[
+
+TODO
+- Configure wsp.nvim to work with Lazy as a dev plugin.
+
+
+NOTES
 
 - A workspace is a directory with .wsp/ subdir
 - we should go in workspace mode when cwd is a subdir of a workspace

@@ -8,23 +8,21 @@ local alib = require 'ps.actions_lib'
 local utils = require 'ps.utils'
 local wsp = require 'ps.wsp'
 
-local this = {}
+local M = {}
 
 -- Select from nvim config files.
-this.nvim_config_files = function()
-  ts_builtin.find_files({
-    cwd = vim.fn.stdpath('config')
-  })
-end
-
 alib.register_action({
   name = 'nvim-config-files',
-  func = this.nvim_config_files
+  func = function()
+    ts_builtin.find_files({
+      cwd = vim.fn.stdpath('config')
+    })
+  end,
 })
 
 -- Toggle tree sidebar.
-this.toggle_tree = function()
-  require'nvim-tree.api'.tree.toggle(
+M.toggle_tree = function()
+  require 'nvim-tree.api'.tree.toggle(
     {
       focus = false,
       find_file = true,
@@ -33,17 +31,16 @@ this.toggle_tree = function()
 end
 
 -- Sync tree to current file. Opening if not opened.
-this.sync_tree = function()
-  require'nvim-tree.api'.tree.open(
-    {
-      focus = false,
-      find_file = true,
-      update_root = true,
-    })
-end
 alib.register_action({
   name = 'sync-tree',
-  func = this.sync_tree,
+  func = function()
+    require 'nvim-tree.api'.tree.open(
+      {
+        focus = false,
+        find_file = true,
+        update_root = true,
+      })
+  end,
 })
 
 alib.register_action({
@@ -71,4 +68,16 @@ alib.register_action({
   func = wsp.edit_config,
 })
 
-return this
+M.symbols_toggle = function()
+  -- vim.cmd 'Trouble symbols toggle pinned=true results.win.relative=win results.win.position=right'
+  require 'trouble'.toggle {
+  }
+end
+
+alib.register_action({
+  name = 'symbols-toggle',
+  func = M.symbols_toggle,
+})
+
+return M
+

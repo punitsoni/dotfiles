@@ -92,6 +92,8 @@ require("lspconfig").clangd.setup {
   }
 }
 
+require("lspconfig").pyright.setup {
+}
 
 ---- Setup nvim-cmp
 -- local luasnip = require 'luasnip'

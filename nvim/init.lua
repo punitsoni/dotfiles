@@ -11,21 +11,13 @@ require 'ps.globals'
 
 
 -- Set colorscheme.
-local colorscheme = 'onedark'
+-- local colorscheme = 'onedark'
+local colorscheme = 'catppuccin'
 -- local colorscheme = 'rose-pine-main'
 
 vim.cmd('silent! colorscheme ' .. colorscheme)
 
--- Load any local config that is not part of this github repo.
--- e.g. work related stuff.
--- require 'ps.local'
-
 -- EXPERIMENTATION --
 
--- require 'ps.wsp'
-
--- print('starting profile')
--- require('plenary.profile').start('/tmp/output_flame.log', {flame = true})
-
--- vim.lsp.set_log_level('trace')
+require 'ps.wsp'
 

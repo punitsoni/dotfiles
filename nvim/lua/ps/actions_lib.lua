@@ -13,12 +13,12 @@ local ts_config = require 'telescope.config'.values
 -- register_action() function.
 local all_actions = {}
 
-local alib = {}
+local M = {}
 
 -- Registers a single action.
 -- Args
 --  action: map-like table with 2 keys. 'name' and 'func'
-alib.register_action = function(action)
+M.register_action = function(action)
   all_actions = vim.tbl_extend('error', all_actions, {
     [action.name] = action,
   })
@@ -26,7 +26,7 @@ alib.register_action = function(action)
 end
 
 -- Opens a telescope picker to select an action and executes selected action.
-alib.pick_action = function(opts)
+M.pick_action = function(opts)
   opts = opts or {}
   local opts_theme = ts_themes.get_dropdown()
   opts = vim.tbl_deep_extend('force', opts_theme, opts)
@@ -63,5 +63,15 @@ alib.pick_action = function(opts)
   action_picker:find()
 end
 
-return alib
+-- Finds the action by `name` and runs it.
+M.run_action = function(name)
+  local action = all_actions[name]
+  if action == nil then
+    print('No action with name ' .. name)
+    return
+  end
+  action.func()
+end
+
+return M
 

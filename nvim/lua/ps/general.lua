@@ -85,3 +85,9 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
   command = 'set formatoptions-=ro'
 })
 
+-- Disable line numbers in terminal.
+vim.api.nvim_create_autocmd("TermOpen", {
+  pattern = "*",
+  command = "setlocal nonumber norelativenumber"
+})
+

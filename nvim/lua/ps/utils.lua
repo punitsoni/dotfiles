@@ -30,5 +30,9 @@ M.imap = function(lhs, rhs, opts)
   keymap('i', lhs, rhs, opts)
 end
 
+M.tmap = function(lhs, rhs, opts)
+  keymap('t', lhs, rhs, opts)
+end
+
 return M
 
