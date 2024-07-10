@@ -1,6 +1,6 @@
-local nmap = require'ps.utils'.nmap
 
-M = function()
+local function SetupNvimTmuxNav()
+  local nmap = require'ps.utils'.nmap
   local nav = require('nvim-tmux-navigation')
   nav.setup {
     disable_when_zoomed = true -- defaults to false
@@ -24,7 +24,12 @@ M = function()
   nmap ('<C-Space>', nav.NvimTmuxNavigateNext, {
     desc = 'NvimTmuxNavigateNext'
   })
-
 end
 
-return M
+return {
+  {
+    'alexghergh/nvim-tmux-navigation',
+    config = SetupNvimTmuxNav,
+  },
+}
+

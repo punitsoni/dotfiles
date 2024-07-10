@@ -1,5 +1,5 @@
 
-M = function()
+local function SetupTelescope()
   local actions = require 'telescope.actions'
   require('telescope').setup {
     defaults = {
@@ -28,8 +28,22 @@ M = function()
       }
     }
   }
-
   require('telescope').load_extension('fzf')
 end
 
-return M
+return {
+  {
+    'nvim-telescope/telescope.nvim',
+    config = SetupTelescope,
+    dependencies = { 'nvim-lua/plenary.nvim',
+      -- Native fuzzy finder for telescope. Requires building.
+      -- TODO: make sure gcc/clang and make is available.
+      {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        build = 'make'
+      },
+    },
+  },
+}
+
+

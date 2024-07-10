@@ -1,8 +1,6 @@
-
-local util = require'ps.utils'
-
 -- Initialization for floaterm plugin.
-M = function()
+local function SetupFloaterm()
+  local util = require'ps.utils'
   vim.g.floaterm_width = 0.7
   vim.g.floaterm_height = 0.7
   vim.g.floaterm_titleposition = 'center'
@@ -16,4 +14,10 @@ M = function()
   })
 end
 
-return M
+return {
+  {
+    'voldikss/vim-floaterm',
+    config = SetupFloaterm,
+  },
+}
+

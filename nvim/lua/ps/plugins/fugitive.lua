@@ -1,7 +1,6 @@
 
 -- Function that is called when vim-fugitive plugin is loaded.
-M = function()
-
+local function SetupFugitive()
   local actions_lib = require'ps.actions_lib'
   actions_lib.register_action({
     name = 'blame',
@@ -9,7 +8,12 @@ M = function()
       vim.cmd('Git blame')
     end
   })
-
 end
 
-return M
+return {
+  {
+    'tpope/vim-fugitive',
+    config = SetupFugitive,
+  },
+}
+
