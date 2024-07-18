@@ -68,7 +68,6 @@ return {
           outline_window = {
             hide_cursor = true,
             focus_on_open = false,
-
           },
           symbols = {
             default = { 'String', exclude = true },
@@ -78,8 +77,17 @@ return {
       end
     },
 
+    -- Indenting guides.
+    {
+      "lukas-reineke/indent-blankline.nvim",
+      main = "ibl",
+      opts = {}
+    },
+
+    -- TODO This might not be needed anymore as we have noice.
     {
       'VonHeikemen/fine-cmdline.nvim',
+      enabled = false,
       dependencies = {
         'MunifTanjim/nui.nvim',
       },
@@ -87,14 +95,18 @@ return {
         require'fine-cmdline'.setup {
           popup = {
             position = {
-              row = '40%',
+              row = '80%',
               col = '50%',
             },
+            relative = 'editor',
             size = {
               width = '50%',
             },
             border = {
               style = 'rounded',
+              text = {
+                top = ' Command ',
+              },
             },
             win_options = {
               winhighlight = 'Normal:Normal,FloatBorder:FloatBorder',
@@ -102,8 +114,37 @@ return {
           },
         }
         require'ps.utils'.nmap(':', '<cmd>FineCmdline<cr>')
+        require'ps.utils'.nmap('<C-;>', '<cmd>')
       end
     },
 
+    -- Shows a context line (e.g. function name) when scrolling.
+    {
+      'nvim-treesitter/nvim-treesitter-context',
+      opts = {
+        max_lines = 1,
+        mode = 'topline',
+        trim_scope = 'inner',
+      },
+    },
+
+    -- Automatically save files.
+    {
+      "okuuva/auto-save.nvim",
+      enabled = false,
+      opts = { },
+    },
+
+    {
+      'ii14/neorepl.nvim',
+      -- Lazy-load this plugin on this command.
+      cmd = 'Repl',
+    },
+
+    -- Highlight symbol under cursor.
+    {
+      'RRethy/vim-illuminate'
+    },
   },
 }
+

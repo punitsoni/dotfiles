@@ -2,7 +2,7 @@
 local options = {
   modules = {},
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'lua', 'python', 'vim' },
+  ensure_installed = { 'c', 'cpp', 'lua', 'python', 'vim', 'regex' },
 
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },

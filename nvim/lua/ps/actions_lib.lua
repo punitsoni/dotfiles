@@ -63,6 +63,17 @@ M.pick_action = function(opts)
   action_picker:find()
 end
 
+
+-- Returns the function associated with action `name`
+M.action_func = function(name)
+  local action = all_actions[name]
+  if action == nil then
+    return nil
+  end
+  return action.func
+end
+
+
 -- Finds the action by `name` and runs it.
 M.run_action = function(name)
   local action = all_actions[name]

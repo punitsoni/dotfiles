@@ -22,12 +22,22 @@ alib.register_action({
 
 -- Toggle tree sidebar.
 M.toggle_tree = function()
-  require 'nvim-tree.api'.tree.toggle(
-    {
-      focus = false,
-      find_file = true,
-      update_root = true,
-    })
+  -- require 'nvim-tree.api'.tree.toggle(
+  --   {
+  --     focus = false,
+  --     find_file = true,
+  --     update_root = true,
+  --   })
+  -- require'neotree'
+end
+
+-- Deletes current buffer while keeping the window / split open.
+M.delete_curbuf = function()
+  vim.cmd('bp|sp|bn|bd')
+end
+
+M.toggle_edgy_left = function()
+  require'edgy'.toggle('left')
 end
 
 -- Sync tree to current file. Opening if not opened.
@@ -41,6 +51,13 @@ alib.register_action({
         update_root = true,
       })
   end,
+})
+
+alib.register_action({
+  name = 'quit',
+  func = function()
+    vim.cmd('confirm qall')
+  end
 })
 
 alib.register_action({
@@ -66,6 +83,17 @@ alib.register_action({
 alib.register_action({
   name = 'wsp-config',
   func = wsp.edit_config,
+})
+
+alib.register_action({
+  name = 'lazygit',
+  func = function()
+    if not vim.fn.executable('lazygit') then
+      print('lazygit is not installed. Please install it to use this function')
+      return
+    end
+    vim.cmd [[FloatermNew --width=0.8 --height=0.9 --title=\ LazyGit\  lazygit]]
+  end,
 })
 
 M.symbols_toggle = function()

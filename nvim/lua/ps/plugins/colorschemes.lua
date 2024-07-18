@@ -24,7 +24,7 @@ return {
     priority = 1000,
     config = function()
       -- Set colorscheme when loaded.
-      vim.cmd([[colorscheme tokyonight-night]])
+      -- vim.cmd([[colorscheme tokyonight-night]])
     end,
   },
 

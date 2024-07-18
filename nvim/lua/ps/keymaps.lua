@@ -49,14 +49,18 @@ nmap ('<space>bp',':bp<cr>')
 nmap ('<space>,',':bp<cr>')
 nmap ('<space>bn',':bn<cr>')
 nmap ('<space>.',':bn<cr>')
+
+-- TODO These keymaps are not working. Investigate.
+nmap ('<c-,>',':bp<cr>')
+nmap ('<c-.>',':bn<cr>')
+
 -- Select a buffer to edit.
 nmap ('<space>bb', telescope_builtin.buffers)
 -- Edit previous buffer (Toggle between current and alternate buffer).
 nmap ('<space><tab>',':edit #<cr>')
 -- Delete current buffer.
-nmap ('<space>bd',':bd<cr>')
--- Delete current buffer (force)
-nmap ('<space>bx',':bd!<cr>')
+nmap ('<space>bd', actions.delete_curbuf)
+nmap ('<leader>-', actions.delete_curbuf)
 -- Goto alternate (last-open) buffer.
 nmap ('<space>;','<C-6>')
 
@@ -89,11 +93,7 @@ nmap ('<space>ff', telescope_builtin.find_files, {
 -- Previously open files.
 nmap ('<space>fo', telescope_builtin.oldfiles)
 
--- Nvim config files.
--- nmap ('<space>fn', actions.nvim_config_files, {
---   desc = 'Nvim config files'
--- })
-nmap ('<space>fn', function() alib.run_action('nvim-config-files') end, {
+nmap ('<space>fn', alib.action_func('nvim-config-files'), {
   desc = 'Nvim config files'
 })
 
@@ -115,17 +115,34 @@ nmap ('<space>/', telescope_builtin.current_buffer_fuzzy_find, {
   desc = 'Find in current buffer.'
 })
 
-nmap ('<C-b>', actions.toggle_tree, {
-  desc = 'Toggle nvim-tree'
+nmap ('<space>fg', alib.action_func('lazygit'), {
+  desc = 'LazyGit'
+})
+
+nmap ('<space><space>q', alib.action_func('quit'), {
+  desc = 'Quit neovim'
+})
+
+
+-- nmap ('<C-b>', actions.toggle_tree, {
+--   desc = 'Toggle File Explorer Tree'
+-- })
+
+nmap ('<C-b>', actions.toggle_edgy_left, {
+  desc = 'Toggle Left Edgebar'
 })
 
 -- Center the line after jump.
 nmap ('<C-o>', '<C-o>zz', {})
 nmap ('<C-i>', '<C-i>zz', {})
 
-nmap ('<leader><leader>h', ':Alpha<cr>', {
+nmap ('<leader>hh', ':Alpha<cr>', {
   desc = 'Open home page.'
 })
+
+
+nmap ('{', '<cmd>cprev<cr>zz', { desc = "Quickfix prev" })
+nmap ('}', '<cmd>cnext<cr>zz', { desc = "Quickfix next" })
 
 -- Pick and run an action.
 nmap ('<space>p', alib.pick_action)
@@ -136,7 +153,9 @@ nmap ('<C-p>', alib.pick_action)
 nmap ('<space>n', ':FloatermToggle main<cr>')
 
 -- Press Esc to enter normal mode in terminal.
-tmap ('<esc>', '<C-\\><C-n>')
+-- Question: do we ever need this?
+-- tmap ('<esc>', '<C-\\><C-n>')
+
 -- Window switching for terminal mode.
 tmap ('<C-h>', '<C-\\><C-n><C-w>h')
 tmap ('<C-j>', '<C-\\><C-n><C-w>j')

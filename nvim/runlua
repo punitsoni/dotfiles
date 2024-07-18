@@ -7,5 +7,5 @@ if (( $# != 1 )); then
   echo "Usage: $0 <file.lua>"
 fi
 
-nvim --headless -c "luafile $1" -c q
+nvim --headless -c "luafile $1" -c quit
 
