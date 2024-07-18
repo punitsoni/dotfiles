@@ -62,7 +62,7 @@ alias shrc="source ${HOME}/.zshrc"
 alias ezrc="$EDITOR $HOME/.zshrc"
 # Edit zshrc_main.
 alias ezrcm="$EDITOR $DOTFILES/sh/zshrc_main.zsh"
-# Source bashrc.
+# Source zshrc.
 alias szrc="source $HOME/.zshrc"
 
 # Select and switch to a tmux session.
