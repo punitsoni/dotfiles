@@ -1,9 +1,5 @@
 local builtin = require'telescope.builtin'
--- local pickers = require'telescope.pickers'
--- local finders = require'telescope.finders'
--- local conf = require'telescope.config'.values
 local util = require'ps.utils'
--- local alib = require'ps.actions_lib'
 
 local CONFIG_DIRNAME = '.wsp'
 local CONFIG_FILENAME = 'wsp.json'
@@ -45,18 +41,6 @@ end
 -- TODO call this using autocmd on event such as VimEnter.
 wsp_init()
 
--- local function create_actions()
---   alib.register_action({
---     name = 'wsp-files',
---     func = wsp.select_file
---   })
-
---   alib.register_action({
---     name = 'wsp-config',
---     func = wsp.edit_config,
---   })
--- end
-
 local M = {}
 
 function M.new_workspace()
@@ -96,11 +80,6 @@ function M.select_file()
     --   wsp_config.dirs
     -- )
   })
-end
-
-function M.test()
-  local f = M.select_file()
-  print('selected='..f)
 end
 
 return M

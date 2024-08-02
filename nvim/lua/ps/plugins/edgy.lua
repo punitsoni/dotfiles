@@ -2,6 +2,7 @@ return {
   {
     "folke/edgy.nvim",
     event = "VeryLazy",
+    enabled = false,
     init = function()
       vim.opt.laststatus = 3
       vim.opt.splitkeep = "screen"
@@ -29,18 +30,18 @@ return {
           end,
           pinned = true,
           open = "Neotree",
-          size = { height = 0.6 },
+          -- size = { height = 0.6 },
         },
-        {
-          title = "Neo-Tree Buffers",
-          ft = "neo-tree",
-          filter = function(buf)
-            return vim.b[buf].neo_tree_source == "buffers"
-          end,
-          pinned = true,
-          collapsed = false, -- show window as closed/collapsed on start
-          open = "Neotree position=top buffers",
-        },
+        -- {
+        --   title = "Neo-Tree Buffers",
+        --   ft = "neo-tree",
+        --   filter = function(buf)
+        --     return vim.b[buf].neo_tree_source == "buffers"
+        --   end,
+        --   pinned = true,
+        --   collapsed = false, -- show window as closed/collapsed on start
+        --   open = "Neotree position=top buffers",
+        -- },
         -- {
         --   title = function()
         --     local buf_name = vim.api.nvim_buf_get_name(0) or "[No Name]"
@@ -52,7 +53,7 @@ return {
 
         -- },
         -- any other neo-tree windows
-        "neo-tree",
+        -- "neo-tree",
       },
       bottom = {
         "Trouble",

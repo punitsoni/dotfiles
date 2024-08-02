@@ -15,8 +15,12 @@ local function SetupFloaterm()
   vim.api.nvim_create_autocmd({ 'FileType' }, {
     pattern = 'floaterm',
     callback = function(_)
-      -- Ctrl-Q hides the focused floating terminal.
-      tmap('<C-q>', '<C-\\><C-n>:FloatermHide<cr>')
+      -- tmap('<C-q>', '<C-\\><C-n>:FloatermHide<cr>')
+      -- Any window movement key should hide the floaterm.
+      tmap('<C-h>', '<C-\\><C-n>:FloatermHide<cr>')
+      tmap('<C-j>', '<C-\\><C-n>:FloatermHide<cr>')
+      tmap('<C-k>', '<C-\\><C-n>:FloatermHide<cr>')
+      tmap('<C-l>', '<C-\\><C-n>:FloatermHide<cr>')
     end
   })
 end

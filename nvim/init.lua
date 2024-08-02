@@ -23,3 +23,5 @@ vim.cmd('silent! colorscheme ' .. colorscheme)
 
 --- Experimentation ----
 
+vim.lsp.set_log_level('WARN')
+

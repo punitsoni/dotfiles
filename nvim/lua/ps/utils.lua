@@ -5,6 +5,10 @@ function M.strip(s)
   return string.gsub(s, '\n', '')
 end
 
+M.hascmd = function(cmd)
+  return vim.fn.exists(cmd) == 2
+end
+
 -- Converts a path that is relative to refdir to absolute path.
 function M.abspath(refdir, relpath)
   return M.strip(vim.fn.system(
@@ -33,6 +37,14 @@ end
 M.tmap = function(lhs, rhs, opts)
   keymap('t', lhs, rhs, opts)
 end
+
+-- Copies the string s to system clipboard.
+M.copy_to_clipboard = function(s)
+    -- Write string into vim register `+` which represents the system
+    -- clipboard.
+    vim.fn.setreg('+', s)
+end
+
 
 return M
 

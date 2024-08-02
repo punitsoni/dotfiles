@@ -23,13 +23,14 @@ vim.opt.hidden = true
 -- Shows the current line number at the bottom-right of the screen.
 vim.opt.ruler = true
 -- Disable backups.
-vim.opt.backup= false
+vim.opt.backup = false
 vim.opt.writebackup = false
 -- Use spaces instead of tabs.
 vim.opt.expandtab = true
 -- Set default indentation size.
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.smartindent = true
 -- Round the indents to shiftwidth.
 vim.opt.shiftround = true
 -- Dont show mode as we will use status line for it.
@@ -39,7 +40,7 @@ vim.opt.cmdheight = 1
 -- Default coding textwidth
 vim.opt.textwidth = 80
 -- Highlight the 81st column.
-vim.opt.colorcolumn = {81}
+vim.opt.colorcolumn = { 81 }
 -- No automatic wrapping of lines.
 vim.opt.wrap = false
 -- Use » to mark Tabs and ° to mark trailing whitespace
@@ -66,7 +67,7 @@ vim.opt.updatetime = 500
 -- Make it so there are always ten lines below my cursor
 -- opt.scrolloff = 10
 -- Better completion experience.
-vim.opt.completeopt = {'menuone','noinsert','noselect'}
+vim.opt.completeopt = { 'menuone', 'noinsert', 'noselect' }
 -- Avoid showing status message when using completion.
 -- opt.shortmess = opt.shortmess + {'c'}
 -- Enable truecolor on terminals.
@@ -90,4 +91,3 @@ vim.api.nvim_create_autocmd("TermOpen", {
   pattern = "*",
   command = "setlocal nonumber norelativenumber"
 })
-

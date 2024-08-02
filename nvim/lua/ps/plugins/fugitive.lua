@@ -13,7 +13,7 @@ end
 return {
   {
     'tpope/vim-fugitive',
-    enabled = false,
+    enable = false,
     config = SetupFugitive,
   },
 }

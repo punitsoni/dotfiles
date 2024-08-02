@@ -5,7 +5,7 @@
 -------------------------------------------------------------------------------
 local ts_builtin = require 'telescope.builtin'
 local alib = require 'ps.actions_lib'
-local utils = require 'ps.utils'
+local util = require 'ps.utils'
 local wsp = require 'ps.wsp'
 
 local M = {}
@@ -22,13 +22,12 @@ alib.register_action({
 
 -- Toggle tree sidebar.
 M.toggle_tree = function()
-  -- require 'nvim-tree.api'.tree.toggle(
-  --   {
-  --     focus = false,
-  --     find_file = true,
-  --     update_root = true,
-  --   })
-  -- require'neotree'
+  require 'nvim-tree.api'.tree.toggle(
+    {
+      focus = true,
+      find_file = true,
+      -- update_root = true,
+    })
 end
 
 -- Deletes current buffer while keeping the window / split open.
@@ -37,20 +36,31 @@ M.delete_curbuf = function()
 end
 
 M.toggle_edgy_left = function()
-  require'edgy'.toggle('left')
+  require 'edgy'.toggle('left')
 end
 
 -- Sync tree to current file. Opening if not opened.
 alib.register_action({
   name = 'sync-tree',
   func = function()
-    require 'nvim-tree.api'.tree.open(
-      {
-        focus = false,
-        find_file = true,
-        update_root = true,
-      })
+    require("neo-tree.command").execute({ action = "focus", reveal = true })
+    -- require 'nvim-tree.api'.tree.open(
+    --   {
+    --     focus = false,
+    --     find_file = true,
+    --     update_root = true,
+    --   })
   end,
+})
+
+alib.register_action({
+  name = 'zoom',
+  func = function()
+    require'mini.misc'.zoom(nil, {
+      width = 0.9,
+      height = 0.9,
+    })
+  end
 })
 
 alib.register_action({
@@ -93,6 +103,30 @@ alib.register_action({
       return
     end
     vim.cmd [[FloatermNew --width=0.8 --height=0.9 --title=\ LazyGit\  lazygit]]
+  end,
+})
+
+alib.register_action({
+  name = 'copy-current-path',
+  func = function()
+    -- Write current buffer path into vim register + which represents system
+    -- clipboard.
+    path = vim.fn.expand('%')
+    util.copy_to_clipboard(path)
+    print("Copied: " .. path)
+  end,
+})
+
+alib.register_action({
+  name = 'tmux-sessions',
+  func = function()
+    -- TODO: BUG Floaterm is not starting in insert mode when started from
+    -- actions menu.
+    vim.cmd(
+      'FloatermNew --width=64 --height=16 --title=\\ Tmux-Sessions\\ '
+      .. ' --disposable --autoclose=2'
+      .. ' bash $DOTFILES/scripts/tmux_sessionizer.sh'
+    )
   end,
 })
 
