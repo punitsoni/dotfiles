@@ -36,3 +36,27 @@ yabai -m config mouse_action2                resize
 # Keep the system preferences window floating.
 yabai -m rule --add app="^System Settings$" manage=off
  
+
+
+# We want to keep some spaces to have float layout where we can put non-tiliing
+# windows.
+yabai -m space 7 --layout float
+yabai -m space 8 --layout float
+yabai -m space 9 --layout float
+yabai -m space 10 --layout float
+
+# ---- Experimental ---- #
+
+# Creates a multiline variable on_space_changed
+read -r -d '' on_space_changed <<- 'EOF'
+  # echo "Current space is $YABAI_SPACE_ID"
+EOF
+
+# Attach a handler for space_changed event.
+yabai -m signal --add event=space_changed action="$on_space_changed"
+
+
+
+
+
+

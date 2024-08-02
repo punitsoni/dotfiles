@@ -30,11 +30,12 @@ has_command() {
 # Attach to tmux session. Create new session if it does not exist.
 # If no argument provided. It attaches to session 0.
 tm() {
-  if [ -z $1 ]; then
-    tmux new-session -A -s 0
-  else
-    tmux new-session -A -s $1
-  fi
+  # if [ -z $1 ]; then
+  #   tmux new-session -A -s 0
+  # else
+  #   tmux new-session -A -s $1
+  # fi
+  bash $DOTFILES/scripts/tmux_sessionizer.sh $@
 }
 
 # Returns a string corresponding to the variant of ls command present in the

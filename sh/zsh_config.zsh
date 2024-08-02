@@ -122,6 +122,10 @@ precmd_functions+=(cursor beam)
 autoload -Uz run-help
 # unalias run-help
 
+# Fix Home and End key behavior
+bindkey '\e[H'    beginning-of-line
+bindkey '\e[F'    end-of-line
+
 # ------------------------------- Aliases ----------------------------------- #
 
 alias help=run-help

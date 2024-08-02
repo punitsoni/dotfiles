@@ -1,3 +1,5 @@
+# TODO: Looks like this file is not being used. Migrate or delete it.
+
 EDITOR=${EDITOR:=nvim}
 
 alias ls="ls --color"
@@ -63,3 +65,5 @@ alias ezrcm="$EDITOR $DOTFILES/sh/zshrc_main.zsh"
 # Source bashrc.
 alias szrc="source $HOME/.zshrc"
 
+# Select and switch to a tmux session.
+alias ss="bash $DOTFILES/scripts/tmux_sessionizer.sh"
