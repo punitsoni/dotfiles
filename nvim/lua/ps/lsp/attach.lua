@@ -1,18 +1,18 @@
 local keymap = require("ps.lsp.keymap")
-local command = require'ps.lsp.command'
+local command = require 'ps.lsp.command'
 -- local ui = { diagnostic = require("lsp.ui.diagnostic") }
 
 local function default(client, bufnr)
-    -- if client.resolved_capabilities.code_lens then
-    --   vim.lsp.codelens.refresh()
-    -- end
-    -- vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-    -- command.buffer.attach(client)
-    -- command.codelens.attach(client)
-    -- command.diagnostic.attach()
-    -- keymap.attach(bufnr)
-    -- event.attach(client)
-    -- ui.diagnostic.attach()
+  -- if client.resolved_capabilities.code_lens then
+  --   vim.lsp.codelens.refresh()
+  -- end
+  -- vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+  -- command.buffer.attach(client)
+  -- command.codelens.attach(client)
+  -- command.diagnostic.attach()
+  -- keymap.attach(bufnr)
+  -- event.attach(client)
+  -- ui.diagnostic.attach()
 end
 
 ------------------------------------------------------------------------------
@@ -22,8 +22,8 @@ end
 local M = {}
 
 function M.with_default_config(client, bufnr)
-    keymap.attach(bufnr)
-    command.attach(client, bufnr)
+  keymap.attach(bufnr)
+  command.attach(client, bufnr)
 end
 
 -- function M.with_lsp_status(client)

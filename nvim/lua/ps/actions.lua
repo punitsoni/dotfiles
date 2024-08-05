@@ -85,15 +85,15 @@ alib.register_action({
   func = ts_builtin.colorscheme,
 })
 
-alib.register_action({
-  name = 'wsp-files',
-  func = wsp.select_file
-})
+-- alib.register_action({
+--   name = 'wsp-files',
+--   func = wsp.select_file
+-- })
 
-alib.register_action({
-  name = 'wsp-config',
-  func = wsp.edit_config,
-})
+-- alib.register_action({
+--   name = 'wsp-config',
+--   func = wsp.edit_config,
+-- })
 
 alib.register_action({
   name = 'lazygit',

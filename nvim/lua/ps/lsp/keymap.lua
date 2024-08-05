@@ -22,6 +22,7 @@ function M.attach(bufnr)
 
     buf_nmap('<leader>rn', vim.lsp.buf.rename, 'Rename')
     buf_nmap('<leader>ca', vim.lsp.buf.code_action, 'Code Action')
+    buf_nmap('<C-.>', vim.lsp.buf.code_action, 'Code Action')
 
     buf_nmap("gd", function()
             vim.lsp.buf.definition()

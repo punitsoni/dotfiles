@@ -199,3 +199,8 @@ nmap('<leader>tp', function() vim.cmd 'tabprev' end, {
 nmap('<leader>tn', function() vim.cmd 'tabnext' end, {
     desc = 'Tab next'
 })
+
+nmap('<leader>dp', function() vim.diagnostic.goto_prev() end, { desc = 'Diagnostic Prev' })
+nmap('<leader>dn', function() vim.diagnostic.goto_next() end, { desc = 'Diagnostic Next' })
+
+

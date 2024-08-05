@@ -16,6 +16,10 @@ are finished loading.
 
 sh runlua.sh file.lua
 
+Neovim has a standard way to run lua scripts in headless mode.
+
+nvim -l file.lua 
+
 ## Useful shortcuts and tips
 
 * `C-w L` Move the current window to right full-height. Useful for moving help

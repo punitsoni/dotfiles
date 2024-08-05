@@ -92,7 +92,7 @@ return {
         'MunifTanjim/nui.nvim',
       },
       config = function()
-        require'fine-cmdline'.setup {
+        require 'fine-cmdline'.setup {
           popup = {
             position = {
               row = '80%',
@@ -113,8 +113,8 @@ return {
             },
           },
         }
-        require'ps.utils'.nmap(':', '<cmd>FineCmdline<cr>')
-        require'ps.utils'.nmap('<C-;>', '<cmd>')
+        require 'ps.utils'.nmap(':', '<cmd>FineCmdline<cr>')
+        require 'ps.utils'.nmap('<C-;>', '<cmd>')
       end
     },
 
@@ -132,7 +132,7 @@ return {
     {
       "okuuva/auto-save.nvim",
       enabled = false,
-      opts = { },
+      opts = {},
     },
 
     {
@@ -145,6 +145,16 @@ return {
     {
       'RRethy/vim-illuminate'
     },
+
+    {
+      'dgagn/diagflow.nvim',
+      opts = {
+        scope = 'line',
+        show_sign = true,
+        placement = 'inline',
+        inline_padding_left = 3,
+        show_borders = false,
+      }
+    },
   },
 }
-
