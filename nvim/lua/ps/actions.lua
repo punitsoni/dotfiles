@@ -64,6 +64,13 @@ alib.register_action({
 })
 
 alib.register_action({
+  name = 'switch-source-header',
+  func = function()
+    vim.cmd('ClangdSwitchSourceHeader')
+  end
+})
+
+alib.register_action({
   name = 'quit',
   func = function()
     vim.cmd('confirm qall')

@@ -21,7 +21,7 @@ end
 -- Error if wsp not active.
 function wsp.config_file()
   check_active()
-  return ctx().configfile
+  return ctx().config_file
 end
 
 

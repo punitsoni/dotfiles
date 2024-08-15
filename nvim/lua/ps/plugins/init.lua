@@ -1,7 +1,11 @@
 return {
   {
-    -- Toggle code-commenting
-    'tpope/vim-commentary',
+    {
+      'numToStr/Comment.nvim',
+      opts = {
+      }
+    },
+
     -- Quotes.
     'tpope/vim-surround',
 
@@ -128,13 +132,6 @@ return {
       },
     },
 
-    -- Automatically save files.
-    {
-      "okuuva/auto-save.nvim",
-      enabled = false,
-      opts = {},
-    },
-
     {
       'ii14/neorepl.nvim',
       -- Lazy-load this plugin on this command.
@@ -153,8 +150,23 @@ return {
         show_sign = true,
         placement = 'inline',
         inline_padding_left = 3,
+        -- show_borders does not work properly with inline placement.
         show_borders = false,
       }
+    },
+
+    {
+      'dnlhc/glance.nvim',
+      opts = {}
+    },
+
+    {
+      "SmiteshP/nvim-navbuddy",
+      dependencies = {
+        "SmiteshP/nvim-navic",
+        "MunifTanjim/nui.nvim"
+      },
+      opts = { lsp = { auto_attach = true } }
     },
   },
 }

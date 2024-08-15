@@ -29,11 +29,18 @@ local function NewContext()
   return obj
 end
 
+function Context:check_active()
+  if not self.active then
+    error('Not in workspace.')
+  end
+end
+
 function Context:is_active()
   return self.active
 end
 
 function Context:config_file()
+  self:check_active()
   return self.configfile
 end
 
@@ -51,3 +58,4 @@ setmetatable(Context, {
 })
 
 return Context
+

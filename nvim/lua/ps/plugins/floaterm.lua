@@ -10,7 +10,7 @@ local function SetupFloaterm()
   vim.g.floaterm_autoinsert = true
 
   -- Open/Close floating terminal.
-  nmap ('<space>n', ':FloatermToggle main<cr>')
+  -- nmap ('<space>n', ':FloatermToggle main<cr>')
   -- nmap ('<C-q>', ':FloatermToggle main<cr>')
   vim.api.nvim_create_autocmd({ 'FileType' }, {
     pattern = 'floaterm',
