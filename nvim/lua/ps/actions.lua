@@ -56,7 +56,7 @@ alib.register_action({
 alib.register_action({
   name = 'zoom',
   func = function()
-    require'mini.misc'.zoom(nil, {
+    require 'mini.misc'.zoom(nil, {
       width = 0.9,
       height = 0.9,
     })
@@ -79,8 +79,22 @@ alib.register_action({
 
 alib.register_action({
   name = 'find-files',
-  func = ts_builtin.find_files,
+  func = function()
+    if wsp.is_active() then
+      wsp.find_files()
+    else
+      ts_builtin.find_files()
+    end
+  end
 })
+
+M.live_grep = function()
+  if wsp.is_active() then
+    wsp.live_grep()
+  else
+    ts_builtin.live_grep()
+  end
+end
 
 alib.register_action({
   name = 'help-topics',
@@ -92,15 +106,20 @@ alib.register_action({
   func = ts_builtin.colorscheme,
 })
 
--- alib.register_action({
---   name = 'wsp-files',
---   func = wsp.select_file
--- })
+alib.register_action({
+  name = 'wsp-files',
+  func = wsp.find_files
+})
 
--- alib.register_action({
---   name = 'wsp-config',
---   func = wsp.edit_config,
--- })
+alib.register_action({
+  name = 'wsp-grep',
+  func = wsp.live_grep
+})
+
+alib.register_action({
+  name = 'wsp-edit-config',
+  func = wsp.edit_config,
+})
 
 alib.register_action({
   name = 'lazygit',
@@ -149,4 +168,3 @@ alib.register_action({
 })
 
 return M
-

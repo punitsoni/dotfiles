@@ -6,6 +6,19 @@ local kConfigDirName = '.wsp'
 local kConfigFileName = 'wsp.json'
 local instance = nil
 
+
+local function GetConfig(configdir)
+  vim.opt.rtp:prepend(configdir)
+  -- Try to load local settings if exists. If not, we do nothing.
+  local status_ok, wsp_local = pcall(require, 'wsp_local')
+  if not status_ok then
+    print('wsp_local not found')
+    return nil
+  end
+  return wsp_local.config
+end
+
+
 -- Local private constructor.
 local function NewContext()
   local result = Path.new(vim.uv.cwd()):find_upwards(kConfigDirName)
@@ -14,16 +27,20 @@ local function NewContext()
   if result == '' then
     return obj
   end
+
   local wsp_configdir = result
+  local wsp_rootdir = result:parent()
   local config_filepath = wsp_configdir:joinpath(kConfigFileName)
   if not config_filepath:exists() then
     print('Error: ' .. kConfigFileName .. ' not found at ' .. wsp_configdir.filename)
     return obj
   end
 
-  obj.active = true
   obj.configdir = wsp_configdir.filename
   obj.configfile = config_filepath.filename
+  obj.config = GetConfig(obj.configdir)
+  obj.active = true
+  obj.rootdir = wsp_rootdir.filename
 
   setmetatable(obj, { __index = Context })
   return obj
@@ -58,4 +75,3 @@ setmetatable(Context, {
 })
 
 return Context
-

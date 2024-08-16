@@ -72,7 +72,7 @@ nmap('<space>q', '<c-w>c')
 -- nmap('<space>k', '<c-w>k') nmap('<space>l', '<c-w>l')
 
 -- Find files.
-nmap('<space>ff', telescope_builtin.find_files, { desc = 'Find Files' })
+nmap('<space>ff', alib.action_func('find-files'), { desc = 'Find Files' })
 -- Previously open files.
 nmap('<space>fo', telescope_builtin.oldfiles)
 
@@ -81,7 +81,7 @@ nmap('<space>fn', alib.action_func('nvim-config-files'), { desc = 'Nvim config f
 -- Help tags.
 nmap('<space>fh', telescope_builtin.help_tags, { desc = 'Help tags' })
 -- Livegrep (async search for filenames and text)
-nmap('<space>fl', telescope_builtin.live_grep, { desc = 'Live grep' })
+nmap('<space>fl', actions.live_grep, { desc = 'Live grep' })
 
 -- File symbols using nvim-treesitter
 nmap('<space>fs', telescope_builtin.treesitter, { desc = 'Find symbols' })
