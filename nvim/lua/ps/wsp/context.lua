@@ -12,7 +12,6 @@ local function GetConfig(configdir)
   -- Try to load local settings if exists. If not, we do nothing.
   local status_ok, wsp_local = pcall(require, 'wsp_local')
   if not status_ok then
-    print('wsp_local not found')
     return nil
   end
   return wsp_local.config
@@ -30,15 +29,21 @@ local function NewContext()
 
   local wsp_configdir = result
   local wsp_rootdir = result:parent()
-  local config_filepath = wsp_configdir:joinpath(kConfigFileName)
-  if not config_filepath:exists() then
-    print('Error: ' .. kConfigFileName .. ' not found at ' .. wsp_configdir.filename)
+
+  -- local config_filepath = wsp_configdir:joinpath(kConfigFileName)
+  -- if not config_filepath:exists() then
+  --   print('Error: ' .. kConfigFileName .. ' not found at ' .. wsp_configdir.filename)
+  --   return obj
+  -- end
+
+  local config = GetConfig(wsp_configdir.filename)
+  if not config then
     return obj
   end
 
+  obj.config = config
   obj.configdir = wsp_configdir.filename
-  obj.configfile = config_filepath.filename
-  obj.config = GetConfig(obj.configdir)
+  -- obj.configfile = config_filepath.filename
   obj.active = true
   obj.rootdir = wsp_rootdir.filename
 

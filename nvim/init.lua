@@ -15,7 +15,8 @@ require 'ps.experiments'
 
 -- Set colorscheme.
 -- local colorscheme = 'onedark'
-local colorscheme = 'catppuccin-frappe'
+-- local colorscheme = 'catppuccin-frappe'
+local colorscheme = 'catppuccin'
 -- local colorscheme = 'rose-pine-main'
 
 vim.cmd('silent! colorscheme ' .. colorscheme)

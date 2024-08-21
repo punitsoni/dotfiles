@@ -9,21 +9,7 @@ local function get_context()
   return Context.Instance()
 end
 
-local function check_active()
-  if not get_context():is_active() then
-    error('Not in active workspace')
-  end
-end
-
 function wsp.init()
-  -- local configdir = ctx().configdir
-  -- vim.opt.rtp:prepend(configdir)
-  -- -- Try to load local settings if exists. If not, we do nothing.
-  -- local status_ok, wsp_local = pcall(require, 'wsp_local')
-  -- if not status_ok then
-  --   return
-  -- end
-  -- local config = wsp_local.config
 end
 
 function wsp.is_active()
@@ -59,12 +45,12 @@ function wsp.find_files()
   vim.list_extend(command, {
     '--glob=!**/.git/*',
     '--type=c',
+    '--type=cpp',
     '--type=python',
     '--type=make',
     '--type=cmake',
     ctx.rootdir
   })
-
 
   ts_builtin.find_files({
     find_command = command,
