@@ -83,6 +83,7 @@ function wsp.live_grep()
   vim.list_extend(rg_args, {
     '--glob=!**/.git/*',
     '--type=c',
+    '--type=cpp',
     '--type=python',
     '--type=make',
     '--type=cmake',

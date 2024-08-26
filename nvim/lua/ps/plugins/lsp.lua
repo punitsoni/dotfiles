@@ -1,20 +1,21 @@
 local function SetupLspConfig()
-  capabilities = require 'ps.lsp.capabilities'
+  local capabilities = require 'ps.lsp.capabilities'
   -- nvim-cmp supports additional completion capabilities.
-  new_caps = require 'cmp_nvim_lsp'.default_capabilities(
+  local new_caps = require 'cmp_nvim_lsp'.default_capabilities(
     capabilities.get()
   )
   capabilities.update(new_caps)
 
   require 'mason'.setup()
   require 'mason-lspconfig'.setup {
-    ensure_installed = { 'lua_ls' },
+    ensure_installed = { 'lua_ls', 'bashls' },
   }
 
   -- Configure language servers.
   require("lspconfig").lua_ls.setup(require 'ps.lsp.lua_ls')
   require("lspconfig").clangd.setup(require 'ps.lsp.clangd')
   require("lspconfig").pyright.setup(require 'ps.lsp.pyright')
+  require("lspconfig").bashls.setup(require 'ps.lsp.bashls')
 end
 
 
@@ -77,8 +78,11 @@ return {
       },
     },
   },
+
   -- Useful status updates for LSP
-  { 'j-hui/fidget.nvim' },
+  -- Not needed when using noice.
+  -- { 'j-hui/fidget.nvim' },
+
   -- Good LSP settings for neovim lua development.
   {
     "folke/lazydev.nvim",

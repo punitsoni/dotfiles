@@ -16,6 +16,8 @@ vim.opt.number = true
 vim.opt.mouse = 'a'
 -- Ignore case while searching
 vim.opt.ignorecase = true
+-- Case matters when a capital letter is typed.
+vim.opt.smartcase = true
 -- Do not create swap files
 vim.opt.swapfile = false
 -- keep buffers loaded when window closes, required by many plugins.

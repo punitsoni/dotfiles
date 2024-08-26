@@ -123,4 +123,14 @@ return {
     },
     config = SetupNvimTreesitter,
   },
+  -- Shows a context line (e.g. function name) when scrolling.
+  {
+    'nvim-treesitter/nvim-treesitter-context',
+    opts = {
+      max_lines = 1,
+      mode = 'topline',
+      trim_scope = 'inner',
+    },
+  },
+
 }

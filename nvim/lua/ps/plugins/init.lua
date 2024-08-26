@@ -2,8 +2,7 @@ return {
   {
     {
       'numToStr/Comment.nvim',
-      opts = {
-      }
+      opts = {}
     },
 
     -- Quotes.
@@ -12,6 +11,7 @@ return {
     -- Open files at the last cursor position.
     {
       'ethanholz/nvim-lastplace',
+      event = "VeryLazy",
       opts = {},
     },
 
@@ -24,6 +24,7 @@ return {
     -- Harpoon: quickly switch between imp files in project.
     {
       "ThePrimeagen/harpoon",
+      event = "VeryLazy",
       branch = "harpoon2",
       dependencies = { "nvim-lua/plenary.nvim" },
     },
@@ -56,13 +57,14 @@ return {
     -- Awesome plugin to move windows / splits around.
     {
       'sindrets/winshift.nvim',
+      event = "VeryLazy",
       opts = {},
     },
 
     -- Show symbols sidebar.
     {
       "hedyhli/outline.nvim",
-      lazy = true,
+      event = "VeryLazy",
       cmd = { "Outline", "OutlineOpen" },
       keys = {
         { "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
@@ -88,50 +90,6 @@ return {
       opts = {}
     },
 
-    -- TODO This might not be needed anymore as we have noice.
-    {
-      'VonHeikemen/fine-cmdline.nvim',
-      enabled = false,
-      dependencies = {
-        'MunifTanjim/nui.nvim',
-      },
-      config = function()
-        require 'fine-cmdline'.setup {
-          popup = {
-            position = {
-              row = '80%',
-              col = '50%',
-            },
-            relative = 'editor',
-            size = {
-              width = '50%',
-            },
-            border = {
-              style = 'rounded',
-              text = {
-                top = ' Command ',
-              },
-            },
-            win_options = {
-              winhighlight = 'Normal:Normal,FloatBorder:FloatBorder',
-            },
-          },
-        }
-        require 'ps.utils'.nmap(':', '<cmd>FineCmdline<cr>')
-        require 'ps.utils'.nmap('<C-;>', '<cmd>')
-      end
-    },
-
-    -- Shows a context line (e.g. function name) when scrolling.
-    {
-      'nvim-treesitter/nvim-treesitter-context',
-      opts = {
-        max_lines = 1,
-        mode = 'topline',
-        trim_scope = 'inner',
-      },
-    },
-
     {
       'ii14/neorepl.nvim',
       -- Lazy-load this plugin on this command.
@@ -140,7 +98,8 @@ return {
 
     -- Highlight symbol under cursor.
     {
-      'RRethy/vim-illuminate'
+      'RRethy/vim-illuminate',
+      event = "VeryLazy",
     },
 
     {
@@ -167,12 +126,6 @@ return {
         "MunifTanjim/nui.nvim"
       },
       opts = { lsp = { auto_attach = true } }
-    },
-
-    {
-      "nvim-telescope/telescope-file-browser.nvim",
-      lazy = true,
-      dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
     },
 
   },
