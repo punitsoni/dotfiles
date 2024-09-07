@@ -9,3 +9,5 @@ return {
   single_file_support = true,
   settings = {}
 }
+
+-- Install shfmt using Mason to enable code formatting

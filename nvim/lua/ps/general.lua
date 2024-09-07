@@ -30,8 +30,8 @@ vim.opt.writebackup = false
 -- Use spaces instead of tabs.
 vim.opt.expandtab = true
 -- Set default indentation size.
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
 vim.opt.smartindent = true
 -- Round the indents to shiftwidth.
 vim.opt.shiftround = true
