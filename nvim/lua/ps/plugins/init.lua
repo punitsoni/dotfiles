@@ -128,5 +128,12 @@ return {
       opts = { lsp = { auto_attach = true } }
     },
 
+    -- Debugger interface.
+    {
+      "rcarriga/nvim-dap-ui",
+      event = 'VeryLazy',
+      dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" }
+    },
+
   },
 }

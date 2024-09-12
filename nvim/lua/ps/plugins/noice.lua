@@ -14,7 +14,7 @@ return {
       },
       cmdline = {
         enabled = true,
-        view = 'cmdline'
+        view = 'cmdline_popup'
       },
       lsp = {
         -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
@@ -26,16 +26,16 @@ return {
         },
       },
       views = {
-        cmdline_popup = {
-          position = {
-            row = '30%',
-            col = '50%',
-          },
-          relative = 'editor',
-          size = {
-            width = '50%',
-          },
-        }
+      --   cmdline_popup = {
+      --     position = {
+      --       row = '30%',
+      --       col = '50%',
+      --     },
+      --     relative = 'editor',
+      --     size = {
+      --       width = '50%',
+      --     },
+      --   }
       },
     },
     dependencies = {

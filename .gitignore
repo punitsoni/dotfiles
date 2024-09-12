@@ -1,3 +1,4 @@
 gvim/.netrwhist
 .DS_Store
 tmux/plugins
+.wsp.lua

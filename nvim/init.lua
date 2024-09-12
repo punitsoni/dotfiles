@@ -26,4 +26,6 @@ vim.cmd('silent! colorscheme ' .. colorscheme)
 
 -- vim.lsp.set_log_level('WARN')
 
+vim.opt.grepprg = "rg --vimgrep"
+vim.opt.grepformat = "%f:%l:%c:%m"
 
