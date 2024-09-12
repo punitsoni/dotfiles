@@ -14,7 +14,8 @@ local function SetupLspConfig()
   -- Configure language servers.
   require("lspconfig").lua_ls.setup(require 'ps.lsp.lua_ls')
   require("lspconfig").clangd.setup(require 'ps.lsp.clangd')
-  require("lspconfig").pyright.setup(require 'ps.lsp.pyright')
+  -- require("lspconfig").pyright.setup(require 'ps.lsp.pyright')
+  require("lspconfig").basedpyright.setup(require 'ps.lsp.pyright')
   require("lspconfig").bashls.setup(require 'ps.lsp.bashls')
 end
 
