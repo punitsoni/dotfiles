@@ -1,5 +1,9 @@
 # Library of shell functions.
 
+neo() {
+  ${DOTFILES}/neo/neo.sh $@
+}
+
 # Show message for an error when loading this bashrc.
 __shrc_show_error() {
   echo "Error: $1"
@@ -81,34 +85,6 @@ ff() {
   [[ ! -z $file ]] && $EDITOR $file
 }
 
-# ripgrep->fzf->vim [QUERY]
-# Requires `bat` --> brew install bat
-frg() {
-  dir=$1
-
-  if [[ -z $dir ]]; then
-    dir=.
-  fi
-
-  RELOAD="reload:rg --column --color=always --smart-case {q} ${dir}|| :"
-  OPENER='if [[ $FZF_SELECT_COUNT -eq 0 ]]; then
-            ${EDITOR} {1} +{2}     # No selection. Open the current line in Vim.
-          else
-            ${EDITOR} +cw -q {+f}  # Build quickfix list for the selected items.
-          fi'
-  fzf --disabled --ansi --multi \
-      --bind "start:$RELOAD" --bind "change:$RELOAD" \
-      --bind "enter:become:$OPENER" \
-      --bind "ctrl-o:execute:$OPENER" \
-      --bind 'alt-a:select-all,alt-d:deselect-all,ctrl-/:toggle-preview' \
-      --preview 'bat --style=full --color=always --highlight-line {2} {1}' \
-      --preview-window '~4,+{2}+4/3,<80(up)' \
-      --delimiter : \
-      --query ""
-
-      # --delimiter / --with-nth -1 \
-}
-
 
 # Set terminal cursor shape.
 cursor() {
@@ -142,15 +118,4 @@ xo() {
 showpath() {
   sed 's/:/\n/g' < echo ${PATH}
 }
-
-random_chuck_joke() {
-  wget "http://api.icndb.com/jokes/random" -qO- | \
-    jshon -e value -e joke -u | recode html | cowsay | lolcat
-}
-
-# Displays weather in your city.
-weather() {
-  curl "wttr.in?q0uFnM";
-}
-
 

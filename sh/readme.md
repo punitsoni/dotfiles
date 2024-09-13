@@ -13,3 +13,7 @@ if [ -d ${dotfiles_path} ]; then
 fi
 
 ```
+
+References
+
+* https://github.com/rawiriblundell/sh_libpath/tree/main
