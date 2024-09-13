@@ -1,46 +1,55 @@
 #!/usr/bin/env bash
 set -o pipefail
 
-show_usage_and_exit() {
-  echo "Usage: neo <command> [options]"
-  echo "Commands:"
-  echo "  help     Display this help message"
-  exit 1
+# Get directory containing the this script.
+export NEODIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+source "${NEODIR}/require.sh"
+
+require fzf_rg
+require misc
+require macos_setup
+
+get_subcommands() {
+  # List all declared functions that match pattern "cmd::*"
+  declare -F | sed -n '/cmd::/s/.*cmd:://p'
 }
 
-cmd__help() {
-  show_usage_and_exit
+show_usage() {
+  echo "Usage:"
+  echo ""
+  echo "  neo <command> [options]"
+  echo ""
+  echo "Available commands:"
+
+  # Read output of get_commands line by line.
+  while IFS= read -r line; do
+    echo "  ${line}"
+  done < <(get_subcommands)
 }
 
-cmd__test() {
-  get_scriptdir
-}
-
-get_scriptdir() {
-  echo $(cd $(dirname "$BASH_SOURCE") && pwd)
-}
-
-execute_subcommand() {
-  # Map command to function.
-  cmd_func="cmd__$1"
-
-  # TODO: exit if function does not exist.
-
-  # Remove first argument and then call the command func with
-  # rest of the arguments.
-  shift && ${cmd_func} $@
+cmd::help() {
+  show_usage
 }
 
 main() {
   # Ensure at least one argument is passed
-  if [ $# -lt 1 ]; then
-    show_usage_and_exit
+  if [[ $# -lt 1 ]]; then
+    show_usage
+    exit 1
   fi
 
-  export NEODIR=$(get_scriptdir)
-
   # TODO: handle global opts here before executing subcommand.
-  execute_subcommand $@
+
+  # Get the function associated with the subcommand.
+  subcommand="cmd::$1"
+
+  # TODO: print nice error message and exit if function does not exist.
+
+  # Remove first argument and then call the subcommand with
+  # the rest of the arguments.
+  shift && ${subcommand} "$@"
 }
 
-main $@
+main "$@"
+
