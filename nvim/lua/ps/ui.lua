@@ -1,5 +1,5 @@
 
-util = require'ps.utils'
+local util = require'ps.utils'
 
 local M = {}
 

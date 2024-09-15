@@ -1,4 +1,5 @@
 local util = require 'ps.utils'
+local ui = require 'ps.ui'
 
 -- Augroup for all autocommands from here.
 local group_id = vim.api.nvim_create_augroup('interaction', {})
@@ -12,31 +13,26 @@ local function OnTermOpen(ev)
   vim.cmd('startinsert')
 end
 
+local group = vim.api.nvim_create_augroup("MyGroup", { clear = true })
+-- vim.api.nvim_create_autocmd('CursorHold', { command = "echo 'hold'", group = group })
+
 -- Do not continue comments when pressing enter.
 vim.api.nvim_create_autocmd({ 'FileType' }, {
-  group = group_id,
-  command = 'set formatoptions-=ro'
+  group = group,
+  command = 'set formatoptions-=ro',
 })
 
 -- Disable line numbers in terminal.
 vim.api.nvim_create_autocmd("TermOpen", {
-  group = group_id,
   pattern = "*",
   callback = OnTermOpen,
-})
-
-vim.api.nvim_create_autocmd("BufEnter", {
-  group = group_id,
-  pattern = "term://*",
-  callback = function()
-    vim.cmd('startinsert')
-  end,
+  group = group,
 })
 
 -- When last buffer is deleted, instead of switching to a NONAME buffer, opens
 -- the homepage.
 vim.api.nvim_create_autocmd("BufDelete", {
-  group = group_id,
+  group = group,
   pattern = "*",
   callback = function(opts)
     local bufs = vim.tbl_filter(function(bufnr)
