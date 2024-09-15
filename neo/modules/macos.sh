@@ -25,7 +25,6 @@ macos_configure() {
 }
 
 install_essential() {
-  echo "Installing packages..."
   packages=(
     git
     tmux
@@ -37,7 +36,6 @@ install_essential() {
 }
 
 install_optional() {
-  echo "Installing packages..."
   packages=(
     # Pretty version of cat.
     bat
@@ -54,11 +52,29 @@ cmd::macos_setup() {
   check_brew_install
   brew update
 
+  echo "Installing packages..."
   install_essential
   install_optional
 
   echo "Configuring MacOS..."
   macos_configure
+}
+
+cmd::restart_yabai() {
+  echo 'Stopping yabai and skhd'
+  yabai --stop-service
+  skhd --stop-service
+  echo 'Starting yabai and skhd'
+  yabai --start-service
+  skhd --start-service
+  echo 'DONE'
+}
+
+cmd::stop_yabai() {
+  echo 'Stopping yabai and skhd'
+  yabai --stop-service
+  skhd --stop-service
+  echo 'DONE'
 }
 
 # Reference

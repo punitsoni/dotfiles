@@ -4,11 +4,11 @@ set -o pipefail
 # Get directory containing the this script.
 export NEODIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-source "${NEODIR}/require.sh"
+source "${NEODIR}"/require.sh
 
 require fzf_rg
 require misc
-require macos_setup
+require macos
 
 get_subcommands() {
   # List all declared functions that match pattern "cmd::*"
@@ -33,23 +33,26 @@ cmd::help() {
 }
 
 main() {
-  # Ensure at least one argument is passed
+  # Ensure at least one argument is passed.
   if [[ $# -lt 1 ]]; then
     show_usage
     exit 1
   fi
+  subcommand="$1"
 
   # TODO: handle global opts here before executing subcommand.
 
   # Get the function associated with the subcommand.
-  subcommand="cmd::$1"
+  func="cmd::${subcommand}"
 
-  # TODO: print nice error message and exit if function does not exist.
+  if ! declare -F "${func}" >/dev/null; then
+    echo "No command ${subcommand}"
+    exit 1
+  fi
 
-  # Remove first argument and then call the subcommand with
-  # the rest of the arguments.
-  shift && ${subcommand} "$@"
+  # Remove first argument and then call the subcommand with the rest of the
+  # arguments.
+  shift && ${func} "$@"
 }
 
 main "$@"
-
