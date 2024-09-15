@@ -14,3 +14,8 @@ sudo pmset -a disablesleep 1
 sudo pmset -a disablesleep 0
 ```
 
+Workaround for "Clock is behind" problem
+
+```
+sudo sntp -sS time.apple.com
+```

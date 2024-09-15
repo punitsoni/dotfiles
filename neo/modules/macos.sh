@@ -24,27 +24,37 @@ macos_configure() {
   defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 }
 
-install_essential() {
+install_packages() {
   packages=(
     git
     tmux
     fzf
     neovim
     npm
+    lazygit
+    python
+    font-fira-code-nerd-font
+    bat
+    koekeishiya/formulae/yabai
+    koekeishiya/formulae/skhd
   )
   brew install "${packages[@]}"
 }
 
-install_optional() {
-  packages=(
-    # Pretty version of cat.
-    bat
-    # lolcat
-    # jshon
-    # recode
-    # wget
-  )
-  brew install "${packages[@]}"
+link_configs() {
+  echo "Link config: nvim"
+  ln -s ${DOTFILES}/nvim ${HOME}/.config/nvim
+
+  echo "Link config: tmux"
+  ln -s ${DOTFILES}/tmux ${HOME}/.config/tmux
+
+  echo "Link config: yabai"
+  mkdir -p ~/.config/yabai
+  rm -f ~/.config/yabai/yabairc
+  ln -s ${DOTFILES}/macos/yabairc ~/.config/yabai/yabairc
+  mkdir -p ~/.config/skhd
+  rm -f ~/.config/skhd/skhdrc
+  ln -s ${DOTFILES}/macos/skhdrc ~/.config/skhd/skhdrc
 }
 
 cmd::macos_setup() {
@@ -53,8 +63,9 @@ cmd::macos_setup() {
   brew update
 
   echo "Installing packages..."
-  install_essential
-  install_optional
+  install_packages
+
+  link_config
 
   echo "Configuring MacOS..."
   macos_configure
