@@ -4,26 +4,10 @@ set -o pipefail
 # Get directory containing the this script.
 NEODIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-flag_load_defaults=true
-flag_verbose=false
+source "${NEODIR}"/lib/util.sh
 
-# echo to stderr
-perr() {
-  echo "$1" >&2
-}
-
-logv() {
-  if [[ "${flag_verbose}" == "true" ]]; then
-    perr "$1"
-  fi
-}
-
-die() {
-  if [[ -n $1 ]]; then
-    perr "Error: $1"
-  fi
-  exit 1
-}
+FLAG_load_defaults=true
+FLAG_verbose=false
 
 list_commands() {
   # List all declared functions that match pattern "cmd::*"
@@ -40,7 +24,7 @@ show_usage() {
   echo ""
   echo "Available commands:"
 
-  # Read output of get_commands line by line.
+  # Read output of `list_commands` line by line.
   while IFS= read -r line; do
     echo "  ${line}"
   done < <(list_commands)
@@ -74,7 +58,7 @@ execute_command() {
 
 load_modules() {
 
-  if [[ "${flag_load_defaults}" == "true" ]]; then
+  if [[ "${FLAG_load_defaults}" == "true" ]]; then
     # Load default modules.
     for mod in "${NEODIR}"/modules/*.sh; do
       logv "loading module: ${mod}"
@@ -101,10 +85,10 @@ main() {
       exit
       ;;
     --no-default)
-      flag_load_defaults=false
+      FLAG_load_defaults=false
       ;;
     -v | --verbose)
-      flag_verbose=true
+      FLAG_verbose=true
       ;;
     -m | --module)
       if [[ "$2" =~ ^- ]]; then
