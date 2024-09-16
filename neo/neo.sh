@@ -2,10 +2,28 @@
 set -o pipefail
 
 # Get directory containing the this script.
-export NEODIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+NEODIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 flag_load_defaults=true
 flag_verbose=false
+
+# echo to stderr
+perr() {
+  echo "$1" >&2
+}
+
+logv() {
+  if [[ "${flag_verbose}" == "true" ]]; then
+    perr "$1"
+  fi
+}
+
+die() {
+  if [[ -n $1 ]]; then
+    perr "Error: $1"
+  fi
+  exit 1
+}
 
 list_commands() {
   # List all declared functions that match pattern "cmd::*"
@@ -15,7 +33,7 @@ list_commands() {
 show_usage() {
   echo "Usage:"
   echo ""
-  echo "  neo [global_options] <command> [options]"
+  echo "  neo [options] <command> [command_args]"
   echo ""
   echo "Global options:"
   echo "  --no-default: Disable loading default modules"
@@ -35,9 +53,9 @@ cmd::help() {
 execute_command() {
   # Ensure that at least one positional argument is present.
   if [[ "$1" == "" ]]; then
-    # show_usage
-    # exit 1
-    die "command required"
+    perr "Error: command required"
+    echo ""
+    show_usage && exit 1
   fi
 
   command="$1"
@@ -46,8 +64,7 @@ execute_command() {
   func="cmd::${command}"
 
   if ! declare -F "${func}" >/dev/null; then
-    echo "Unknown command: ${command}"
-    exit 1
+    die "Unknown command: ${command}"
   fi
 
   # Remove first argument and then call the command with the rest of the
@@ -55,36 +72,17 @@ execute_command() {
   shift && ${func} "$@"
 }
 
-logv() {
-  if [[ "${flag_verbose}" == "true" ]]; then
-    echo "$1"
-  fi
-}
-
-
-die() {
-  if [[ -n $1 ]]; then
-    echo "Error: $1"
-  fi
-  exit 1
-}
-
 load_modules() {
-  default_mods=(
-    "${NEODIR}"/modules/fzf_rg.sh
-    "${NEODIR}"/modules/misc.sh
-    "${NEODIR}"/modules/macos.sh
-  )
-  extra_mods="$@"
 
   if [[ "${flag_load_defaults}" == "true" ]]; then
-    for mod in "${default_mods[@]}"; do
+    # Load default modules.
+    for mod in "${NEODIR}"/modules/*.sh; do
       logv "loading module: ${mod}"
       source "${mod}" || die "cannot load module ${mod}"
     done
   fi
 
-  for mod in ${extra_mods}; do
+  for mod in $@; do
     logv "loading module: ${mod}"
     source "${mod}" || die "cannot load module ${mod}"
   done
@@ -122,9 +120,10 @@ main() {
     shift
   done
 
-  # Load modules that provide commands.
+  # Load commands from the modules.
   load_modules "${extra_modules[@]}"
 
+  # Execute requested command.
   execute_command "$@"
 }
 
