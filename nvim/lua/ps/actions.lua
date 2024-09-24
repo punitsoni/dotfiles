@@ -167,4 +167,11 @@ alib.register_action({
   func = M.symbols_toggle,
 })
 
+alib.register_action({
+  name = 'sessions',
+  func = function ()
+    vim.cmd('SessionManager load_session')
+  end,
+})
+
 return M

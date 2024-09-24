@@ -107,10 +107,10 @@ return {
       opts = {
         scope = 'line',
         show_sign = true,
-        placement = 'inline',
-        inline_padding_left = 3,
+        -- placement = 'inline',
+        -- inline_padding_left = 3,
         -- show_borders does not work properly with inline placement.
-        show_borders = false,
+        -- show_borders = false,
       }
     },
 
@@ -134,6 +134,14 @@ return {
       event = 'VeryLazy',
       dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" }
     },
+
+    {
+      'nanozuki/tabby.nvim',
+      event = 'VeryLazy', -- if you want lazy load, see below
+      dependencies = 'nvim-tree/nvim-web-devicons',
+      config = function()
+      end,
+    }
 
   },
 }

@@ -157,7 +157,9 @@ tmap('<C-\\><C-\\>', '<C-\\><C-n>', { desc = 'Enter normal mode in terminal' })
 nmap('[[', '[[zz')
 nmap(']]', ']]zz')
 
-nmap('<leader>uf', "mmgggqG'm", { desc = 'Format Buffer' })
+-- nmap('<leader>uf', "mmgggqG'm", { desc = 'Format Buffer' })
+
+nmap('<leader>sl', alib.action_func('sessions'), { desc = 'Load Session' })
 
 nmap('<leader>tp', function() vim.cmd 'tabprev' end, { desc = 'Tab prev' })
 

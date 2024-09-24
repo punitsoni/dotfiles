@@ -1,5 +1,10 @@
 function SetupLualine()
   require 'lualine'.setup {
+    options = {
+      disabled_filetypes = { 'toggleterm' },
+      global_status = false,
+
+    },
     sections = {
       lualine_a = { 'mode' },
       lualine_b = { 'vim.g.wsp_mode', 'branch', 'diff', 'diagnostics' },
@@ -37,6 +42,14 @@ function SetupLualine()
       lualine_y = { 'progress' },
       lualine_z = { 'location' }
     },
+    tabline = {
+      lualine_a = { 'tabs' },
+      lualine_b = { 'buffers' },
+      lualine_c = {},
+      lualine_x = {},
+      lualine_y = {},
+      lualine_z = {}
+    }
   }
 end
 

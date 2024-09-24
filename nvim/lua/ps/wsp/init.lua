@@ -49,6 +49,7 @@ function wsp.find_files()
     '--type=python',
     '--type=make',
     '--type=cmake',
+    '--type=sh',
     ctx.rootdir
   })
 

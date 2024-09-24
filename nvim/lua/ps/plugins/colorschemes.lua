@@ -14,7 +14,8 @@ return {
             DiagnosticVirtualTextWarn = { fg = colors.surface1, bg=colors.base },
           }
         end
-      }
+      },
+      term_colors = true,
     }
   },
 

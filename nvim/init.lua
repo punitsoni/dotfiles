@@ -1,5 +1,7 @@
 -- Load my global functions / objects.
 require 'ps.globals'
+-- Neovide GUI config
+require 'ps.neovide'
 -- Configure default neovim setup such as options.
 require 'ps.general'
 -- Setup plugins via lazy.nvim.
@@ -10,13 +12,13 @@ require 'ps.keymaps'
 require 'ps.actions'
 -- Custom Interactions --
 require 'ps.interaction'
--- Experimental config.
-require 'ps.experiments'
 
 -- Set colorscheme.
 -- local colorscheme = 'onedark'
 -- local colorscheme = 'catppuccin-frappe'
-local colorscheme = 'catppuccin'
+-- local colorscheme = 'catppuccin-macchiato'
+local colorscheme = 'catppuccin-mocha'
+-- local colorscheme = 'catppuccin'
 -- local colorscheme = 'rose-pine-main'
 
 vim.cmd('silent! colorscheme ' .. colorscheme)
@@ -28,4 +30,6 @@ vim.cmd('silent! colorscheme ' .. colorscheme)
 
 vim.opt.grepprg = "rg --vimgrep"
 vim.opt.grepformat = "%f:%l:%c:%m"
+
+
 

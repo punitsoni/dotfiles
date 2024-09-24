@@ -8,7 +8,7 @@ local function SetupLspConfig()
 
   require 'mason'.setup()
   require 'mason-lspconfig'.setup {
-    ensure_installed = { 'lua_ls', 'bashls' },
+    ensure_installed = { 'lua_ls', 'bashls', 'basedpyright' },
   }
 
   -- Configure language servers.
@@ -87,7 +87,7 @@ return {
   -- Good LSP settings for neovim lua development.
   {
     "folke/lazydev.nvim",
-    ft = "lua",     -- only load on lua files
+    ft = "lua", -- only load on lua files
     opts = {}
   },
   {
