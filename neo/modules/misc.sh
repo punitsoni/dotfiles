@@ -17,3 +17,20 @@ cmd::sshme() { (
   set -x
   autossh -M 0 -o "ServerAliveInterval 60" -o "ServerAliveCountMax 5" "$@"
 ); }
+
+# Checkout git branch using fzf
+cmd::gch_fzf() {
+  # branches=$(git branch | grep -v HEAD)
+  # preview_cmd='git log --oneline --graph --date=short --color=always --pretty=format:"%C(auto)%cd %h%d %s"'
+  # branch=$(git branch |
+  #   fzf-tmux --height 40% --reverse --multi --preview-window right:65% \
+  #     --preview \'${preview_cmd}\' cut -d' ' -f3 |
+  #   sed 's#remotes/[^/]*/##')
+  branch_list=$(git branch --list --format='%(refname:short)')
+  branch=$( \
+    echo "$branch_list" \
+    | fzf --height=40% --reverse \
+  )
+  echo "checking out: $branch"
+  git checkout "$branch"
+}

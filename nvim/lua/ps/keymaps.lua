@@ -185,3 +185,7 @@ nmap('L', function() vim.diagnostic.open_float() end, {
   desc =
   'Diagnostic Float'
 })
+
+-- Disable horizontal scrolling with mouse in all modes.
+vim.keymap.set({ 'n', 'v', 'c', 't' }, '<ScrollWheelLeft>', '<nop>')
+vim.keymap.set({ 'n', 'v', 'c', 't' }, '<ScrollWheelRight>', '<nop>')
