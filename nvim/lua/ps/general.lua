@@ -30,8 +30,8 @@ vim.opt.writebackup = false
 -- Use spaces instead of tabs.
 vim.opt.expandtab = true
 -- Set default indentation size.
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
 vim.opt.smartindent = true
 -- Round the indents to shiftwidth.
 vim.opt.shiftround = true
@@ -40,9 +40,9 @@ vim.opt.showmode = false
 -- Command-line height
 vim.opt.cmdheight = 1
 -- Default coding textwidth
-vim.opt.textwidth = 80
+vim.opt.textwidth = 100
 -- Highlight the 81st column.
-vim.opt.colorcolumn = { 81 }
+vim.opt.colorcolumn = { 101 }
 -- No automatic wrapping of lines.
 vim.opt.wrap = false
 -- Use » to mark Tabs and ° to mark trailing whitespace
