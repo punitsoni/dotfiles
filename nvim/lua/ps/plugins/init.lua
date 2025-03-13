@@ -90,12 +90,6 @@ return {
       opts = {}
     },
 
-    {
-      'ii14/neorepl.nvim',
-      -- Lazy-load this plugin on this command.
-      cmd = 'Repl',
-    },
-
     -- Highlight symbol under cursor.
     {
       'RRethy/vim-illuminate',
@@ -129,19 +123,19 @@ return {
     },
 
     -- Debugger interface.
-    {
-      "rcarriga/nvim-dap-ui",
-      event = 'VeryLazy',
-      dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" }
-    },
+    -- {
+    --   "rcarriga/nvim-dap-ui",
+    --   event = 'VeryLazy',
+    --   dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" }
+    -- },
 
-    {
-      'nanozuki/tabby.nvim',
-      event = 'VeryLazy', -- if you want lazy load, see below
-      dependencies = 'nvim-tree/nvim-web-devicons',
-      config = function()
-      end,
-    }
+    -- {
+    --   'nanozuki/tabby.nvim',
+    --   event = 'VeryLazy', -- if you want lazy load, see below
+    --   dependencies = 'nvim-tree/nvim-web-devicons',
+    --   config = function()
+    --   end,
+    -- }
 
   },
 }

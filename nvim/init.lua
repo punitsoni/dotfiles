@@ -1,5 +1,3 @@
--- Load my global functions / objects.
-require 'ps.globals'
 -- Neovide GUI config
 require 'ps.neovide'
 -- Configure default neovim setup such as options.

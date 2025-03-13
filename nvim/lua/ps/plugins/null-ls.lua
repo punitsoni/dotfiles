@@ -11,6 +11,7 @@ end
 
 return {
   {
+    -- none-ls is the supported version of null-ls as original one is now archived.
     'nvimtools/none-ls.nvim',
     config = configure_null_ls
   },

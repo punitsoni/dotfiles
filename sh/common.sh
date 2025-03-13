@@ -69,6 +69,11 @@ alias gt="git tag"
 # Delete all branches except the current one.
 alias grmb="git branch | xargs git branch -D"
 
+gls() {
+    git log --pretty=format:"%C(auto)%h %<(40,trunc)%s %<(10,trunc) %an %as %d"
+}
+
+
 # allow colored output in less
 alias less="less -r"
 

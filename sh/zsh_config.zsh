@@ -26,6 +26,7 @@ zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "zsh-users/zsh-autosuggestions", from:github
 zplug "mafredri/zsh-async", from:github
+zplug 'Aloxaf/fzf-tab', from:github, use:fzf-tab.plugin.zsh
 # zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 # zplug "denysdovhan/spaceship-prompt", use:spaceship.zsh, from:github, as:theme
 # zplug "ChesterYue/ohmyzsh-theme-passion", use:passion.zsh-theme, from:github, as:theme
@@ -82,13 +83,14 @@ SAVEHIST=10000
 
 # ------------------------------ Completions -------------------------------- #
 
+# Disabled completions as we are using fzf-tab plugin.
 # load bashcompinit for some old bash completions
-autoload -Uz compinit bashcompinit
-zstyle ':completion:*' menu select
-zmodload zsh/complist
-compinit
-bashcompinit
-_comp_options+=(globdots) # Include hidden files.
+# autoload -Uz compinit bashcompinit
+# zstyle ':completion:*' menu select
+# zmodload zsh/complist
+# compinit
+# bashcompinit
+# _comp_options+=(globdots) # Include hidden files.
 
 # -------------------------------- VI Mode ---------------------------------- #
 # Enable vi mode keymap.
