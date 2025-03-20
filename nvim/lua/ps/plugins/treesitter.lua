@@ -5,7 +5,8 @@ local options = {
 
   highlight = { enable = true },
 
-  indent = { enable = true, disable = { 'python' } },
+  -- indent = { enable = true, disable = { 'python' } },
+  indent = { enable = true },
 
   incremental_selection = {
     enable = true,

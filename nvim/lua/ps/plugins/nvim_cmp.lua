@@ -1,4 +1,4 @@
-local function SetupNvimCmp()
+local function config__nvim_cmp()
   local cmp = require 'cmp'
   cmp.setup {
     mapping = cmp.mapping.preset.insert {
@@ -12,8 +12,6 @@ local function SetupNvimCmp()
       ['<Tab>'] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
-          -- elseif luasnip.expand_or_jumpable() then
-          --   luasnip.expand_or_jump()
         else
           fallback()
         end
@@ -21,8 +19,6 @@ local function SetupNvimCmp()
       ['<S-Tab>'] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
-          -- elseif luasnip.jumpable(-1) then
-          --   luasnip.jump(-1)
         else
           fallback()
         end
@@ -32,13 +28,22 @@ local function SetupNvimCmp()
       { name = 'nvim_lsp' },
     },
   }
+
+
+  -- Update the lsp client capabilities
+  local capabilities = require 'ps.lsp.capabilities'
+  -- nvim-cmp supports additional completion capabilities.
+  local new_caps = require 'cmp_nvim_lsp'.default_capabilities(
+    capabilities.get()
+  )
+  capabilities.update(new_caps)
 end
 
--- Return the Lazy plugin spec. --
+
 return {
   {
     'hrsh7th/nvim-cmp',
-    config = SetupNvimCmp,
+    config = config__nvim_cmp,
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-nvim-lua',
@@ -48,4 +53,3 @@ return {
     },
   },
 }
-

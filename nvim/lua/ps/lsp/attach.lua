@@ -22,8 +22,13 @@ end
 local M = {}
 
 function M.with_default_config(client, bufnr)
-  keymap.attach(bufnr)
+  keymap.attach(client, bufnr)
   command.attach(client, bufnr)
+
+  -- io.stdout:write(vim.inspect(client)..'\n')
+  -- vim.print(client)
+  -- vim.print(vim.inspect(client))
+  -- vim.cmd('quit')
 end
 
 -- function M.with_lsp_status(client)

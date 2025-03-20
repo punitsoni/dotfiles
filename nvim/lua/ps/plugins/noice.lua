@@ -1,7 +1,7 @@
 return {
   {
     "folke/noice.nvim",
-    enabled = true,
+    enabled = false,
     event = "VeryLazy",
     opts = {
       -- you can enable a preset for easier configuration

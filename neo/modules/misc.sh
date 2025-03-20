@@ -34,3 +34,8 @@ cmd::gch_fzf() {
   echo "checking out: $branch"
   git checkout "$branch"
 }
+
+# Remove all "gone" branches.
+cmd::git_gone() {
+  git fetch --all --prune && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D;
+}

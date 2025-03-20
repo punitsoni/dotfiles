@@ -6,7 +6,7 @@ return {
     },
 
     -- Quotes.
-    'tpope/vim-surround',
+    -- 'tpope/vim-surround',
 
     -- Open files at the last cursor position.
     {
@@ -113,6 +113,7 @@ return {
       opts = {}
     },
 
+    -- Navigate symbols in code.
     {
       "SmiteshP/nvim-navbuddy",
       dependencies = {
@@ -136,6 +137,13 @@ return {
     --   config = function()
     --   end,
     -- }
+
+    -- Good LSP settings for neovim lua development.
+    {
+      "folke/lazydev.nvim",
+      ft = "lua", -- only load on lua files
+      opts = {}
+    },
 
   },
 }

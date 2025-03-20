@@ -82,6 +82,8 @@ vim.opt.pumblend = 17
 vim.opt.foldminlines = 3
 -- Start with all folds open
 vim.opt.foldlevelstart = 99
+-- No modelines
+vim.opt.modeline = false
 
 -- Do not continue comments when pressing enter.
 vim.api.nvim_create_autocmd({ 'FileType' }, {

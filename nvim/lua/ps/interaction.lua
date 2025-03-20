@@ -78,3 +78,30 @@ vim.api.nvim_create_user_command(
   end,
   { nargs = 0 }
 )
+
+vim.api.nvim_create_user_command('LspDebugEnable',
+  function(opts)
+    vim.lsp.set_log_level('error')
+    require('vim.lsp.log').set_format_func(vim.inspect)
+  end,
+  {})
+
+vim.api.nvim_create_user_command('LspDebugDisable',
+  function(opts)
+    vim.lsp.set_log_level('off')
+  end,
+  {})
+
+-- Clear contents of lsp log.
+vim.api.nvim_create_user_command('LspClearLog',
+  function(opts)
+    local filepath = vim.lsp.get_log_path()
+    local file = io.open(filepath, 'w')
+    if file then
+      file:write('')
+      file:close()
+    else
+      print("Failed to open the file: " .. filepath)
+    end
+  end,
+  {})

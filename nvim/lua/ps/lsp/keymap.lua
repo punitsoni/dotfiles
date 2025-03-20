@@ -13,7 +13,7 @@ local function ShowReferences()
 end
 
 -- Attaches key-mapping to a given buffer.
-function M.attach(bufnr)
+function M.attach(client, bufnr)
   local function buf_nmap(keys, func, desc)
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
   end
