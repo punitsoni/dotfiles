@@ -174,4 +174,12 @@ alib.register_action({
   end,
 })
 
+alib.register_action({
+  name = 'delete-all-buffers',
+  func = function ()
+    vim.cmd('%bd!')
+  end,
+})
+
+
 return M
