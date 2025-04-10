@@ -30,3 +30,11 @@ See https://apple.stackexchange.com/questions/69223/how-to-replace-mac-os-x-util
 
 ---
 
+## Use vscode as a diff tool for git
+
+```
+git config --global diff.guitool vscode && \
+git config --global difftool.vscode.cmd 'code --new-window --wait --diff $LOCAL $REMOTE'
+```
+
+

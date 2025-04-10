@@ -46,8 +46,8 @@ alt + shift - c: yabai -m space --create
 alt + shift - d: yabai -m space --destroy
 
 # Focus on prev/next workspace.
-alt - n : yabai -m space --focus next
-alt - p : yabai -m space --focus prev
+alt - l : yabai -m space --focus next
+alt - h : yabai -m space --focus prev
 alt - right : yabai -m space --focus next
 alt - left : yabai -m space --focus prev
 ctrl - right : yabai -m space --focus next
@@ -64,10 +64,11 @@ alt - d : yabai -m window --toggle float; yabai -m window --grid 50:100:25:10:50
 
 
 # Focus windows on current workspace.
-alt - h : yabai -m window --focus west
-alt - j : yabai -m window --focus south
-alt - k : yabai -m window --focus north
-alt - l : yabai -m window --focus east
+# alt - h : yabai -m window --focus west
+# alt - j : yabai -m window --focus south
+# alt - k : yabai -m window --focus north
+# alt - l : yabai -m window --focus east
+
 # swap window position and size with window in direction of focused window
 alt + shift - h: yabai -m window --swap west
 alt + shift - j: yabai -m window --swap south
