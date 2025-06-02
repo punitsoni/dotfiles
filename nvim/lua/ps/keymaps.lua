@@ -91,11 +91,12 @@ nmap('<space>q', '<c-w>c')
 
 -- Find files.
 nmap('<space>ff', alib.action_func('find-files'), { desc = 'Find Files' })
+-- Pickers
+nmap('<space>fp', function() require 'snacks'.picker() end, { desc = 'Pickers' })
 -- Previously open files.
 nmap('<space>fo', telescope_builtin.oldfiles)
-
+-- Nvim config files
 nmap('<space>fn', alib.action_func('nvim-config-files'), { desc = 'Nvim config files' })
-
 -- Help tags.
 nmap('<space>fh', telescope_builtin.help_tags, { desc = 'Help tags' })
 -- Livegrep (async search for filenames and text)

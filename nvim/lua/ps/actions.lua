@@ -14,9 +14,13 @@ local M = {}
 alib.register_action({
   name = 'nvim-config-files',
   func = function()
-    ts_builtin.find_files({
-      cwd = vim.fn.stdpath('config')
+    require 'snacks'.picker.files({
+      dirs = { vim.fn.stdpath('config') },
     })
+
+    -- ts_builtin.find_files({
+    --   cwd = vim.fn.stdpath('config')
+    -- })
   end,
 })
 
@@ -83,7 +87,8 @@ alib.register_action({
     if wsp.is_active() then
       wsp.find_files()
     else
-      ts_builtin.find_files()
+      -- ts_builtin.find_files()
+      require 'snacks'.picker.files()
     end
   end
 })
@@ -169,16 +174,17 @@ alib.register_action({
 
 alib.register_action({
   name = 'sessions',
-  func = function ()
+  func = function()
     vim.cmd('SessionManager load_session')
   end,
 })
 
+-- Close all buffers
 alib.register_action({
   name = 'reset',
-  func = function ()
-    -- delete all buffers
-    vim.cmd('%bd!')
+  func = function()
+    vim.cmd'%bd!'
+    vim.cmd'Alpha'
   end,
 })
 

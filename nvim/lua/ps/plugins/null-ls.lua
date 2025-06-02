@@ -28,13 +28,13 @@ local function config__null_ls()
 end
 
 return {
-  {
-    -- none-ls is the supported version of null-ls as original one is now archived.
-    'nvimtools/none-ls.nvim',
-    config = config__null_ls,
-    dependencies = {
-      'nvimtools/none-ls-extras.nvim',
-      'jayp0521/mason-null-ls.nvim',
-    },
-  },
+  -- {
+  --   -- none-ls is the supported version of null-ls as original one is now archived.
+  --   'nvimtools/none-ls.nvim',
+  --   config = config__null_ls,
+  --   dependencies = {
+  --     'nvimtools/none-ls-extras.nvim',
+  --     'jayp0521/mason-null-ls.nvim',
+  --   },
+  -- },
 }

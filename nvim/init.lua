@@ -14,8 +14,8 @@ require 'ps.interaction'
 -- Set colorscheme.
 -- local colorscheme = 'onedark'
 -- local colorscheme = 'catppuccin-frappe'
--- local colorscheme = 'catppuccin-macchiato'
-local colorscheme = 'catppuccin-mocha'
+local colorscheme = 'catppuccin-macchiato'
+-- local colorscheme = 'catppuccin-mocha'
 -- local colorscheme = 'catppuccin'
 -- local colorscheme = 'rose-pine-main'
 
@@ -28,6 +28,3 @@ vim.cmd('silent! colorscheme ' .. colorscheme)
 
 vim.opt.grepprg = "rg --vimgrep"
 vim.opt.grepformat = "%f:%l:%c:%m"
-
-
-
