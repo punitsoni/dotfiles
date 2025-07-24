@@ -88,3 +88,5 @@ alt + ctrl - l: sh ${DOTFILES}/yabai/lock_screen.sh
 alt + shift - f: yabai -m window --toggle float && yabai -m window --grid 5:8:2:1:4:3
 
 
+# Focus the most recent window.
+alt - tab : yabai -m window --focus recent

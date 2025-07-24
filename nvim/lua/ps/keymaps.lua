@@ -103,7 +103,8 @@ nmap('<space>fh', telescope_builtin.help_tags, { desc = 'Help tags' })
 nmap('<space>fl', actions.live_grep, { desc = 'Live grep' })
 
 -- File symbols using nvim-treesitter
-nmap('<space>fs', telescope_builtin.treesitter, { desc = 'Find symbols' })
+-- nmap('<space>fs', telescope_builtin.treesitter, { desc = 'Find symbols' })
+nmap('<space>fs', function() require 'snacks'.picker('lsp_workspace_symbols') end, { desc = 'Workspace Symbols' })
 
 nmap('<space>/', telescope_builtin.current_buffer_fuzzy_find, { desc = 'Find in current buffer.' })
 
