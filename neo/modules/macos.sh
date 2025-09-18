@@ -88,5 +88,17 @@ cmd::stop_yabai() {
   echo 'DONE'
 }
 
+cmd::dock_right_hide() {
+  defaults write com.apple.dock orientation right
+  defaults write com.apple.dock autohide -bool true
+  killall Dock
+}
+
+cmd::dock_left() {
+  defaults write com.apple.dock orientation left
+  defaults write com.apple.dock autohide -bool false
+  killall Dock
+}
+
 # Reference
 # https://medium.com/macoclock/automating-your-macos-setup-with-homebrew-and-cask-e2a103b51af1

@@ -40,6 +40,12 @@ yabai -m rule --add app="^System Settings$" manage=off
 
 # We want to keep some spaces to have float layout where we can put non-tiliing
 # windows.
+# yabai -m space 1 --layout float
+# yabai -m space 2 --layout float
+# yabai -m space 3 --layout float
+# yabai -m space 4 --layout float
+# yabai -m space 5 --layout float
+yabai -m space 6 --layout float
 yabai -m space 7 --layout float
 yabai -m space 8 --layout float
 yabai -m space 9 --layout float
@@ -59,4 +65,15 @@ yabai -m signal --add event=space_changed action="$on_space_changed"
 
 
 
+# for Yabai Indicator
+yabai -m signal --add event=mission_control_exit action='echo "refresh" | nc -U /tmp/yabai-indicator.socket'
+yabai -m signal --add event=display_added action='echo "refresh" | nc -U /tmp/yabai-indicator.socket'
+yabai -m signal --add event=display_removed action='echo "refresh" | nc -U /tmp/yabai-indicator.socket'
+yabai -m signal --add event=window_created action='echo "refresh windows" | nc -U /tmp/yabai-indicator.socket'
+yabai -m signal --add event=window_destroyed action='echo "refresh windows" | nc -U /tmp/yabai-indicator.socket'
+yabai -m signal --add event=window_focused action='echo "refresh windows" | nc -U /tmp/yabai-indicator.socket'
+yabai -m signal --add event=window_moved action='echo "refresh windows" | nc -U /tmp/yabai-indicator.socket'
+yabai -m signal --add event=window_resized action='echo "refresh windows" | nc -U /tmp/yabai-indicator.socket'
+yabai -m signal --add event=window_minimized action='echo "refresh windows" | nc -U /tmp/yabai-indicator.socket'
+yabai -m signal --add event=window_deminimized action='echo "refresh windows" | nc -U /tmp/yabai-indicator.socket'
 
