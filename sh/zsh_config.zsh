@@ -144,3 +144,11 @@ if has_command fzf; then
   source <(fzf --zsh)
 fi
 
+
+zshrc_local=${CONFIG_LOCAL}/zshrc-local
+if [[ -f ${zshrc_local} ]]; then
+    source ${zshrc_local}
+    echo "local config loaded from ${zshrc_local}"
+fi
+
+
