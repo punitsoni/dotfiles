@@ -12,9 +12,10 @@ require 'ps.actions'
 require 'ps.interaction'
 
 -- Set colorscheme.
+local colorscheme = 'ayu-dark'
 -- local colorscheme = 'onedark'
 -- local colorscheme = 'catppuccin-frappe'
-local colorscheme = 'catppuccin-macchiato'
+-- local colorscheme = 'catppuccin-macchiato'
 -- local colorscheme = 'catppuccin-mocha'
 -- local colorscheme = 'catppuccin'
 -- local colorscheme = 'rose-pine-main'

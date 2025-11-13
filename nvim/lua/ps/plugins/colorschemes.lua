@@ -11,7 +11,7 @@ return {
       highlight_overrides = {
         mocha = function(colors)
           return {
-            DiagnosticVirtualTextWarn = { fg = colors.surface1, bg=colors.base },
+            DiagnosticVirtualTextWarn = { fg = colors.surface1, bg = colors.base },
           }
         end
       },
@@ -29,10 +29,12 @@ return {
     end,
   },
 
-  {'sainnhe/sonokai'},
+  { 'sainnhe/sonokai' },
 
   { 'rose-pine/neovim' },
 
   { "olimorris/onedarkpro.nvim" },
-}
 
+  { "Shatur/neovim-ayu" },
+
+}

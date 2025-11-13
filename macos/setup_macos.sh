@@ -4,4 +4,6 @@
 
 # Install Aersospace Window Manager
 brew install --cask nikitabobko/tap/aerospace
+brew install --cask ghostty
+
 
