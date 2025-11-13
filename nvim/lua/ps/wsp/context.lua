@@ -27,6 +27,7 @@ local function NewContext()
     return obj
   end
 
+  vim.print("result = " .. result)
   local wsp_configdir = result
   local wsp_rootdir = result:parent()
 
