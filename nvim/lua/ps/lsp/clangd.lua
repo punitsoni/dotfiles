@@ -10,7 +10,7 @@ return {
     capabilities = capabilities.get(),
     handlers = handlers.default(),
     on_attach = attach.with_default_config,
-    root_dir = require 'lspconfig'.util.root_pattern('compile_commands.json'),
+    root_markers = { 'compile_commands.json' },
     single_file_support = true,
     settings = {
     }

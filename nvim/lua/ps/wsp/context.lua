@@ -23,11 +23,11 @@ local function NewContext()
   local result = Path.new(vim.uv.cwd()):find_upwards(kConfigDirName)
 
   local obj = { active = false }
-  if result == '' then
+  if result == '' or result == nil then
     return obj
   end
 
-  vim.print("result = " .. result)
+  vim.print("wsp configdir at " .. tostring(result))
   local wsp_configdir = result
   local wsp_rootdir = result:parent()
 

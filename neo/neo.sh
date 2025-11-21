@@ -20,7 +20,10 @@ show_usage() {
   echo "  neo [options] <command> [command_args]"
   echo ""
   echo "Global options:"
-  echo "  --no-default: Disable loading default modules"
+  echo "  -h, --help              Show this help message"
+  echo "  --no-default            Disable loading default modules"
+  echo "  -v, --verbose           Enable verbose output"
+  echo "  -m, --module <module>   Load additional module"
   echo ""
   echo "Available commands:"
 

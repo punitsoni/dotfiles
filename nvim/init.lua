@@ -4,6 +4,8 @@ require 'ps.neovide'
 require 'ps.general'
 -- Setup plugins via lazy.nvim.
 require 'ps.golazy'
+-- Configure LSP servers.
+require 'ps.lsp'
 -- Configure custom keymaps.
 require 'ps.keymaps'
 -- Enable actions.
@@ -12,8 +14,8 @@ require 'ps.actions'
 require 'ps.interaction'
 
 -- Set colorscheme.
-local colorscheme = 'ayu-dark'
--- local colorscheme = 'onedark'
+-- local colorscheme = 'ayu-dark'
+local colorscheme = 'onedark'
 -- local colorscheme = 'catppuccin-frappe'
 -- local colorscheme = 'catppuccin-macchiato'
 -- local colorscheme = 'catppuccin-mocha'
