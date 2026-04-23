@@ -66,6 +66,7 @@ alias gb="git branch -vv"
 alias gr="git remote -v"
 alias gch="git checkout"
 alias gt="git tag"
+alias gsu="git submodule update"
 # Delete all branches except the current one.
 alias grmb="git branch | xargs git branch -D"
 
