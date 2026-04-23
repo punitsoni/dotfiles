@@ -109,16 +109,14 @@ local function SetupFolds()
 end
 
 local function SetupNvimTreesitter()
-  require 'nvim-treesitter.configs'.setup(options)
+  require('nvim-treesitter').setup(options)
   SetupFolds()
 end
 
 return {
   {
     'nvim-treesitter/nvim-treesitter',
-    build = function()
-      require('nvim-treesitter.install').update({ with_sync = true })()
-    end,
+    build = ':TSUpdate',
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
     },
