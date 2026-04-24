@@ -7,6 +7,7 @@ return {
         'clangd', '--fallback-style=webkit', '--background-index', '--clang-tidy',
         '--header-insertion=iwyu', '-j=4'
     },
+    filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
     capabilities = capabilities.get(),
     handlers = handlers.default(),
     on_attach = attach.with_default_config,

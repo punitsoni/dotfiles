@@ -14,8 +14,8 @@ require 'ps.actions'
 require 'ps.interaction'
 
 -- Set colorscheme.
--- local colorscheme = 'ayu-dark'
-local colorscheme = 'onedark'
+local colorscheme = 'ayu-mirage'
+-- local colorscheme = 'onedark'
 -- local colorscheme = 'catppuccin-frappe'
 -- local colorscheme = 'catppuccin-macchiato'
 -- local colorscheme = 'catppuccin-mocha'
@@ -24,6 +24,8 @@ local colorscheme = 'onedark'
 
 vim.cmd('silent! colorscheme ' .. colorscheme)
 
+-- Make Snacks picker directory paths more readable (ayu NonText is too faint).
+vim.api.nvim_set_hl(0, 'SnacksPickerDir', { link = 'Comment' })
 
 --- Experimentation ----
 

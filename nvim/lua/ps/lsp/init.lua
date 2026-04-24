@@ -1,7 +1,5 @@
 -- LSP configuration using vim.lsp.config API (Neovim 0.11+)
 
-vim.lsp.set_log_level('debug')
-
 -- Configure language servers
 vim.lsp.config.lua_ls = require 'ps.lsp.lua_ls'
 vim.lsp.config.clangd = require 'ps.lsp.clangd'
