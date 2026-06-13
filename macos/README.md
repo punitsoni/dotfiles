@@ -1,4 +1,15 @@
+# macOS
 
+## Setup
+
+```sh
+export DOTFILES=$HOME/dotfiles
+bash $DOTFILES/macos/setup_macos.sh
+```
+
+---
+
+## Notes
 
 Add yabai space indicators in menubar
 

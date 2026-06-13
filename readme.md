@@ -38,6 +38,22 @@ source $DOTFILES/sh/main.sh
 
 Restart your terminal.
 
+## macOS Setup
+
+After cloning the repo and setting up `.zshrc`, run the setup script to install
+apps, CLI tools, and link all configs in one shot:
+
+```sh
+export DOTFILES=$HOME/dotfiles
+bash $DOTFILES/macos/setup_macos.sh
+```
+
+The script is idempotent — safe to re-run on an already configured machine.
+It will install: AeroSpace, Ghostty, VS Code, Finicky, Neovim, tmux, fzf, lsd,
+ripgrep, bat, fd, and Fira Code Nerd Font, then link all configs under `~/.config/`.
+
+See `macos/README.md` for additional macOS tips and manual steps.
+
 ## Configure `tmux`
 
 * Install tmux

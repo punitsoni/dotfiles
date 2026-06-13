@@ -2,3 +2,4 @@ gvim/.netrwhist
 .DS_Store
 tmux/plugins
 .wsp.lua
+.claude/settings.local.json
