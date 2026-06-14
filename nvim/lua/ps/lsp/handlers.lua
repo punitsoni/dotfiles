@@ -1,5 +1,12 @@
 local M = {}
 
+local function make_handler(base, opts)
+  return function(err, result, ctx, config)
+    config = vim.tbl_extend('force', config or {}, opts)
+    base(err, result, ctx, config)
+  end
+end
+
 function M.with(handlers)
   local _handlers = {}
   for _, handler in ipairs(handlers) do
@@ -13,16 +20,11 @@ function M.default()
 end
 
 M.signature_help = {
-  ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-    border = "rounded",
-  }),
+  ["textDocument/signatureHelp"] = make_handler(vim.lsp.handlers.signature_help, { border = "rounded" }),
 }
 
 M.hover = {
-  ["textDocument/hover"] = vim.lsp.with(
-    vim.lsp.handlers.hover,
-    { border = "rounded" }
-  ),
+  ["textDocument/hover"] = make_handler(vim.lsp.handlers.hover, { border = "rounded" }),
 }
 
 return M

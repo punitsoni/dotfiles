@@ -29,9 +29,11 @@ run_step() {
 }
 
 brew_install() {
-    brew list "$1" &>/dev/null \
-        && echo "  [skip] $1 already installed" \
-        || run_step "$1" brew install "$1"
+    if brew list "$1" &>/dev/null; then
+        echo "  [skip] $1 already installed"
+    else
+        run_step "$1" brew install "$1"
+    fi
 }
 
 brew_cask_install() {
@@ -98,6 +100,7 @@ brew_install lsd
 brew_install ripgrep
 brew_install bat
 brew_install fd
+brew_install shellcheck
 
 # --------------------------------------------------------------------------- #
 # Tmux Plugin Manager (TPM)

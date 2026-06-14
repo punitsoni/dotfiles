@@ -5,7 +5,7 @@ local M = {}
 M.update = function(caps)
   -- vim.print('caps before')
   -- vim.print(caps_)
-  vim.tbl_deep_extend("force", caps_, caps)
+  caps_ = vim.tbl_deep_extend("force", caps_, caps)
   -- vim.print('updated caps')
   -- vim.print(caps_)
 end

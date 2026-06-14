@@ -44,7 +44,7 @@ imap('<s-tab>', 'pumvisible() ? "<c-p>" : "<s-tab>"', { expr = true })
 
 local function BufNext() vim.cmd('bnext') end
 
-local function BufPrev() vim.cmd('bnext') end
+local function BufPrev() vim.cmd('bprev') end
 
 -- Previous and next.
 nmap('<space>bp', ':bp<cr>')
