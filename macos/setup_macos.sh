@@ -77,6 +77,7 @@ brew_cask_install nikitabobko/tap/aerospace
 brew_cask_install ghostty
 brew_cask_install visual-studio-code
 brew_cask_install finicky
+brew_cask_install mos
 
 # --------------------------------------------------------------------------- #
 # Fonts
