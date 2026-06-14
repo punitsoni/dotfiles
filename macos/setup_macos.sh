@@ -2,6 +2,12 @@
 ## Automated system setup and initialization script for macOS.
 set -uo pipefail
 
+export HOMEBREW_NO_AUTO_UPDATE=1
+export NONINTERACTIVE=1
+
+# Tee all output to log file.
+exec > >(tee /tmp/setup_macos.log) 2>&1
+
 if [[ -z "${DOTFILES:-}" || ! -d "$DOTFILES" ]]; then
     echo "Error: \$DOTFILES is not set or does not exist. Clone dotfiles and set \$DOTFILES first."
     exit 1
@@ -30,12 +36,12 @@ brew_install() {
 
 brew_cask_install() {
     local name="${1##*/}"  # strip tap prefix (e.g. nikitabobko/tap/aerospace -> aerospace)
-    if brew list --cask "$name" &>/dev/null; then
+    if brew list --cask "$name" &>/dev/null || [[ -d "/opt/homebrew/Caskroom/$name" ]]; then
         echo "  [skip] $name already installed"
         return
     fi
     echo "  [install] $1"
-    brew install --cask --overwrite "$1" || fail "$name"
+    brew install --cask --force "$1" || fail "$name"
 }
 
 link_config() {
@@ -115,6 +121,36 @@ link_config "${DOTFILES}/ghostty"            "${HOME}/.config/ghostty"
 link_config "${DOTFILES}/nvim"               "${HOME}/.config/nvim"
 link_config "${DOTFILES}/tmux"               "${HOME}/.config/tmux"
 link_config "${DOTFILES}/finicky/finicky.js" "${HOME}/.finicky.js"
+
+# --------------------------------------------------------------------------- #
+# Neovim plugins (Lazy.nvim headless sync)
+# --------------------------------------------------------------------------- #
+
+step "Neovim plugins"
+if command -v nvim &>/dev/null; then
+    echo "  [sync] Installing/updating plugins via Lazy.nvim..."
+    nvim --headless "+Lazy! sync" +qa 2>&1 | sed 's/^/  /' >/dev/null || fail "Neovim plugin sync"
+    echo "  [done] Plugin sync complete"
+else
+    echo "  [skip] nvim not found"
+fi
+
+# --------------------------------------------------------------------------- #
+# Caps Lock -> Control remapping (via hidutil LaunchAgent)
+# --------------------------------------------------------------------------- #
+
+step "Caps Lock -> Control"
+KEYREMAP_SRC="${DOTFILES}/macos/com.local.KeyRemapping.plist"
+KEYREMAP_DST="${HOME}/Library/LaunchAgents/com.local.KeyRemapping.plist"
+mkdir -p "${HOME}/Library/LaunchAgents"
+if ! cmp -s "$KEYREMAP_SRC" "$KEYREMAP_DST"; then
+    echo "  [install] com.local.KeyRemapping.plist"
+    cp "$KEYREMAP_SRC" "$KEYREMAP_DST" || fail "KeyRemapping plist"
+    launchctl unload "$KEYREMAP_DST" 2>/dev/null || true
+    launchctl load "$KEYREMAP_DST" || fail "KeyRemapping launchctl"
+else
+    echo "  [skip] Key remapping already installed"
+fi
 
 # --------------------------------------------------------------------------- #
 # macOS KeyBindings (Home/End key fix + text editing shortcuts)
