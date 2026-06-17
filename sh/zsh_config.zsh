@@ -57,7 +57,7 @@ bindkey '^ ' autosuggest-accept
 
 export PROMPT="%n@%m: %B%2d%b"$'\n'"$ "
 
-setopt AUTO_CD
+unsetopt AUTO_CD
 # share history across multiple zsh sessions
 setopt SHARE_HISTORY
 # append to history

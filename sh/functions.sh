@@ -1,7 +1,8 @@
+# shellcheck shell=bash
 # Library of shell functions.
 
 neo() {
-  ${DOTFILES}/neo/neo.sh $@
+  "${DOTFILES}/neo/neo.sh" "$@"
 }
 
 # Show message for an error when loading this bashrc.
@@ -28,18 +29,26 @@ is_macos() {
 }
 
 has_command() {
-  command -v $1 &> /dev/null
+  command -v "$1" &> /dev/null
 }
 
-# Attach to tmux session. Create new session if it does not exist.
-# If no argument provided. It attaches to session 0.
+# Attach to or create a tmux session.
+# Usage: tm [session-name]
+# If no name given, opens an interactive fzf picker.
 tm() {
-  # if [ -z $1 ]; then
-  #   tmux new-session -A -s 0
-  # else
-  #   tmux new-session -A -s $1
-  # fi
-  bash $DOTFILES/scripts/tmux_sessionizer.sh $@
+  local session
+  session=$(bash "$DOTFILES/scripts/tmux_sessionizer.sh" "$@")
+  [[ -z "$session" ]] && return 0
+
+  # Create the session if it doesn't exist yet.
+  tmux has-session -t "$session" 2>/dev/null || tmux new-session -ds "$session"
+
+  if [[ -n "${TMUX:-}" ]]; then
+    tmux switch-client -t "$session"
+  else
+    # Use `script` to allocate a pty when stdout isn't a terminal (e.g. iTerm).
+    script /dev/null tmux new-session -A -s "$session"
+  fi
 }
 
 # Returns a string corresponding to the variant of ls command present in the
@@ -56,14 +65,10 @@ ls_version() {
 
 # Fuzzy find a file and open in editor.
 ff() {
-  dir=$1
-
-  if [[ -z $dir ]]; then
-    dir=.
-  fi
+  local dir="${1:-.}"
 
   __editable_files() {
-    find $dir \
+    find "$dir" \
       -type f \
       \( -not -path "*/.git/*" \) \
       \( -not -path "*/__pycache__/*" \) \
@@ -80,20 +85,18 @@ ff() {
         --keep-right
   }
 
+  local file
   file=$(__editable_files | __open_fzf)
-
-  [[ ! -z $file ]] && $EDITOR $file
+  [[ -n "$file" ]] && $EDITOR "$file"
 }
 
 
 # Set terminal cursor shape.
 cursor() {
   if [[ $1 == "block" ]]; then
-      # Set terminal cursor to block.
-      echo -ne '\e[2 q';
+      echo -ne '\e[2 q'
   else
-      # Default: Set terminal cursor to I-beam.
-      echo -ne '\e[6 q';
+      echo -ne '\e[6 q'
   fi
 }
 
@@ -111,11 +114,15 @@ run_detached() {
 
 # Open a file in desktop UI.
 xo() {
-  run_detached xdg-open $1
+  run_detached xdg-open "$1"
 }
 
 # Show $PATH variable with each entry in its own line.
 showpath() {
-  sed 's/:/\n/g' < echo ${PATH}
+  echo "${PATH//:/$'\n'}"
 }
 
+# Print the hardware serial number of this machine.
+machine_serial() {
+  system_profiler SPHardwareDataType | awk '/Serial Number/{print $4}'
+}

@@ -1,58 +1,40 @@
 #!/usr/bin/env bash
+# Prints a selected tmux session name to stdout (for use by the tm() shell function).
+# Does NOT call tmux attach/switch — the caller handles that.
 
 selector() {
   fzf --height=~100% --prompt='> '
 }
 
 available_sessions() {
-  tmux list-sessions | awk -F':' '{print $1}'
+  tmux list-sessions 2>/dev/null | awk -F':' '{print $1}'
   echo "** New Session **"
 }
 
 tmux_running() {
-  [[ ! -z $(pgrep tmux) ]]
-}
-
-goto_session() {
-  session=$1
-
-  if [[ -z ${TMUX} ]]; then
-    # We are not inside a tmux session. Attach to selected session.
-    tmux attach-session -t $session
-  else 
-    # We are inside a tmux session, switch to selected session.
-    tmux switch-client -t $session
-  fi
+  tmux list-sessions &>/dev/null
 }
 
 # ---- Main ---- #
 
-if [[ $# == 1 ]]; then
-  session=$1
-fi
-
-if ! tmux_running; then
-  if [[ -z $session ]]; then
-    read -p 'New session: ' session
-  fi
-  tmux new-session -s $session
+# If a session name was given, just print it back.
+if [[ $# -eq 1 ]]; then
+  echo "$1"
   exit 0
 fi
 
-if [[ -z $session ]]; then
-  session=$(available_sessions | selector)
-  if [[ -z $session ]]; then
-    # If user does not select anything at fzf prompt, just exit.
-    exit 0
-  fi
-  if [[ $session == '** New Session **' ]]; then
-    read -p 'New session: ' session
-  fi
+# Interactive picker.
+if ! tmux_running; then
+  read -rp 'New session: ' session
+  echo "$session"
+  exit 0
 fi
 
-if ! tmux has-session -t $session 2> /dev/null; then
-  tmux new-session -ds $session
+session=$(available_sessions | selector)
+[[ -z "$session" ]] && exit 0
+
+if [[ "$session" == '** New Session **' ]]; then
+  read -rp 'New session: ' session
 fi
 
-goto_session $session
-
+echo "$session"

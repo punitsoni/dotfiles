@@ -101,6 +101,7 @@ brew_install ripgrep
 brew_install bat
 brew_install fd
 brew_install shellcheck
+brew_install uv
 
 # --------------------------------------------------------------------------- #
 # Tmux Plugin Manager (TPM)
@@ -120,7 +121,7 @@ fi
 # --------------------------------------------------------------------------- #
 
 step "Linking configs"
-link_config "${DOTFILES}/aerospace"          "${HOME}/.config/aerospace"
+run_step "AeroSpace config" bash "${DOTFILES}/aerospace/setup.sh"
 link_config "${DOTFILES}/ghostty"            "${HOME}/.config/ghostty"
 link_config "${DOTFILES}/nvim"               "${HOME}/.config/nvim"
 link_config "${DOTFILES}/tmux"               "${HOME}/.config/tmux"

@@ -1,0 +1,11 @@
+# Workspace-to-monitor assignments for this machine.
+# Use 'secondary' to match any non-main monitor.
+# Run `aerospace list-monitors` to see monitor names for exact matching.
+[workspace-to-monitor-force-assignment]
+    1 = 'main'
+    2 = 'main'
+    3 = 'main'
+    4 = 'main'
+    5 = 'secondary'
+    6 = 'secondary'
+    7 = 'secondary'

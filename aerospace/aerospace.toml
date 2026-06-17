@@ -58,18 +58,6 @@ automatically-unhide-macos-hidden-apps = true
     outer.top =        0
     outer.right =      0
 
-# Assign workspaces to monitors
-# Use 'secondary' to match any non-main monitor.
-# Run `aerospace list-monitors` to see monitor names for exact matching.
-[workspace-to-monitor-force-assignment]
-    1 = 'main'
-    2 = 'main'
-    3 = 'main'
-    4 = 'main'
-    5 = 'secondary'
-    6 = 'secondary'
-    7 = 'secondary'
-
 [[on-window-detected]]
 if.workspace = '3'
 run = ['layout floating']
