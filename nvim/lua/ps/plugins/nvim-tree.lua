@@ -19,6 +19,9 @@ local function SetupNvimTree()
   require 'nvim-tree'.setup {
     -- on_attach = OnNvimTreeAttach,
     hijack_cursor = true,
+    filters = {
+      git_ignored = false,
+    },
     view = {
       float = {
         enable = true,

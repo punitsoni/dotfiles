@@ -1,5 +1,6 @@
 local Context = require 'ps.wsp.context'
 local ts_builtin = require('telescope.builtin')
+local snacks = require('snacks')
 
 
 -- wsp module.
@@ -25,36 +26,20 @@ function wsp.find_files()
   end
 
   local config = ctx.config
-  local command = { 'rg', '--files', '--hidden', '--color=never' }
-
   assert(config)
 
-  -- TODO: inclusion of general globs interferes with type selection later.
-  -- for _, d in ipairs(config.dirs) do
-  --   table.insert(command, '--glob')
-  --   table.insert(command, d .. '/**/*')
-  --   print(d)
-  -- end
-
-  for _, d in ipairs(config.dirs_exclude) do
-    table.insert(command, '--glob')
-    table.insert(command, '!' .. d .. '/**/*')
-    print(d)
+  local args = { '--no-ignore-vcs', '--follow' }
+  for _, t in ipairs(config.file_types or {}) do
+    table.insert(args, '--type=' .. t)
   end
 
-  vim.list_extend(command, {
-    '--glob=!**/.git/*',
-    '--type=c',
-    '--type=cpp',
-    '--type=python',
-    '--type=make',
-    '--type=cmake',
-    '--type=sh',
-    ctx.rootdir
-  })
-
-  ts_builtin.find_files({
-    find_command = command,
+  snacks.picker.files({
+    cmd = 'rg',
+    hidden = true,
+    preview = false,
+    cwd = ctx.rootdir,
+    exclude = vim.tbl_map(function(d) return d .. '/**/*' end, config.dirs_exclude or {}),
+    args = args,
   })
 end
 
@@ -69,26 +54,17 @@ function wsp.live_grep()
   local config = ctx.config
   assert(config)
 
-  -- Telescope live_grep calls the ripgrep (rg) tool. We can pass additional
-  -- arguments to the rg invocation.
-  local rg_args = {}
+  local rg_args = { '--no-ignore-vcs' }
 
-  -- for _, d in ipairs(config.dirs) do
-  --   table.insert(rg_args, '--glob='..d .. '/**/*')
-  -- end
-  --
-  for _, d in ipairs(config.dirs_exclude) do
+  for _, d in ipairs(config.dirs_exclude or {}) do
     table.insert(rg_args, '--glob=!' .. d .. '/**/*')
   end
 
-  vim.list_extend(rg_args, {
-    '--glob=!**/.git/*',
-    '--type=c',
-    '--type=cpp',
-    '--type=python',
-    '--type=make',
-    '--type=cmake',
-  })
+  table.insert(rg_args, '--glob=!**/.git/*')
+
+  for _, t in ipairs(config.file_types or {}) do
+    table.insert(rg_args, '--type=' .. t)
+  end
 
   ts_builtin.live_grep({
     cwd = ctx.rootdir,

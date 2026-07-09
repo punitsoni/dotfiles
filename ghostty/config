@@ -1,3 +1,5 @@
 theme = Ayu
 font-family = FiraCode Nerd Font
+macos-titlebar-style = tabs
+
 # macos-titlebar-style = hidden

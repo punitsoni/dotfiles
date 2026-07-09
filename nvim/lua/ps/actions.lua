@@ -88,7 +88,7 @@ alib.register_action({
       wsp.find_files()
     else
       -- ts_builtin.find_files()
-      require 'snacks'.picker.files()
+      require 'snacks'.picker.files({ preview = false })
     end
   end
 })
