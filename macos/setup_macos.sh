@@ -8,6 +8,14 @@ export NONINTERACTIVE=1
 # Tee all output to log file.
 exec > >(tee /tmp/setup_macos.log) 2>&1
 
+SERVER_MODE=0
+for arg in "$@"; do
+    case "$arg" in
+        --server-mode) SERVER_MODE=1 ;;
+        *) echo "Unknown argument: $arg"; exit 1 ;;
+    esac
+done
+
 if [[ -z "${DOTFILES:-}" || ! -d "$DOTFILES" ]]; then
     echo "Error: \$DOTFILES is not set or does not exist. Clone dotfiles and set \$DOTFILES first."
     exit 1
@@ -170,6 +178,15 @@ if ! cmp -s "$KEYBINDINGS_SRC" "$KEYBINDINGS_DST"; then
     cp "$KEYBINDINGS_SRC" "$KEYBINDINGS_DST" || fail "KeyBindings"
 else
     echo "  [skip] KeyBindings already up to date"
+fi
+
+# --------------------------------------------------------------------------- #
+# Server Mode (lid closed, ethernet, power)
+# --------------------------------------------------------------------------- #
+
+if [[ "$SERVER_MODE" -eq 1 ]]; then
+    step "Server Mode"
+    run_step "server_mode.sh" bash "${DOTFILES}/macos/server_mode.sh"
 fi
 
 # --------------------------------------------------------------------------- #

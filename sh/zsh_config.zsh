@@ -76,6 +76,7 @@ setopt HIST_REDUCE_BLANKS
 # setopt CORRECT_ALL
 setopt noautomenu
 setopt nomenucomplete
+unsetopt BEEP
 
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 HISTSIZE=10000
@@ -149,6 +150,11 @@ zshrc_local=${CONFIG_LOCAL}/zshrc-local
 if [[ -f ${zshrc_local} ]]; then
     source ${zshrc_local}
     echo "local config loaded from ${zshrc_local}"
+fi
+
+config_work="${DOTFILES}/config-work/zsh_config.zsh"
+if [[ -f "$config_work" ]]; then
+    source "$config_work"
 fi
 
 
