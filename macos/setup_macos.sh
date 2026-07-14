@@ -104,6 +104,7 @@ step "CLI Tools"
 brew_install fzf
 brew_install neovim
 brew_install tmux
+brew_install zellij
 brew_install lsd
 brew_install ripgrep
 brew_install bat
@@ -133,6 +134,7 @@ run_step "AeroSpace config" bash "${DOTFILES}/aerospace/setup.sh"
 link_config "${DOTFILES}/ghostty"            "${HOME}/.config/ghostty"
 link_config "${DOTFILES}/nvim"               "${HOME}/.config/nvim"
 link_config "${DOTFILES}/tmux"               "${HOME}/.config/tmux"
+link_config "${DOTFILES}/zellij/config.kdl"  "${HOME}/.config/zellij/config.kdl"
 link_config "${DOTFILES}/finicky/finicky.js" "${HOME}/.finicky.js"
 
 # --------------------------------------------------------------------------- #
