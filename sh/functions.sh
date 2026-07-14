@@ -51,6 +51,33 @@ tm() {
   fi
 }
 
+# Attach to or create a zellij session.
+# Usage: zm [session-name]
+# If no name given, opens an interactive fzf picker.
+zm() {
+  if [[ "$1" == "help" || "$1" == "-h" || "$1" == "--help" ]]; then
+    cat <<'EOF'
+zm - attach to or create a zellij session
+
+Usage:
+  zm             Open an interactive fzf picker of existing sessions
+  zm <name>      Attach to (or create) the session named <name>
+  zm help        Show this help
+EOF
+    return 0
+  fi
+
+  local session
+  session=$(bash "$DOTFILES/scripts/zellij_sessionizer.sh" "$@")
+  [[ -z "$session" ]] && return 0
+
+  if [[ -n "${ZELLIJ:-}" ]]; then
+    zellij action switch-session "$session"
+  else
+    zellij attach -c "$session"
+  fi
+}
+
 # Returns a string corresponding to the variant of ls command present in the
 # system.
 ls_version() {

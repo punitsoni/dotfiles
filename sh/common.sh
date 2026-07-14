@@ -45,6 +45,7 @@ fi
 alias ..='cd ..'
 alias xx='exit'
 alias t=type
+alias zel=zellij
 
 # Common typos
 alias celar=clear
