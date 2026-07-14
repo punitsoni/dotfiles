@@ -15,7 +15,18 @@ cmd::weather() {
 # ssh with automatic reconnection
 cmd::sshme() { (
   set -x
-  autossh -M 0 -o "ServerAliveInterval 60" -o "ServerAliveCountMax 5" "$@"
+
+  # autossh -M 0 \
+  #     -o "ServerAliveInterval 60" \
+  #     -o "ServerAliveCountMax 5" "$@"
+
+  autossh -M 0 \
+    -o "TCPKeepAlive yes" \
+    -o "ServerAliveInterval 5" \
+    -o "ServerAliveCountMax 3" \
+    -o "IPQoS throughput" \
+    "$@"
+
 ); }
 
 # Checkout git branch using fzf
