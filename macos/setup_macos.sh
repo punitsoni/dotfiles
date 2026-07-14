@@ -57,12 +57,20 @@ brew_cask_install() {
 link_config() {
     local src="$1" dst="$2"
     mkdir -p "$(dirname "$dst")"
-    if [[ -e "$dst" || -L "$dst" ]]; then
-        echo "  [skip] $dst already linked"
+    if [[ -L "$dst" ]]; then
+        if [[ "$(readlink "$dst")" == "$src" ]]; then
+            echo "  [skip] $dst already linked"
+            return
+        fi
+        echo "  [relink] $dst -> $src"
+        rm -f "$dst"
+    elif [[ -e "$dst" ]]; then
+        echo "  [backup] $dst -> $dst.bak"
+        mv "$dst" "$dst.bak" || fail "backup $dst"
     else
         echo "  [link] $dst -> $src"
-        ln -s "$src" "$dst" || fail "link $dst"
     fi
+    ln -s "$src" "$dst" || fail "link $dst"
 }
 
 # --------------------------------------------------------------------------- #
