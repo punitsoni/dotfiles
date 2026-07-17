@@ -16,14 +16,16 @@ cmd::weather() {
 cmd::sshme() { (
   set -x
 
-  # autossh -M 0 \
-  #     -o "ServerAliveInterval 60" \
-  #     -o "ServerAliveCountMax 5" "$@"
-
+  # Tuned for a laptop that frequently sleeps (lid-close) and roams networks.
+  # GATETIME=0 stops autossh from giving up when the first post-wake
+  # reconnect dies instantly; keepalives detect the dead link in ~20s.
+  AUTOSSH_GATETIME=0 AUTOSSH_POLL=20 \
   autossh -M 0 \
-    -o "TCPKeepAlive yes" \
-    -o "ServerAliveInterval 5" \
-    -o "ServerAliveCountMax 3" \
+    -o "ServerAliveInterval 10" \
+    -o "ServerAliveCountMax 2" \
+    -o "ExitOnForwardFailure yes" \
+    -o "ConnectTimeout 8" \
+    -o "TCPKeepAlive no" \
     -o "IPQoS throughput" \
     "$@"
 
