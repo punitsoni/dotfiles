@@ -24,6 +24,7 @@ show_usage() {
   echo "  --no-default            Disable loading default modules"
   echo "  -v, --verbose           Enable verbose output"
   echo "  -m, --module <module>   Load additional module"
+  echo "  -s, --showcmd <command> Print the definition of a command"
   echo ""
   echo "Available commands:"
 
@@ -35,6 +36,23 @@ show_usage() {
 
 cmd::help() {
   show_usage
+}
+
+show_command() {
+  # Print the definition of command "$1" (i.e. function cmd::<name>).
+  local command="$1"
+
+  if [[ "${command}" == "" ]]; then
+    die "command name required after --showcmd"
+  fi
+
+  local func="cmd::${command}"
+
+  if ! declare -F "${func}" >/dev/null; then
+    die "Unknown command: ${command}"
+  fi
+
+  declare -f "${func}"
 }
 
 execute_command() {
@@ -83,8 +101,16 @@ main() {
   while [[ "$1" =~ ^- ]]; do
     case "$1" in
     -h | --help)
-      load_modules "${extra_modules}"
+      load_modules "${extra_modules[@]}"
       execute_command help
+      exit
+      ;;
+    -s | --showcmd)
+      if [[ "$2" =~ ^- || "$2" == "" ]]; then
+        die "command name required after $1"
+      fi
+      load_modules "${extra_modules[@]}"
+      show_command "$2"
       exit
       ;;
     --no-default)
