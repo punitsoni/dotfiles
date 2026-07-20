@@ -55,7 +55,13 @@ bindkey '^ ' autosuggest-accept
 # ------------------------------- My Config --------------------------------- #
 # --------------------------------------------------------------------------- #
 
-export PROMPT="%n@%m: %B%2d%b"$'\n'"$ "
+if [[ -n "$SSH_CONNECTION" || -n "$SSH_TTY" ]]; then
+  _prompt_dot_color="blue"
+else
+  _prompt_dot_color="green"
+fi
+export PROMPT="%F{$_prompt_dot_color}●%f %n@%m: %B%2d%b"$'\n'"$ "
+unset _prompt_dot_color
 
 # setopt AUTO_CD
 # share history across multiple zsh sessions

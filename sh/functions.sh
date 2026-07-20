@@ -74,7 +74,7 @@ EOF
   if [[ -n "${ZELLIJ:-}" ]]; then
     zellij action switch-session "$session"
   else
-    zellij attach -c "$session"
+    zellij attach -c "$session" options --default-layout default
   fi
 }
 

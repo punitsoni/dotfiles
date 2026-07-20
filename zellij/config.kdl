@@ -117,7 +117,6 @@ keybinds clear-defaults=true {
             }
             SwitchToMode "normal"
         }
-        bind "Ctrl o" { SwitchToMode "normal"; }
         bind "p" {
             LaunchOrFocusPlugin "plugin-manager" {
                 floating true
@@ -166,9 +165,15 @@ keybinds clear-defaults=true {
         bind "Ctrl j" { MoveFocus "down"; }
         bind "Ctrl k" { MoveFocus "up"; }
         bind "Ctrl l" { MoveFocus "right"; }
-    }
-    shared_except "locked" "session" {
-        bind "Ctrl o" { SwitchToMode "session"; }
+        bind "Ctrl 1" { GoToTab 1; }
+        bind "Ctrl 2" { GoToTab 2; }
+        bind "Ctrl 3" { GoToTab 3; }
+        bind "Ctrl 4" { GoToTab 4; }
+        bind "Ctrl 5" { GoToTab 5; }
+        bind "Ctrl 6" { GoToTab 6; }
+        bind "Ctrl 7" { GoToTab 7; }
+        bind "Ctrl 8" { GoToTab 8; }
+        bind "Ctrl 9" { GoToTab 9; }
     }
     shared_except "locked" "scroll" "search" "tmux" {
         bind "Ctrl a" { SwitchToMode "tmux"; }
@@ -329,7 +334,7 @@ web_client {
 // The name of the default layout to load on startup
 // Default: "default"
 //
-default_layout "compact"
+default_layout "default"
  
 // The folder in which Zellij will look for layouts
 // (Requires restart)
