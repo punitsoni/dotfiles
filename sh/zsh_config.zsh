@@ -55,13 +55,8 @@ bindkey '^ ' autosuggest-accept
 # ------------------------------- My Config --------------------------------- #
 # --------------------------------------------------------------------------- #
 
-if [[ -n "$SSH_CONNECTION" || -n "$SSH_TTY" ]]; then
-  _prompt_dot_color="blue"
-else
-  _prompt_dot_color="green"
-fi
-export PROMPT="%F{$_prompt_dot_color}●%f %n@%m: %B%2d%b"$'\n'"$ "
-unset _prompt_dot_color
+# Set IDCOLOR in ~/.zshrc (before dotfiles are sourced) to override, e.g. per-machine.
+export PROMPT="%F{${IDCOLOR:-green}}●%f %n@%m: %B%2d%b"$'\n'"$ "
 
 # setopt AUTO_CD
 # share history across multiple zsh sessions
