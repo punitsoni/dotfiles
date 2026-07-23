@@ -51,6 +51,28 @@ tm() {
   fi
 }
 
+# Wraps the zellij binary to refuse starting a new session when already
+# inside one (bare `zellij`/`-s`/`-l` would otherwise silently nest a
+# session inside the current pane). Subcommands that operate on/within an
+# existing session (action, attach, run, edit, ...) pass through untouched;
+# `-n`/--new-session-with-layout is explicit opt-in to nest and is allowed.
+zellij() {
+  if [[ -n "${ZELLIJ:-}" ]]; then
+    case "$1" in
+      action|ac|attach|a|list-sessions|ls|kill-session|k|delete-session|d|\
+      kill-all-sessions|ka|delete-all-sessions|da|edit|e|run|r|pipe|plugin|p|\
+      list-aliases|la|setup|watch|w|convert-config|convert-layout|convert-theme|\
+      help|-h|--help|-V|--version|-n|--new-session-with-layout)
+        ;;
+      *)
+        echo "zellij: already inside a session; refusing to nest. Use 'zm' to switch sessions, or 'zellij -n <layout>' to force nesting." >&2
+        return 1
+        ;;
+    esac
+  fi
+  command zellij "$@"
+}
+
 # Attach to or create a zellij session.
 # Usage: zm [session-name]
 # If no name given, opens an interactive fzf picker.
