@@ -119,6 +119,7 @@ brew_install bat
 brew_install fd
 brew_install shellcheck
 brew_install uv
+brew_install herdr
 
 # --------------------------------------------------------------------------- #
 # Tmux Plugin Manager (TPM)
@@ -144,6 +145,23 @@ link_config "${DOTFILES}/nvim"               "${HOME}/.config/nvim"
 link_config "${DOTFILES}/tmux"               "${HOME}/.config/tmux"
 link_config "${DOTFILES}/zellij/config.kdl"  "${HOME}/.config/zellij/config.kdl"
 link_config "${DOTFILES}/finicky/finicky.js" "${HOME}/.finicky.js"
+link_config "${DOTFILES}/herdr/config.toml" "${HOME}/.config/herdr/config.toml"
+
+# --------------------------------------------------------------------------- #
+# Herdr service
+# --------------------------------------------------------------------------- #
+
+step "Herdr service"
+if command -v herdr &>/dev/null; then
+    if brew services list 2>/dev/null | grep -qE '^herdr\s+started'; then
+        echo "  [skip] herdr service already started"
+    else
+        echo "  [start] herdr"
+        brew services start herdr || fail "herdr service"
+    fi
+else
+    echo "  [skip] herdr not found"
+fi
 
 # --------------------------------------------------------------------------- #
 # Neovim plugins (Lazy.nvim headless sync)
