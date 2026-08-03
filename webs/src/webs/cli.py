@@ -28,11 +28,15 @@ app = typer.Typer(no_args_is_help=True, add_completion=False)
 
 
 @app.command()
-def run(port: int = typer.Option(DEFAULT_PORT, "--port", help="Port to listen on")) -> None:
+def run(
+    port: int = typer.Option(DEFAULT_PORT, "--port", help="Port to listen on"),
+    bind: bool = typer.Option(False, "--bind", help="Bind to 0.0.0.0 instead of localhost only"),
+) -> None:
     """Run the server in the foreground."""
     DOCS_DIR.mkdir(parents=True, exist_ok=True)
-    server = http.server.ThreadingHTTPServer(("0.0.0.0", port), WebsRequestHandler)
-    print(f"Serving {WEBS_HOME} (docs at {DOCS_DIR}) on http://0.0.0.0:{port}")
+    host = "0.0.0.0" if bind else "127.0.0.1"
+    server = http.server.ThreadingHTTPServer((host, port), WebsRequestHandler)
+    print(f"Serving {WEBS_HOME} (docs at {DOCS_DIR}) on http://{host}:{port}")
     try:
         server.serve_forever()
     except KeyboardInterrupt:
@@ -47,10 +51,11 @@ def _require(cmd: str) -> str:
     return path
 
 
-def _plist_contents(port: int) -> str:
+def _plist_contents(port: int, bind: bool) -> str:
     uv_path = _require("uv")
     project_dir = Path(__file__).resolve().parents[2]
     LOG_DIR.mkdir(parents=True, exist_ok=True)
+    extra_arg = "\n        <string>--bind</string>" if bind else ""
     return f"""<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -66,7 +71,7 @@ def _plist_contents(port: int) -> str:
         <string>webs</string>
         <string>run</string>
         <string>--port</string>
-        <string>{port}</string>
+        <string>{port}</string>{extra_arg}
     </array>
     <key>RunAtLoad</key>
     <true/>
@@ -82,7 +87,10 @@ def _plist_contents(port: int) -> str:
 
 
 @app.command()
-def install(port: int = typer.Option(DEFAULT_PORT, "--port", help="Port to listen on")) -> None:
+def install(
+    port: int = typer.Option(DEFAULT_PORT, "--port", help="Port to listen on"),
+    bind: bool = typer.Option(False, "--bind", help="Bind to 0.0.0.0 instead of localhost only"),
+) -> None:
     """Install/reload a launchd agent running the server in the background."""
     DOCS_DIR.mkdir(parents=True, exist_ok=True)
     PLIST_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -93,11 +101,12 @@ def install(port: int = typer.Option(DEFAULT_PORT, "--port", help="Port to liste
     if already_loaded:
         subprocess.run(["launchctl", "unload", str(PLIST_PATH)], check=False)
 
-    PLIST_PATH.write_text(_plist_contents(port))
+    PLIST_PATH.write_text(_plist_contents(port, bind))
     subprocess.run(["launchctl", "load", str(PLIST_PATH)], check=True)
 
     action = "Reloaded" if already_loaded else "Installed"
-    print(f"{action}. Serving {DOCS_DIR} on http://0.0.0.0:{port}")
+    host = "0.0.0.0" if bind else "127.0.0.1"
+    print(f"{action}. Serving {DOCS_DIR} on http://{host}:{port}")
     print(f"Logs: {LOG_DIR}/webserver.{{out,err}}.log")
     print(f"Stop:    launchctl unload {PLIST_PATH}")
     print(f"Restart: launchctl kickstart -k gui/{os.getuid()}/{LABEL}")
