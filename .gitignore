@@ -3,3 +3,5 @@ gvim/.netrwhist
 tmux/plugins
 .wsp.lua
 .claude/settings.local.json
+webs/.venv
+__pycache__/

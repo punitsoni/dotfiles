@@ -1,0 +1,13 @@
+[project]
+name = "webs"
+version = "0.1.0"
+description = "Static file webserver for ~/webs/docs"
+requires-python = ">=3.9"
+dependencies = ["typer>=0.12"]
+
+[project.scripts]
+webs = "webs.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

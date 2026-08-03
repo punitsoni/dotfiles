@@ -37,6 +37,13 @@ ln -s $DOTFILES/aerospace ~/.config/aerospace
 
 # Terminfo (needed for tmux over SSH)
 tic -x $DOTFILES/resources/tmux.terminfo
+
+# Herdr
+ln -s $DOTFILES/herdr/config.toml ~/.config/herdr/config.toml
+
+# Web server (Python/uv, launchd agent serving ~/webs/docs)
+cd $DOTFILES/webs && uv run webs install    # background via launchd
+cd $DOTFILES/webs && uv run webs run        # foreground
 ```
 
 ## Key Directories
@@ -52,6 +59,8 @@ tic -x $DOTFILES/resources/tmux.terminfo
 | `alacritty/` `kitty/` `wezterm/` `ghostty/` | Terminal emulator configs |
 | `neo/` | `neo` CLI — a shell-based task runner using `cmd::<name>` function pattern |
 | `scripts/` | One-off install scripts (fzf, fonts, tmux sessionizer) |
+| `herdr/` | Herdr TUI config (`config.toml`) |
+| `webs/` | Static file webserver (launchd agent serving `~/web`) |
 
 ## Neovim Architecture
 
