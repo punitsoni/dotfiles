@@ -1,7 +1,7 @@
 local function config__mason()
   require 'mason'.setup()
   require 'mason-lspconfig'.setup {
-    -- ensure_installed = { 'lua_ls', 'bashls', 'basedpyright' },
+    -- ensure_installed = { 'lua_ls', 'bashls', 'basedpyright', 'ruff' },
     -- LSP servers setup via lspconfig are automatically installed.
     ensure_installed = {},
     automatic_installation = true,

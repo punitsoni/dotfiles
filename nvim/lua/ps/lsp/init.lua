@@ -3,15 +3,15 @@
 -- Configure language servers
 vim.lsp.config.lua_ls = require 'ps.lsp.lua_ls'
 vim.lsp.config.clangd = require 'ps.lsp.clangd'
--- vim.lsp.config.basedpyright = require 'ps.lsp.basedpyright'
+vim.lsp.config.basedpyright = require 'ps.lsp.basedpyright'
+vim.lsp.config.ruff = require 'ps.lsp.ruff'
 vim.lsp.config.bashls = require 'ps.lsp.bashls'
-vim.lsp.config.pylsp = require 'ps.lsp.pylsp'
 vim.lsp.config.sourcekit = require 'ps.lsp.sourcekit'
 
 -- Enable the LSP servers
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('clangd')
--- vim.lsp.enable('basedpyright')
+vim.lsp.enable('basedpyright')
+vim.lsp.enable('ruff')
 vim.lsp.enable('bashls')
-vim.lsp.enable('pylsp')
 vim.lsp.enable('sourcekit')

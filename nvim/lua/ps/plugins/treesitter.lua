@@ -1,7 +1,12 @@
 local options = {
   modules = {},
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'lua', 'python', 'vim', 'regex', 'bash', 'make', 'swift' },
+  ensure_installed = {
+    'c', 'cpp', 'lua', 'python', 'vim', 'regex', 'bash', 'make', 'swift',
+    -- yaml (pep_config.yaml, pep_videos*.yaml, bolt configs) and toml
+    -- (pyproject.toml) for PEPPy and other uv/Python projects.
+    'yaml', 'toml',
+  },
 
   highlight = { enable = true },
 
