@@ -1,5 +1,4 @@
 local Context = require 'ps.wsp.context'
-local ts_builtin = require('telescope.builtin')
 local snacks = require('snacks')
 
 
@@ -54,21 +53,17 @@ function wsp.live_grep()
   local config = ctx.config
   assert(config)
 
-  local rg_args = { '--no-ignore-vcs' }
-
-  for _, d in ipairs(config.dirs_exclude or {}) do
-    table.insert(rg_args, '--glob=!' .. d:gsub('/+$', '') .. '/**/*')
-  end
-
-  table.insert(rg_args, '--glob=!**/.git/*')
-
+  local args = { '--no-ignore-vcs' }
   for _, t in ipairs(config.file_types or {}) do
-    table.insert(rg_args, '--type=' .. t)
+    table.insert(args, '--type=' .. t)
   end
 
-  ts_builtin.live_grep({
+  snacks.picker.grep({
+    hidden = true,
+    layout = vim.o.columns < 200 and { hidden = { 'preview' } } or nil,
     cwd = ctx.rootdir,
-    additional_args = rg_args,
+    exclude = vim.tbl_map(function(d) return d:gsub('/+$', '') .. '/**/*' end, config.dirs_exclude or {}),
+    args = args,
   })
 end
 
