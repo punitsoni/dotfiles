@@ -36,9 +36,9 @@ function wsp.find_files()
   snacks.picker.files({
     cmd = 'rg',
     hidden = true,
-    preview = false,
+    layout = vim.o.columns < 200 and { hidden = { 'preview' } } or nil,
     cwd = ctx.rootdir,
-    exclude = vim.tbl_map(function(d) return d .. '/**/*' end, config.dirs_exclude or {}),
+    exclude = vim.tbl_map(function(d) return d:gsub('/+$', '') .. '/**/*' end, config.dirs_exclude or {}),
     args = args,
   })
 end
@@ -57,7 +57,7 @@ function wsp.live_grep()
   local rg_args = { '--no-ignore-vcs' }
 
   for _, d in ipairs(config.dirs_exclude or {}) do
-    table.insert(rg_args, '--glob=!' .. d .. '/**/*')
+    table.insert(rg_args, '--glob=!' .. d:gsub('/+$', '') .. '/**/*')
   end
 
   table.insert(rg_args, '--glob=!**/.git/*')
