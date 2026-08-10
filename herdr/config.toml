@@ -24,6 +24,7 @@ focus_pane_down = "ctrl+j"
 focus_pane_up = "ctrl+k"
 focus_pane_right = "ctrl+l"
 toggle_sidebar = "ctrl+,"
+rename_tab = "prefix+,"
 
 [update]
 channel = "stable"
