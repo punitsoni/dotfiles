@@ -7,10 +7,25 @@
   # pin it to the version you first installed with, then update deliberately.
   system.stateVersion = 5;
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  # Determinate manages the Nix installation via its own daemon, so nix-darwin
+  # must not try to manage Nix itself (this also disables the nix.* settings).
+  nix.enable = false;
 
   environment.systemPackages = with pkgs; [
     git
     neovim
   ];
+
+  homebrew = {
+    enable = true;
+    onActivation.cleanup = "none"; # additive only — never removes internally/manually installed packages
+
+    brews = [
+      "herdr" # terminal agent multiplexer; not in nixpkgs, so installed via brew
+    ];
+
+    casks = [
+      "visual-studio-code"
+    ];
+  };
 }
