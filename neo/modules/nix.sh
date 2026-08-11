@@ -13,6 +13,16 @@ set -o pipefail
 cmd::nix-apply() {
   local config="${1:-work}"
   git -C "${DOTFILES}" add nix/ || return 1
+
+  # Third-party Homebrew taps must be trusted once per machine (a local trust
+  # store, outside the flake) before `brew bundle` — run during activation —
+  # will load their casks. Idempotent, so safe to run every apply. Keep this
+  # list in sync with homebrew.taps in nix/modules/base.nix.
+  local tap
+  for tap in nikitabobko/tap flplima/tap; do
+    brew trust "${tap}" || true
+  done
+
   sudo nix run nix-darwin -- switch --flake "${DOTFILES}/nix#${config}"
 }
 
