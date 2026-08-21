@@ -115,6 +115,9 @@ end
 
 local function SetupNvimTreesitter()
   require('nvim-treesitter').setup(options)
+  -- Legacy master-branch nvim-treesitter is incompatible with Neovim 0.11+'s
+  -- query-match API; this shim adapts its predicate/directive handlers.
+  require('ps.ts_predicate_compat').setup()
   SetupFolds()
 end
 
