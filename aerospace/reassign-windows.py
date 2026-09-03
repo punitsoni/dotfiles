@@ -14,8 +14,8 @@ import sys
 WORKSPACE_FOR_APP = {
     "com.brave.Browser": "1",
     "com.apple.Safari": "2",
-    "com.apple.dt.Xcode": "3",
-    "com.googlecode.iterm2": "5",
+    "com.apple.dt.Xcode": "4",
+    "com.googlecode.iterm2": "3",
     "com.microsoft.VSCode": "6",
     "com.apple.MobileSMS": "9",
     "com.apple.iCal": "Q",
@@ -26,21 +26,49 @@ WORKSPACE_FOR_APP = {
     "Cisco-Systems.Spark": "W",
 }
 
+# Windows whose app isn't in the map above go here.
+DEFAULT_WORKSPACE = "8"
+
+
+def notify(message, title="AeroSpace"):
+    subprocess.run(
+        ["osascript", "-e", f'display notification "{message}" with title "{title}"']
+    )
+
 
 def move_window(window_id, app_id):
-    ws = WORKSPACE_FOR_APP.get(app_id)
-    if ws:
-        subprocess.run(["aerospace", "move-node-to-workspace", ws, "--window-id", window_id])
+    ws = WORKSPACE_FOR_APP.get(app_id, DEFAULT_WORKSPACE)
+    subprocess.run(["aerospace", "move-node-to-workspace", ws, "--window-id", window_id])
+    return ws
+
+
+def focused_window_id():
+    result = subprocess.run(
+        ["aerospace", "list-windows", "--focused", "--format", "%{window-id}"],
+        capture_output=True, text=True,
+    )
+    return result.stdout.strip() or None
 
 
 def move_all():
+    focused = focused_window_id()
     result = subprocess.run(
         ["aerospace", "list-windows", "--all", "--format", "%{window-id}|%{app-bundle-id}"],
         capture_output=True, text=True,
     )
+    moved = 0
+    focused_ws = None
     for line in result.stdout.strip().splitlines():
         wid, app_id = line.split("|", 1)
-        move_window(wid.strip(), app_id.strip())
+        wid = wid.strip()
+        ws = move_window(wid, app_id.strip())
+        moved += 1
+        if wid == focused:
+            focused_ws = ws
+    notify(f"Reassigned {moved} window(s) to pinned workspaces")
+    # Follow the previously-focused window to wherever it landed.
+    if focused_ws:
+        subprocess.run(["aerospace", "workspace", focused_ws])
 
 
 def move_single():
