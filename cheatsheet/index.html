@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dotfiles Cheat Sheet</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --panel: #171a21;
+    --panel-2: #1d212b;
+    --border: #2a2f3a;
+    --text: #e6e9ef;
+    --muted: #9aa4b2;
+    --accent: #7aa2f7;
+    --accent-2: #9ece6a;
+    --key-bg: #262b36;
+    --key-border: #3a4150;
+    --key-shadow: #10131a;
+  }
+  * { box-sizing: border-box; }
+  html { color-scheme: dark; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    padding: 40px 24px 80px;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; }
+  header { margin-bottom: 8px; }
+  h1 { font-size: 26px; margin: 0 0 4px; letter-spacing: -0.02em; }
+  .sub { color: var(--muted); font-size: 14px; }
+  .sub code { color: var(--accent); }
+
+  .note {
+    margin: 20px 0 28px;
+    padding: 12px 16px;
+    background: rgba(122,162,247,0.08);
+    border: 1px solid rgba(122,162,247,0.3);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 13.5px;
+  }
+  .note strong { color: var(--text); }
+
+  h2 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin: 36px 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  h2::before { content: ""; width: 6px; height: 6px; border-radius: 2px; background: var(--accent); }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 16px;
+  }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .card h3 {
+    margin: 0;
+    padding: 12px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    background: var(--panel-2);
+    border-bottom: 1px solid var(--border);
+  }
+  .card h3 span { color: var(--muted); font-weight: 400; font-size: 12px; }
+  table { width: 100%; border-collapse: collapse; }
+  td { padding: 8px 16px; vertical-align: middle; border-bottom: 1px solid rgba(42,47,58,0.6); }
+  tr:last-child td { border-bottom: none; }
+  td.keys { white-space: nowrap; width: 1%; }
+  td.desc { color: var(--muted); }
+  td.desc b { color: var(--text); font-weight: 500; }
+
+  kbd {
+    display: inline-block;
+    min-width: 18px;
+    padding: 3px 7px;
+    font: 12px/1 ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+    color: var(--text);
+    background: var(--key-bg);
+    border: 1px solid var(--key-border);
+    border-radius: 6px;
+    box-shadow: 0 2px 0 var(--key-shadow);
+    text-align: center;
+  }
+  .plus { color: var(--muted); padding: 0 2px; font-size: 11px; }
+
+  .pins { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+  .pin {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 14px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .pin .app { display: flex; flex-direction: column; }
+  .pin .app b { font-size: 14px; }
+  .pin .app small { color: var(--muted); font-size: 11px; font-family: ui-monospace, monospace; }
+  .ws {
+    flex: none;
+    width: 34px; height: 34px;
+    display: grid; place-items: center;
+    font-weight: 700;
+    background: var(--panel-2);
+    border: 1px solid var(--key-border);
+    border-radius: 8px;
+    color: var(--accent-2);
+  }
+  .ws.default { color: var(--muted); }
+
+  footer { margin-top: 48px; color: var(--muted); font-size: 12px; text-align: center; }
+  footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Dotfiles Cheat Sheet</h1>
+    <div class="sub">Keybindings & behavior for the current setup. Modifier <kbd>alt</kbd> = <kbd>⌥ Option</kbd>.</div>
+  </header>
+
+  <!-- ============================= AEROSPACE ============================= -->
+  <h2>AeroSpace — Window Manager</h2>
+
+  <div class="note">
+    <strong>Config:</strong> <code>aerospace/aerospace.toml</code> · prefix modifier is <kbd>alt</kbd>.
+    Enter <b>service mode</b> with <kbd>alt</kbd><span class="plus">+</span><kbd>shift</kbd><span class="plus">+</span><kbd>;</kbd>,
+    then press one key (<kbd>esc</kbd> reloads config &amp; exits).
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>Focus window</h3>
+      <table>
+        <tr><td class="keys"><kbd>alt</kbd><span class="plus">+</span><kbd>h</kbd> <span class="plus">/</span> <kbd>←</kbd></td><td class="desc">Focus <b>left</b></td></tr>
+        <tr><td class="keys"><kbd>alt</kbd><span class="plus">+</span><kbd>j</kbd> <span class="plus">/</span> <kbd>↓</kbd></td><td class="desc">Focus <b>down</b></td></tr>
+        <tr><td class="keys"><kbd>alt</kbd><span class="plus">+</span><kbd>k</kbd> <span class="plus">/</span> <kbd>↑</kbd></td><td class="desc">Focus <b>up</b></td></tr>
+        <tr><td class="keys"><kbd>alt</kbd><span class="plus">+</span><kbd>l</kbd> <span class="plus">/</span> <kbd>→</kbd></td><td class="desc">Focus <b>right</b></td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Move window</h3>
+      <table>
+        <tr><td class="keys"><kbd>alt</kbd><span class="plus">+</span><kbd>shift</kbd><span class="plus">+</span><kbd>h</kbd> <span class="plus">/</span> <kbd>←</kbd></td><td class="desc">Move <b>left</b></td></tr>
+        <tr><td class="keys"><kbd>alt</kbd><span class="plus">+</span><kbd>shift</kbd><span class="plus">+</span><kbd>j</kbd> <span class="plus">/</span> <kbd>↓</kbd></td><td class="desc">Move <b>down</b></td></tr>
+        <tr><td class="keys"><kbd>alt</kbd><span class="plus">+</span><kbd>shift</kbd><span class="plus">+</span><kbd>k</kbd> <span class="plus">/</span> <kbd>↑</kbd></td><td class="desc">Move <b>up</b></td></tr>
+        <tr><td class="keys"><kbd>alt</kbd><span class="plus">+</span><kbd>shift</kbd><span class="plus">+</span><kbd>l</kbd> <span class="plus">/</span> <kbd>→</kbd></td><td class="desc">Move <b>right</b></td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Layout</h3>
+      <table>
+        <tr><td class="keys"><kbd>alt</kbd><span class="plus">+</span><kbd>/</kbd></td><td class="desc"><b>Tiles</b> layout (horiz/vert)</td></tr>
+        <tr><td class="keys"><kbd>alt</kbd><span class="plus">+</span><kbd>,</kbd></td><td class="desc"><b>Accordion</b> layout (horiz/vert)</td></tr>
+        <tr><td class="keys"><kbd>alt</kbd><span class="plus">+</span><kbd>`</kbd></td><td class="desc">Toggle <b>floating / tiling</b></td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Resize</h3>
+      <table>
+        <tr><td class="keys"><kbd>alt</kbd><span class="plus">+</span><kbd>-</kbd></td><td class="desc">Shrink <b>−50</b> (smart)</td></tr>
+        <tr><td class="keys"><kbd>alt</kbd><span class="plus">+</span><kbd>=</kbd></td><td class="desc">Grow <b>+50</b> (smart)</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Workspaces</h3>
+      <table>
+        <tr><td class="keys"><kbd>alt</kbd><span class="plus">+</span><kbd>1…9</kbd></td><td class="desc">Switch to workspace <b>1–9</b></td></tr>
+        <tr><td class="keys"><kbd>alt</kbd><span class="plus">+</span><kbd>a…z</kbd></td><td class="desc">Switch to lettered workspace <b>(A, B, … Z)</b></td></tr>
+        <tr><td class="keys"><kbd>alt</kbd><span class="plus">+</span><kbd>tab</kbd></td><td class="desc"><b>Back-and-forth</b> (last workspace)</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Send window to workspace</h3>
+      <table>
+        <tr><td class="keys"><kbd>alt</kbd><span class="plus">+</span><kbd>shift</kbd><span class="plus">+</span><kbd>1…9</kbd></td><td class="desc">Move window to workspace <b>1–9</b></td></tr>
+        <tr><td class="keys"><kbd>alt</kbd><span class="plus">+</span><kbd>shift</kbd><span class="plus">+</span><kbd>a…z</kbd></td><td class="desc">Move window to lettered workspace</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Monitors &amp; reassign</h3>
+      <table>
+        <tr><td class="keys"><kbd>alt</kbd><span class="plus">+</span><kbd>shift</kbd><span class="plus">+</span><kbd>tab</kbd></td><td class="desc">Move workspace to <b>next monitor</b></td></tr>
+        <tr><td class="keys"><kbd>alt</kbd><span class="plus">+</span><kbd>shift</kbd><span class="plus">+</span><kbd>=</kbd></td><td class="desc"><b>Reassign all windows</b> to pinned workspaces, then follow the focused one</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Service mode <span>— alt+shift+;</span></h3>
+      <table>
+        <tr><td class="keys"><kbd>esc</kbd></td><td class="desc"><b>Reload config</b> &amp; exit</td></tr>
+        <tr><td class="keys"><kbd>r</kbd></td><td class="desc"><b>Reset layout</b> (flatten tree)</td></tr>
+        <tr><td class="keys"><kbd>f</kbd></td><td class="desc">Toggle <b>floating / tiling</b></td></tr>
+        <tr><td class="keys"><kbd>backspace</kbd></td><td class="desc"><b>Close all</b> windows but current</td></tr>
+        <tr><td class="keys"><kbd>alt</kbd><span class="plus">+</span><kbd>shift</kbd><span class="plus">+</span><kbd>h/j/k/l</kbd></td><td class="desc"><b>Join</b> with left/down/up/right</td></tr>
+        <tr><td class="keys"><kbd>↓</kbd> <span class="plus">/</span> <kbd>↑</kbd></td><td class="desc">Volume <b>down / up</b></td></tr>
+        <tr><td class="keys"><kbd>shift</kbd><span class="plus">+</span><kbd>↓</kbd></td><td class="desc"><b>Mute</b> (volume 0) &amp; exit</td></tr>
+      </table>
+    </div>
+
+  </div>
+
+  <h2>App → Workspace Pins</h2>
+  <div class="note">
+    Applied on startup and on <kbd>alt</kbd><span class="plus">+</span><kbd>shift</kbd><span class="plus">+</span><kbd>=</kbd> by
+    <code>aerospace/reassign-windows.py</code>. Anything not listed goes to the default workspace <b>8</b>.
+    <br><strong>Note:</strong> the <code>on-window-detected</code> rules in <code>aerospace.toml</code> still pin Xcode→3 and iTerm→5;
+    those fire per-new-window and currently disagree with the script below.
+  </div>
+  <div class="grid pins">
+    <div class="pin"><div class="app"><b>Brave</b><small>com.brave.Browser</small></div><div class="ws">1</div></div>
+    <div class="pin"><div class="app"><b>Safari</b><small>com.apple.Safari</small></div><div class="ws">2</div></div>
+    <div class="pin"><div class="app"><b>iTerm2</b><small>com.googlecode.iterm2</small></div><div class="ws">3</div></div>
+    <div class="pin"><div class="app"><b>Xcode</b><small>com.apple.dt.Xcode</small></div><div class="ws">4</div></div>
+    <div class="pin"><div class="app"><b>VS Code</b><small>com.microsoft.VSCode</small></div><div class="ws">6</div></div>
+    <div class="pin"><div class="app"><b>Messages</b><small>com.apple.MobileSMS</small></div><div class="ws">9</div></div>
+    <div class="pin"><div class="app"><b>Calendar</b><small>com.apple.iCal</small></div><div class="ws">Q</div></div>
+    <div class="pin"><div class="app"><b>Logseq</b><small>com.logseq.logseq</small></div><div class="ws">E</div></div>
+    <div class="pin"><div class="app"><b>Radar</b><small>com.apple.radar.gm</small></div><div class="ws">R</div></div>
+    <div class="pin"><div class="app"><b>Mail</b><small>com.apple.mail</small></div><div class="ws">M</div></div>
+    <div class="pin"><div class="app"><b>Slack</b><small>com.tinyspeck.slackmacgap</small></div><div class="ws">S</div></div>
+    <div class="pin"><div class="app"><b>Webex</b><small>Cisco-Systems.Spark</small></div><div class="ws">W</div></div>
+    <div class="pin"><div class="app"><b>Everything else</b><small>default fallback</small></div><div class="ws default">8</div></div>
+  </div>
+
+  <footer>
+    Generated from <a href="https://github.com/punitsoni/dotfiles">punitsoni/dotfiles</a> ·
+    <code>aerospace/aerospace.toml</code> &amp; <code>aerospace/reassign-windows.py</code>
+  </footer>
+</div>
+</body>
+</html>
