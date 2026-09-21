@@ -34,7 +34,10 @@ return {
     config.settings.python = config.settings.python or {}
     if venv_python then
       config.settings.python.pythonPath = venv_python
-    else
+    elseif root then
+      -- Found a project root but no `.venv` — `uv sync` hasn't run. Nag once.
+      -- (When there's no root at all, e.g. a scratch file, stay silent and let
+      -- basedpyright discover its own interpreter.)
       vim.schedule(function()
         vim.notify(
           'basedpyright: no .venv at ' .. root .. ' — run `uv sync` first',

@@ -1,8 +1,10 @@
+onboarding = false
 # Herdr configuration
 
 [theme]
-name = "catppuccin"
+name = "one-dark"
 
+auto_switch = false
 [terminal]
 shell_mode = "auto"
 new_cwd = "follow"
@@ -16,8 +18,8 @@ previous_workspace = "ctrl+["
 next_workspace = "ctrl+]"
 previous_agent = "ctrl+shift+["
 next_agent = "ctrl+shift+]"
-previous_tab = "ctrl+shift+h"
-next_tab = "ctrl+shift+l"
+previous_tab = "prefix+p"
+next_tab = "prefix+n"
 split_vertical = "prefix+|"
 focus_pane_left = "ctrl+h"
 focus_pane_down = "ctrl+j"
@@ -25,6 +27,7 @@ focus_pane_up = "ctrl+k"
 focus_pane_right = "ctrl+l"
 toggle_sidebar = "ctrl+,"
 rename_tab = "prefix+,"
+detach = "prefix+d"
 
 [update]
 channel = "stable"
@@ -35,5 +38,6 @@ delivery = "herdr"
 [ui]
 show_agent_labels_on_pane_borders = true
 
+agent_panel_sort = "spaces"
 [ui.sound]
 enabled = false
