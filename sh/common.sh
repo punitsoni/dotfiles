@@ -46,6 +46,7 @@ alias ..='cd ..'
 alias xx='exit'
 alias t=type
 alias zel=zellij
+alias hr=herdr
 
 # Common typos
 alias celar=clear
