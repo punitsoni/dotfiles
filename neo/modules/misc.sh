@@ -88,3 +88,44 @@ cmd::gch_fzf() {
 cmd::git_gone() {
   git fetch --all --prune && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D;
 }
+
+# Set the title of the current terminal window/tab.
+#
+# Usage: neo term-title <title...>
+#
+# Inside herdr the escape sequence is swallowed by the pane, so the outer
+# terminal title is set through herdr's socket API (client.window_title.set).
+# Herdr keeps owning that title afterwards (see `ui.window_title` in its
+# config); set `window_title = ""` there to leave the title alone.
+# Inside tmux the pane title is set too (tmux swallows the escape sequence
+# unless `set-titles` is configured).
+cmd::term-title() {
+  if [[ $# -eq 0 ]]; then
+    die "usage: neo term-title <title...>"
+  fi
+  local title="$*"
+
+  if [[ -n "${HERDR_SOCKET_PATH}" ]]; then
+    python3 -I - "${HERDR_SOCKET_PATH}" "${title}" <<'PY' || die "herdr window title request failed"
+import json, socket, sys
+
+sock_path, title = sys.argv[1:3]
+req = {"id": "neo:term-title", "method": "client.window_title.set",
+       "params": {"title": title}}
+with socket.socket(socket.AF_UNIX) as s:
+    s.settimeout(3)
+    s.connect(sock_path)
+    s.sendall((json.dumps(req) + "\n").encode())
+    resp = json.loads(s.makefile().readline())
+if "error" in resp:
+    sys.exit(resp["error"].get("message", "unknown error"))
+PY
+    return
+  fi
+
+  # OSC 1 sets the icon name, which this terminal shows as the tab title.
+  printf '\033]1;%s\007' "${title}" >/dev/tty
+  if [[ -n "${TMUX}" ]]; then
+    tmux select-pane -T "${title}"
+  fi
+}
