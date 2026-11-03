@@ -71,6 +71,10 @@ if.workspace = '5'
 run = ['layout floating']
 
 [[on-window-detected]]
+if.workspace = '8'
+run = ['layout floating']
+
+[[on-window-detected]]
 if.workspace = 'R'
 run = ['layout floating']
 
@@ -103,7 +107,7 @@ if.app-id = 'com.apple.iCal'
 run = 'move-node-to-workspace Q'
 
 [[on-window-detected]]
-if.app-id = 'com.logseq.logseq'
+if.app-id = 'com.electron.logseq'
 run = 'move-node-to-workspace E'
 
 [[on-window-detected]]

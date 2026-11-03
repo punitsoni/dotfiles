@@ -19,7 +19,7 @@ WORKSPACE_FOR_APP = {
     "com.microsoft.VSCode": "6",
     "com.apple.MobileSMS": "9",
     "com.apple.iCal": "Q",
-    "com.logseq.logseq": "E",
+    "com.electron.logseq": "E",
     "com.apple.radar.gm": "R",
     "com.apple.mail": "M",
     "com.tinyspeck.slackmacgap": "S",
@@ -39,6 +39,8 @@ def notify(message, title="AeroSpace"):
 def move_window(window_id, app_id):
     ws = WORKSPACE_FOR_APP.get(app_id, DEFAULT_WORKSPACE)
     subprocess.run(["aerospace", "move-node-to-workspace", ws, "--window-id", window_id])
+    if ws == DEFAULT_WORKSPACE:
+        subprocess.run(["aerospace", "layout", "floating", "--window-id", window_id])
     return ws
 
 
