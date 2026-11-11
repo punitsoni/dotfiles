@@ -7,27 +7,23 @@ Usage:
     reassign-windows.py --all        # all open windows (startup / manual)
 """
 
+import json
 import os
 import subprocess
 import sys
 
-WORKSPACE_FOR_APP = {
-    "com.brave.Browser": "1",
-    "com.apple.Safari": "2",
-    "com.apple.dt.Xcode": "4",
-    "com.googlecode.iterm2": "3",
-    "com.microsoft.VSCode": "6",
-    "com.apple.MobileSMS": "9",
-    "com.apple.iCal": "Q",
-    "com.electron.logseq": "E",
-    "com.apple.radar.gm": "R",
-    "com.apple.mail": "M",
-    "com.tinyspeck.slackmacgap": "S",
-    "Cisco-Systems.Spark": "W",
-}
+# Assignments live in assignments.json (editable via ui/server.py).
+CONFIG = os.path.join(os.path.dirname(os.path.realpath(__file__)), "assignments.json")
 
-# Windows whose app isn't in the map above go here.
-DEFAULT_WORKSPACE = "8"
+
+def load_config():
+    with open(CONFIG) as f:
+        cfg = json.load(f)
+    apps = {bid: a["workspace"] for bid, a in cfg["apps"].items()}
+    return apps, cfg["default_workspace"]
+
+
+WORKSPACE_FOR_APP, DEFAULT_WORKSPACE = load_config()
 
 
 def notify(message, title="AeroSpace"):

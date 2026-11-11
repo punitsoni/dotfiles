@@ -1,0 +1,61 @@
+{
+  "default_workspace": "8",
+  "apps": {
+    "com.brave.Browser": {
+      "name": "Brave",
+      "workspace": "1"
+    },
+    "com.apple.Safari": {
+      "name": "Safari",
+      "workspace": "2"
+    },
+    "com.googlecode.iterm2": {
+      "name": "iTerm2",
+      "workspace": "3"
+    },
+    "com.apple.dt.Xcode": {
+      "name": "Xcode",
+      "workspace": "4"
+    },
+    "com.microsoft.VSCode": {
+      "name": "VS Code",
+      "workspace": "6"
+    },
+    "com.apple.MobileSMS": {
+      "name": "Messages",
+      "workspace": "9"
+    },
+    "com.apple.iCal": {
+      "name": "Calendar",
+      "workspace": "Q"
+    },
+    "com.electron.logseq": {
+      "name": "Logseq",
+      "workspace": "E"
+    },
+    "com.apple.radar.gm": {
+      "name": "Radar",
+      "workspace": "R"
+    },
+    "com.apple.mail": {
+      "name": "Mail",
+      "workspace": "M"
+    },
+    "com.tinyspeck.slackmacgap": {
+      "name": "Slack",
+      "workspace": "S"
+    },
+    "Cisco-Systems.Spark": {
+      "name": "Webex",
+      "workspace": "W"
+    },
+    "com.apple.genai.a3code.macos": {
+      "name": "A3 Code (Dev)",
+      "workspace": "5"
+    },
+    "com.apple.ScreenSharing": {
+      "name": "Screen Sharing",
+      "workspace": "D"
+    }
+  }
+}

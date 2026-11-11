@@ -78,53 +78,9 @@ run = ['layout floating']
 if.workspace = 'R'
 run = ['layout floating']
 
+# Per-app workspace assignments live in assignments.json (edit via ui/server.py).
 [[on-window-detected]]
-if.app-id = 'com.brave.Browser'
-run = 'move-node-to-workspace 1'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.Safari'
-run = 'move-node-to-workspace 2'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.dt.Xcode'
-run = 'move-node-to-workspace 3'
-
-[[on-window-detected]]
-if.app-id = 'com.googlecode.iterm2'
-run = 'move-node-to-workspace 5'
-
-[[on-window-detected]]
-if.app-id = 'com.microsoft.VSCode'
-run = 'move-node-to-workspace 6'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.MobileSMS'
-run = 'move-node-to-workspace 9'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.iCal'
-run = 'move-node-to-workspace Q'
-
-[[on-window-detected]]
-if.app-id = 'com.electron.logseq'
-run = 'move-node-to-workspace E'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.radar.gm'
-run = 'move-node-to-workspace R'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.mail'
-run = 'move-node-to-workspace M'
-
-[[on-window-detected]]
-if.app-id = 'com.tinyspeck.slackmacgap'
-run = 'move-node-to-workspace S'
-
-[[on-window-detected]]
-if.app-id = 'Cisco-Systems.Spark'
-run = 'move-node-to-workspace W'
+run = ['exec-and-forget ~/.config/aerospace/reassign-windows.py']
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes

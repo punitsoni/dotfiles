@@ -1,0 +1,169 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>AeroSpace Workspaces</title>
+<style>
+  /* Linear design tokens (linear.design.md) */
+  :root {
+    color-scheme: dark;
+    --primary: #5e6ad2; --on-primary: #ffffff; --primary-hover: #828fff; --primary-focus: #5e69d1;
+    --ink: #f7f8f8; --ink-muted: #d0d6e0; --ink-subtle: #8a8f98; --ink-tertiary: #62666d;
+    --canvas: #010102; --surface-1: #0f1011; --surface-2: #141516;
+    --hairline: #23252a; --hairline-strong: #34343a;
+    --font-text: "Linear Text", Inter, -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+    --font-mono: "Linear Mono", "JetBrains Mono", "Geist Mono", ui-monospace, monospace;
+    --rounded-md: 8px; --rounded-pill: 9999px;
+    --space-xxs: 4px; --space-xs: 8px; --space-sm: 12px; --space-md: 16px; --space-xxl: 48px;
+  }
+  * { box-sizing: border-box; scrollbar-width: thin; scrollbar-color: var(--hairline-strong) transparent; }
+  html, body { height: 100%; }
+  body {
+    margin: 0; overflow: hidden; overscroll-behavior: none;
+    background: var(--canvas); color: var(--ink);
+    font: 400 13px/1.4 var(--font-text); cursor: default;
+    -webkit-user-select: none; user-select: none; -webkit-font-smoothing: antialiased;
+  }
+  input { -webkit-user-select: text; user-select: text; }
+
+  /* app shell: toolbar / content / status bar, no page scrolling */
+  .app { height: 100%; display: flex; flex-direction: column; }
+  .toolbar, .addbar { flex: none; display: flex; align-items: center; gap: var(--space-sm); padding: var(--space-xs) var(--space-md); background: var(--surface-1); }
+  .toolbar { border-bottom: 1px solid var(--hairline); }
+  .addbar { border-top: 1px solid var(--hairline); }
+  h1 { flex: 1; margin: 0; font: 600 13px/1.2 var(--font-text); }
+  .toolbar label { display: flex; gap: var(--space-xs); align-items: center; color: var(--ink-subtle); }
+  main { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  section { display: flex; flex-direction: column; min-height: 0; }
+  section.assigned { flex: 1 1 0; }
+  section.unassigned { flex: 0 1 auto; max-height: 40%; border-top: 1px solid var(--hairline); }
+  h2 { /* eyebrow */
+    flex: none; margin: 0; padding: var(--space-xs) var(--space-md);
+    font: 500 11px/1.3 var(--font-text); letter-spacing: 0.4px; text-transform: uppercase; color: var(--ink-subtle);
+  }
+  .addbar h2 { padding: 0; }
+  .scroll { overflow: auto; min-height: 0; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: var(--space-xxs) var(--space-md); border-bottom: 1px solid var(--hairline); white-space: nowrap; }
+  th {
+    position: sticky; top: 0; background: var(--canvas); box-shadow: inset 0 -1px var(--hairline);
+    font: 500 11px/1.4 var(--font-text); color: var(--ink-subtle);
+  }
+  tr[data-bid]:hover td { background: var(--surface-2); }
+  code { font: 400 12px/1.4 var(--font-mono); color: var(--ink-subtle); }
+
+  input { /* text-input */
+    font: 400 13px/1.4 var(--font-text); color: var(--ink); background: var(--surface-1);
+    border: 1px solid var(--hairline-strong); border-radius: var(--rounded-md);
+    padding: var(--space-xxs) var(--space-xs);
+  }
+  input::placeholder { color: var(--ink-tertiary); }
+  input:focus { outline: 0; border-color: var(--primary); }
+  input.ws { width: var(--space-xxl); text-align: center; }
+  #n-name { width: 160px; } #n-bid { flex: 1; min-width: 0; }
+
+  button { /* button-secondary */
+    font: 500 13px/1.2 var(--font-text); cursor: default; padding: var(--space-xxs) var(--space-sm);
+    color: var(--ink); background: var(--surface-2);
+    border: 1px solid var(--hairline-strong); border-radius: var(--rounded-md);
+  }
+  button:hover { border-color: var(--ink-tertiary); }
+  button:focus-visible { outline: 2px solid var(--primary); outline-offset: 1px; }
+  button.primary { background: var(--primary); color: var(--on-primary); border-color: var(--primary); }
+  button.primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
+  button.primary:active { background: var(--primary-focus); border-color: var(--primary-focus); }
+  button.rm { /* button-tertiary */
+    background: transparent; border-color: transparent; color: var(--ink-subtle);
+  }
+  button.rm:hover { color: var(--ink); border-color: var(--hairline-strong); }
+
+  .badge { /* status-badge */
+    display: inline-block; padding: 1px var(--space-xs); border-radius: var(--rounded-pill);
+    background: var(--surface-2); color: var(--ink-muted); font: 400 11px/1.4 var(--font-text);
+  }
+  .err { flex: none; padding: var(--space-xs) var(--space-md); border-bottom: 1px solid var(--hairline); }
+  .err:empty { display: none; } /* spec defines no error color */
+  .dim { color: var(--ink-subtle); }
+</style>
+<div class="app">
+  <header class="toolbar">
+    <h1>AeroSpace workspace assignments</h1>
+    <span id="msg" class="dim"></span>
+    <label>Default workspace: <input class="ws" id="def"></label>
+    <button class="primary" id="reassign">Reassign all windows now</button>
+  </header>
+  <div id="err" class="err"></div>
+
+  <main>
+    <section class="assigned">
+      <h2>Assigned apps</h2>
+      <div class="scroll"><table id="assigned"></table></div>
+    </section>
+    <section class="unassigned">
+      <h2>Open windows with no assignment</h2>
+      <div class="scroll"><table id="unassigned"></table></div>
+    </section>
+  </main>
+
+  <footer class="addbar">
+    <h2>Add assignment</h2>
+    <input id="n-name" placeholder="Name">
+    <input id="n-bid" placeholder="com.example.App">
+    <input class="ws" id="n-ws" placeholder="ws">
+    <button id="n-add">Add</button>
+  </footer>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const post = (p, b) => fetch(p, {method: "POST", body: JSON.stringify(b || {})}).then(r => r.json());
+const flash = t => { $("msg").textContent = t; setTimeout(() => $("msg").textContent = "", 2500); };
+
+function esc(s) { return s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+async function assign(bid, name, ws) {
+  if (!ws) return;
+  await post("/api/assign", {bundle_id: bid, name, workspace: ws});
+  flash("Saved"); load();
+}
+
+async function load() {
+  let s;
+  try { s = await (await fetch("/api/state")).json(); }
+  catch (e) { $("err").textContent = "Server not responding: " + e.message; return; }
+  $("err").textContent = s.error ? "aerospace: " + s.error : "";
+  $("def").value = s.default_workspace;
+
+  const apps = Object.entries(s.apps).sort((a, b) => a[1].workspace.localeCompare(b[1].workspace));
+  $("assigned").innerHTML = "<tr><th>App</th><th>Bundle ID</th><th>Workspace</th><th>Open</th><th></th></tr>" +
+    apps.map(([bid, a]) => `<tr data-bid="${esc(bid)}" data-name="${esc(a.name)}">
+      <td>${esc(a.name)}</td><td><code>${esc(bid)}</code></td>
+      <td><input class="ws" value="${esc(a.workspace)}"></td>
+      <td>${a.open.length ? '<span class="badge">' + a.open.length + " (on " + [...new Set(a.open.map(w => w.workspace))].join(",") + ")</span>" : '<span class="dim">–</span>'}</td>
+      <td><button class="rm">Remove</button></td></tr>`).join("");
+
+  $("unassigned").innerHTML = s.unassigned.length
+    ? "<tr><th>App</th><th>Bundle ID</th><th>Windows</th><th>Assign to</th></tr>" + s.unassigned.map(u =>
+      `<tr data-bid="${esc(u.bundle_id)}" data-name="${esc(u.name)}">
+        <td>${esc(u.name)}</td><td><code>${esc(u.bundle_id)}</code></td>
+        <td><span class="badge">${u.windows.length} (on ${[...new Set(u.windows.map(w => w.workspace))].join(",")})</span></td>
+        <td><input class="ws"> <button class="add">Assign</button></td></tr>`).join("")
+    : '<tr><td class="dim">None 🎉</td></tr>';
+}
+
+document.addEventListener("click", async e => {
+  const tr = e.target.closest("tr[data-bid]");
+  if (e.target.matches(".rm")) { await post("/api/remove", {bundle_id: tr.dataset.bid}); load(); }
+  if (e.target.matches(".add")) assign(tr.dataset.bid, tr.dataset.name, tr.querySelector("input").value.trim());
+});
+document.addEventListener("change", e => {
+  const tr = e.target.closest("#assigned tr[data-bid]");
+  if (tr) assign(tr.dataset.bid, tr.dataset.name, e.target.value.trim());
+});
+$("def").onchange = async e => { await post("/api/default", {workspace: e.target.value.trim()}); flash("Saved"); };
+$("n-add").onclick = async () => {
+  await assign($("n-bid").value.trim(), $("n-name").value.trim(), $("n-ws").value.trim());
+  ["n-name", "n-bid", "n-ws"].forEach(i => $(i).value = "");
+};
+$("reassign").onclick = async () => { await post("/api/reassign"); flash("Reassigned"); setTimeout(load, 500); };
+load();
+</script>
